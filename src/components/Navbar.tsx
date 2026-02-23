@@ -28,12 +28,12 @@ export default function Navbar() {
           <div className="flex items-center justify-between h-16">
             {/* Logo */}
             <Link to="/" className="flex items-center gap-2 group">
-              <div className="w-8 h-8 bg-navy rounded flex items-center justify-center">
-                <span className="text-gold font-display font-bold text-sm">S</span>
+              <div className="w-9 h-9 bg-navy rounded flex items-center justify-center">
+                <span className="text-gold font-display font-bold text-base">S</span>
               </div>
               <div>
-                <span className="font-display font-bold text-xl text-navy tracking-tight">Sleek</span>
-                <span className="font-display font-bold text-xl text-gold tracking-tight">Stamp</span>
+                <span className="font-display font-bold text-2xl text-navy tracking-tight">Sleek</span>
+                <span className="font-display font-bold text-2xl text-gold tracking-tight">Stamp</span>
               </div>
             </Link>
 
@@ -46,7 +46,7 @@ export default function Navbar() {
                 >
                   <Link
                     to={link.href}
-                    className={`flex items-center gap-1 px-4 py-2 rounded font-body text-sm font-medium transition-smooth hover:text-navy hover:bg-secondary
+                    className={`flex items-center gap-1 px-4 py-2 rounded font-body text-base font-medium transition-smooth hover:text-navy hover:bg-secondary
                       ${location.pathname === link.href.split("?")[0] && location.pathname !== "/"
                         ? "text-navy font-semibold"
                         : location.pathname === "/" && link.href === "/"
@@ -63,7 +63,7 @@ export default function Navbar() {
             <div className="flex items-center gap-3">
               <Link
                 to="/cart"
-                className="relative flex items-center gap-1.5 bg-navy text-primary-foreground px-4 py-2 rounded font-body text-sm font-medium hover:bg-navy-light transition-smooth"
+                className="relative flex items-center gap-1.5 bg-navy text-primary-foreground px-5 py-2.5 rounded font-body text-base font-medium hover:bg-navy-light transition-smooth"
               >
                 <ShoppingCart className="w-4 h-4" />
                 <span className="hidden sm:inline">Cart</span>

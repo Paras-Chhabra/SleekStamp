@@ -3,6 +3,7 @@ import React, { createContext, useContext, useState, useCallback } from "react";
 export interface CartItem {
   id: string;
   productId: string;
+  slug?: string;
   name: string;
   image: string;
   price: number;
@@ -20,6 +21,7 @@ interface CartContextType {
   items: CartItem[];
   addItem: (item: Omit<CartItem, "id">) => void;
   removeItem: (id: string) => void;
+  updateItem: (id: string, updates: Partial<Omit<CartItem, "id">>) => void;
   updateQuantity: (id: string, quantity: number) => void;
   clearCart: () => void;
   total: number;
@@ -52,6 +54,12 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     }
   }, []);
 
+  const updateItem = useCallback((id: string, updates: Partial<Omit<CartItem, "id">>) => {
+    setItems((prev) =>
+      prev.map((item) => (item.id === id ? { ...item, ...updates } : item))
+    );
+  }, []);
+
   const clearCart = useCallback(() => setItems([]), []);
 
   const total = items.reduce((sum, item) => sum + item.price * item.quantity, 0);
@@ -59,7 +67,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
 
   return (
     <CartContext.Provider
-      value={{ items, addItem, removeItem, updateQuantity, clearCart, total, itemCount }}
+      value={{ items, addItem, removeItem, updateItem, updateQuantity, clearCart, total, itemCount }}
     >
       {children}
     </CartContext.Provider>

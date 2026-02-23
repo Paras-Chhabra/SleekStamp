@@ -9,7 +9,7 @@ import heroBanner from "@/assets/hero-premium-stamps.png";
 
 const trustBadges = [
   { icon: Shield, label: "Secure Checkout", sub: "SSL encrypted" },
-  { icon: Truck, label: "Free Shipping", sub: "Orders over $50" },
+  { icon: Truck, label: "Free Shipping", sub: "Orders over $150" },
   { icon: Clock, label: "Fast Turnaround", sub: "1–3 business days" },
   { icon: Award, label: "Quality Guaranteed", sub: "100% satisfaction" },
 ];

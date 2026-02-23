@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useParams, Link, useNavigate } from "react-router-dom";
+import { useParams, Link, useNavigate, useSearchParams } from "react-router-dom";
 import { Star, ChevronRight, Check, ArrowLeft, ShoppingCart, Zap, Upload } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -31,9 +31,13 @@ interface CustomizerState {
 function Customizer({
   product,
   onComplete,
+  initialState,
+  isEditing,
 }: {
   product: Product;
   onComplete: (state: CustomizerState) => void;
+  initialState?: Partial<CustomizerState>;
+  isEditing?: boolean;
 }) {
   const isStampPad = product.category === "stamp-pad";
   const isCustomStamp = product.category === "custom-stamps";
@@ -49,11 +53,11 @@ function Customizer({
 
   const [stepIdx, setStepIdx] = useState(0);
   const [state, setState] = useState<CustomizerState>({
-    size: product.sizes?.[1] ?? null,
-    stampPad: null,
-    inkColor: product.inkColors?.[0] ?? null,
-    logo: null,
-    priority: false,
+    size: initialState?.size ?? product.sizes?.[1] ?? null,
+    stampPad: initialState?.stampPad ?? null,
+    inkColor: initialState?.inkColor ?? product.inkColors?.[0] ?? null,
+    logo: initialState?.logo ?? null,
+    priority: initialState?.priority ?? false,
   });
 
   const step = STEPS[stepIdx];
@@ -214,7 +218,12 @@ function Customizer({
                   className="w-12 h-12 rounded-full shadow-md border-2 border-white"
                   style={{ backgroundColor: colorSwatches[color] ?? "#333" }}
                 />
-                <span className="font-body text-sm font-semibold text-foreground uppercase tracking-tight">{color}</span>
+                <span className="font-body text-sm font-semibold text-foreground uppercase tracking-tight">
+                  {color}
+                  {(color === "Black" || color === "Blue") && (
+                    <span className="block text-[10px] text-gold normal-case tracking-normal font-medium mt-0.5">Top Seller</span>
+                  )}
+                </span>
                 {state.inkColor === color && <Check className="w-3.5 h-3.5 text-gold" />}
               </button>
             ))}
@@ -394,7 +403,7 @@ function Customizer({
           className="mt-2 w-full bg-navy text-primary-foreground py-3.5 rounded-xl font-body font-semibold text-base hover:bg-navy-light transition-smooth disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center gap-2"
         >
           <ShoppingCart className="w-4 h-4" />
-          Add to Cart — ${total.toFixed(2)}
+          {isEditing ? `Save Changes — $${total.toFixed(2)}` : `Add to Cart — $${total.toFixed(2)}`}
         </button>
       )}
     </div>
@@ -406,10 +415,15 @@ function Customizer({
 export default function ProductDetail() {
   const { slug } = useParams<{ slug: string }>();
   const navigate = useNavigate();
-  const { addItem } = useCart();
+  const [searchParams] = useSearchParams();
+  const editId = searchParams.get('editId');
+  const { addItem, updateItem, items } = useCart();
   const { data: products = [], isLoading } = useShopifyProducts();
 
   const product = products.find((p) => p.slug === slug);
+
+  // Find the cart item being edited (if any)
+  const editingItem = editId ? items.find((i) => i.id === editId) : null;
 
   if (isLoading) {
     return (
@@ -447,19 +461,26 @@ export default function ProductDetail() {
     const total = basePrice + padPrice + priorityPrice;
     const variantId = state.size?.variantId ?? product.defaultVariantId;
 
-    addItem({
+    const itemData = {
       productId: product.id,
+      slug: product.slug,
       name: product.name,
       image: product.image,
       price: total,
-      quantity: 1,
+      quantity: editingItem?.quantity ?? 1,
       size: state.size?.size,
       inkColor: state.inkColor ?? undefined,
       stampPad: state.stampPad?.label,
       priorityProcessing: state.priority,
       logo: state.logo,
       variantId,
-    });
+    };
+
+    if (editId && editingItem) {
+      updateItem(editId, itemData);
+    } else {
+      addItem(itemData);
+    }
 
     navigate("/cart");
   };
@@ -554,7 +575,22 @@ export default function ProductDetail() {
             </div>
 
             {/* Customizer or direct Add to Cart */}
-            <Customizer product={product} onComplete={handleCustomizerComplete} />
+            <Customizer
+              product={product}
+              onComplete={handleCustomizerComplete}
+              isEditing={!!editingItem}
+              initialState={editingItem ? {
+                size: editingItem.size && product.sizes
+                  ? product.sizes.find(s => s.size === editingItem.size) ?? null
+                  : null,
+                inkColor: editingItem.inkColor ?? null,
+                stampPad: editingItem.stampPad
+                  ? { label: editingItem.stampPad, price: editingItem.stampPad.includes('Small') ? 7.99 : editingItem.stampPad.includes('Medium') ? 9.99 : 12.99 }
+                  : null,
+                logo: editingItem.logo ?? null,
+                priority: editingItem.priorityProcessing ?? false,
+              } : undefined}
+            />
           </div>
         </div>
 

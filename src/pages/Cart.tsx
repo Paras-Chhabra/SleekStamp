@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Trash2, Plus, Minus, ArrowRight, ArrowLeft, ShoppingBag, ShoppingCart } from "lucide-react";
+import { Trash2, Plus, Minus, ArrowRight, ArrowLeft, ShoppingBag, ShoppingCart, Pencil } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { useCart } from "@/context/CartContext";
@@ -37,7 +37,7 @@ export default function Cart() {
     );
   }
 
-  const shipping = total >= 50 ? 0 : 5.99;
+  const shipping = total >= 150 ? 0 : 5.99;
   const tax = total * 0.08;
   const orderTotal = total + shipping + tax;
 
@@ -126,6 +126,13 @@ export default function Cart() {
                       <span className="font-body font-bold text-navy">
                         ${(item.price * item.quantity).toFixed(2)}
                       </span>
+                      <Link
+                        to={`/products/${item.slug || item.productId.split('/').pop()}?editId=${item.id}`}
+                        className="p-1.5 text-muted-foreground hover:text-navy transition-smooth rounded"
+                        title="Edit item"
+                      >
+                        <Pencil className="w-4 h-4" />
+                      </Link>
                       <button
                         onClick={() => removeItem(item.id)}
                         className="p-1.5 text-muted-foreground hover:text-destructive transition-smooth rounded"
@@ -142,12 +149,12 @@ export default function Cart() {
             {shipping > 0 && (
               <div className="bg-cream rounded-xl border border-border p-4">
                 <p className="text-sm font-body text-foreground mb-2">
-                  Add <span className="font-semibold text-navy">${(50 - total).toFixed(2)}</span> more to get free shipping!
+                  Add <span className="font-semibold text-navy">${(150 - total).toFixed(2)}</span> more to get free shipping!
                 </p>
                 <div className="h-2 bg-secondary rounded-full overflow-hidden">
                   <div
                     className="h-full bg-gold rounded-full transition-all"
-                    style={{ width: `${Math.min((total / 50) * 100, 100)}%` }}
+                    style={{ width: `${Math.min((total / 150) * 100, 100)}%` }}
                   />
                 </div>
               </div>

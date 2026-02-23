@@ -92,7 +92,7 @@ export default function Footer() {
               </li>
               <li className="flex items-start gap-2.5 text-sm text-primary-foreground/70 font-body">
                 <Mail className="w-4 h-4 mt-0.5 shrink-0 text-gold" />
-                <span>support@sleekstamp.com</span>
+                <a href="mailto:support@sleekstamp.com" className="hover:text-gold transition-smooth">support@sleekstamp.com</a>
               </li>
               <li className="flex items-start gap-2.5 text-sm text-primary-foreground/70 font-body">
                 <MapPin className="w-4 h-4 mt-0.5 shrink-0 text-gold" />

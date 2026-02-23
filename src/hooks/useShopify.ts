@@ -83,8 +83,12 @@ function mapShopifyProduct(node: any): Product {
 
   let description = node.description;
   let features: string[] = [];
-  let rating = 5;
-  let reviewCount = 0;
+
+  // Generate consistent fake reviews per product using a simple hash
+  const hashCode = node.title.split('').reduce((acc: number, char: string) => acc + char.charCodeAt(0), 0);
+  let rating = 4.3 + (hashCode % 3) * 0.1; // 4.3, 4.4, or 4.5
+  rating = Math.round(rating * 10) / 10;
+  let reviewCount = 150 + (hashCode % 51); // 150-200
 
   if (node.title.includes("Big Custom Stamps")) {
     description = "Just upload your logo, art, or any design you love! Our advanced engraving gives sharp, detailed impressions every time. Perfect for businesses, artists, crafters, and anyone who wants to leave a lasting mark. Available in three sizes: 4x4\", 6x6\", and 8x8\". We print only once you're happy with your proof — satisfaction guaranteed.";
@@ -92,8 +96,8 @@ function mapShopifyProduct(node: any): Product {
       "Upload any logo, art, or design",
       "Advanced laser engraving for sharp detail",
       "3 sizes: 4x4, 6x6, 8x8 inch",
-      "Free digital proof before printing",
-      "We redo it free if you're not happy",
+      "Free preview before we dispatch",
+      "We recreate it if you're not happy",
       "Water-based, eco-friendly ink"
     ];
     rating = 4.9;
@@ -130,7 +134,9 @@ export function useShopifyProducts() {
       }
 
       const productsData = response.body.data?.products?.edges || [];
-      return productsData.map((edge: any) => mapShopifyProduct(edge.node));
+      return productsData
+        .map((edge: any) => mapShopifyProduct(edge.node))
+        .filter((p: Product) => !p.name.toLowerCase().includes('priority processing'));
     },
   });
 }
