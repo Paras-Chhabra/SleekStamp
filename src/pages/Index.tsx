@@ -70,7 +70,7 @@ export default function Index() {
             </h1>
 
             <p className="text-lg text-primary-foreground/90 font-body mb-10 max-w-2xl mx-auto leading-relaxed">
-              From self-inking business stamps to notary seals — precision-made, fast-shipped, and guaranteed to impress. Trusted by 50,000+ professionals.
+              From self-inking business stamps to notary seals — precision-made, fast-shipped, and guaranteed to impress. Trusted by 45,000+ businesses.
             </p>
 
             <div className="flex flex-wrap items-center justify-center gap-4">
@@ -265,7 +265,7 @@ export default function Index() {
             Ready to Create Your Custom Stamp?
           </h2>
           <p className="text-muted-foreground font-body mb-7 max-w-md mx-auto">
-            Join over 50,000 satisfied customers. Free artwork setup. Free proof. Fast delivery.
+            Join over 45,000+ satisfied customers. Free artwork setup. Free proof. Fast delivery.
           </p>
           <Link
             to="/products"

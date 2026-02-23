@@ -17,7 +17,7 @@ export default function Footer() {
               </span>
             </div>
             <p className="text-sm text-primary-foreground/70 font-body leading-relaxed mb-5">
-              Premium custom stamps made in the USA. Trusted by over 50,000 businesses, professionals, and individuals.
+              Premium custom stamps made in the USA. Trusted by 45,000+ businesses, professionals, and individuals.
             </p>
             <div className="flex gap-3">
               {[Facebook, Instagram, Twitter].map((Icon, i) => (
@@ -37,13 +37,11 @@ export default function Footer() {
             <h4 className="font-display font-semibold text-base mb-4 text-primary-foreground">Products</h4>
             <ul className="space-y-2.5">
               {[
-                ["Self-Inking Stamps", "/products?category=self-inking"],
-                ["Pre-Inked Stamps", "/products?category=pre-inked"],
-                ["Address Stamps", "/products?category=address"],
-                ["Notary Stamps", "/products?category=notary"],
-                ["Signature Stamps", "/products?category=signature"],
-                ["Date Stamps", "/products?category=date"],
-                ["Ink Pads & Refills", "/products?category=ink-pads"],
+                ["Big Custom Stamps", "/products?category=custom-stamps"],
+                ["Wooden Stamps", "/products?category=wooden-stamps"],
+                ["Face and Logo Stamps", "/products?category=face-stamps"],
+                ["Stamp Pads", "/products?category=stamp-pad"],
+                ["Refill Ink", "/products?category=refill-ink"],
               ].map(([label, href]) => (
                 <li key={label}>
                   <Link
@@ -62,21 +60,19 @@ export default function Footer() {
             <h4 className="font-display font-semibold text-base mb-4 text-primary-foreground">Help & Info</h4>
             <ul className="space-y-2.5">
               {[
-                ["How to Order", "#"],
-                ["File Requirements", "#"],
-                ["Turnaround Times", "#"],
-                ["Shipping Info", "#"],
-                ["Returns & Refunds", "#"],
-                ["FAQ", "#"],
-                ["Track Your Order", "#"],
+                ["Contact us", "/contact"],
+                ["Privacy Policy", "/privacy-policy"],
+                ["Shipping Policy", "/shipping-policy"],
+                ["Term of Services", "/terms-of-service"],
+                ["Refund Policy", "/refund-policy"],
               ].map(([label, href]) => (
                 <li key={label}>
-                  <a
-                    href={href}
+                  <Link
+                    to={href}
                     className="text-sm text-primary-foreground/70 hover:text-gold transition-smooth font-body"
                   >
                     {label}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -88,7 +84,7 @@ export default function Footer() {
             <ul className="space-y-3">
               <li className="flex items-start gap-2.5 text-sm text-primary-foreground/70 font-body">
                 <Phone className="w-4 h-4 mt-0.5 shrink-0 text-gold" />
-                <span>1-800-555-0123<br />Mon–Fri, 9am–6pm EST</span>
+                <a href="https://wa.me/12495010837" target="_blank" rel="noopener noreferrer" className="hover:text-gold transition-smooth">+1(249) 501-0837</a>
               </li>
               <li className="flex items-start gap-2.5 text-sm text-primary-foreground/70 font-body">
                 <Mail className="w-4 h-4 mt-0.5 shrink-0 text-gold" />
@@ -96,7 +92,7 @@ export default function Footer() {
               </li>
               <li className="flex items-start gap-2.5 text-sm text-primary-foreground/70 font-body">
                 <MapPin className="w-4 h-4 mt-0.5 shrink-0 text-gold" />
-                <span>123 Commerce Dr<br />Columbus, OH 43215</span>
+                <span>30 N Gould St Ste R<br />Sheridan, Wyoming 82801</span>
               </li>
             </ul>
           </div>

@@ -128,14 +128,15 @@ export default function Cart() {
                       </span>
                       <Link
                         to={`/products/${item.slug || item.productId.split('/').pop()}?editId=${item.id}`}
-                        className="p-1.5 text-muted-foreground hover:text-navy transition-smooth rounded"
+                        className="p-1.5 bg-yellow-400 text-navy hover:bg-yellow-500 transition-smooth rounded shadow-sm"
                         title="Edit item"
                       >
                         <Pencil className="w-4 h-4" />
                       </Link>
                       <button
                         onClick={() => removeItem(item.id)}
-                        className="p-1.5 text-muted-foreground hover:text-destructive transition-smooth rounded"
+                        className="p-1.5 bg-red-500 text-white hover:bg-red-600 transition-smooth rounded shadow-sm"
+                        title="Delete item"
                       >
                         <Trash2 className="w-4 h-4" />
                       </button>

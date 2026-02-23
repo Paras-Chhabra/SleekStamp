@@ -94,18 +94,7 @@ export default function Products() {
                 })}
               </nav>
 
-              <div className="mt-8 p-4 bg-cream rounded-xl border border-border">
-                <h4 className="font-display font-semibold text-sm text-navy mb-2">Need Help?</h4>
-                <p className="text-xs text-muted-foreground font-body mb-3">
-                  Can't find what you need? Our experts are here.
-                </p>
-                <a
-                  href="tel:1-800-555-0123"
-                  className="block text-center bg-navy text-primary-foreground text-xs py-2 rounded font-body font-medium hover:bg-navy-light transition-smooth"
-                >
-                  Call Us Free
-                </a>
-              </div>
+
             </div>
           </aside>
 
