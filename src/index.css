@@ -6,61 +6,61 @@
 
 @layer base {
   :root {
-    /* Core Brand Colors */
-    --background: 42 20% 97%;
-    --foreground: 215 40% 10%;
+    /* Core Brand Colors — white / cream / black */
+    --background: 40 20% 98%;
+    --foreground: 0 0% 8%;
 
     --card: 0 0% 100%;
-    --card-foreground: 215 40% 10%;
+    --card-foreground: 0 0% 8%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 215 40% 10%;
+    --popover-foreground: 0 0% 8%;
 
-    /* Navy Primary */
-    --primary: 215 55% 18%;
-    --primary-foreground: 42 30% 97%;
+    /* Primary = Black */
+    --primary: 0 0% 8%;
+    --primary-foreground: 40 20% 98%;
 
-    /* Light Navy Secondary */
-    --secondary: 215 30% 94%;
-    --secondary-foreground: 215 55% 18%;
+    /* Secondary = warm light */
+    --secondary: 40 20% 95%;
+    --secondary-foreground: 0 0% 8%;
 
-    --muted: 215 20% 94%;
-    --muted-foreground: 215 20% 50%;
+    --muted: 40 10% 93%;
+    --muted-foreground: 0 0% 45%;
 
-    /* Amber Gold Accent */
-    --accent: 38 90% 50%;
-    --accent-foreground: 215 55% 10%;
+    /* Accent = warm cream */
+    --accent: 38 40% 92%;
+    --accent-foreground: 0 0% 8%;
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 215 20% 88%;
-    --input: 215 20% 88%;
-    --ring: 215 55% 18%;
+    --border: 40 15% 88%;
+    --input: 40 15% 88%;
+    --ring: 0 0% 8%;
 
     --radius: 0.375rem;
 
     /* Custom tokens */
-    --cream: 42 40% 96%;
-    --gold: 38 90% 50%;
-    --gold-dark: 33 85% 40%;
-    --navy: 215 55% 18%;
-    --navy-light: 215 45% 28%;
-    --navy-dark: 215 60% 12%;
-    --charcoal: 215 15% 25%;
+    --cream: 40 30% 96%;
+    --gold: 38 50% 50%;
+    --gold-dark: 33 45% 40%;
+    --navy: 0 0% 8%;
+    --navy-light: 0 0% 20%;
+    --navy-dark: 0 0% 4%;
+    --charcoal: 0 0% 20%;
 
-    --shadow-sm: 0 1px 3px rgba(20, 35, 60, 0.08);
-    --shadow-md: 0 4px 16px rgba(20, 35, 60, 0.10);
-    --shadow-lg: 0 12px 40px rgba(20, 35, 60, 0.15);
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.06);
+    --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.08);
+    --shadow-lg: 0 12px 40px rgba(0, 0, 0, 0.12);
 
-    --sidebar-background: 215 55% 18%;
-    --sidebar-foreground: 42 30% 97%;
-    --sidebar-primary: 38 90% 50%;
-    --sidebar-primary-foreground: 215 55% 10%;
-    --sidebar-accent: 215 45% 28%;
-    --sidebar-accent-foreground: 42 30% 97%;
-    --sidebar-border: 215 45% 25%;
-    --sidebar-ring: 38 90% 50%;
+    --sidebar-background: 0 0% 8%;
+    --sidebar-foreground: 40 20% 98%;
+    --sidebar-primary: 38 50% 50%;
+    --sidebar-primary-foreground: 0 0% 8%;
+    --sidebar-accent: 0 0% 20%;
+    --sidebar-accent-foreground: 40 20% 98%;
+    --sidebar-border: 0 0% 18%;
+    --sidebar-ring: 38 50% 50%;
   }
 }
 
@@ -106,6 +106,10 @@
 
   .bg-navy-dark {
     background-color: hsl(var(--navy-dark));
+  }
+
+  .bg-navy-light {
+    background-color: hsl(var(--navy-light));
   }
 
   .bg-gold {
