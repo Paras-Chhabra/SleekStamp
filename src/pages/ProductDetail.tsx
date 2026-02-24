@@ -119,7 +119,7 @@ function Customizer({
       {/* ── 2. Upload Design ── */}
       {(isCustomStamp || product.category === "face-stamps" || product.category === "wooden-stamps") && (
         <div>
-          <h3 className="font-display text-lg font-bold text-foreground mb-4">{++sectionNum}. Upload Design</h3>
+          <h3 className="font-display text-lg font-bold text-foreground mb-4">{++sectionNum}. Upload Design <span className="text-muted-foreground font-body text-sm font-normal">(Optional)</span></h3>
           <div className="border-2 border-dashed border-border rounded-xl bg-gray-50 p-8 text-center hover:border-foreground/30 transition-smooth">
             <input
               type="file"
@@ -156,15 +156,6 @@ function Customizer({
               </label>
             )}
           </div>
-          {/* Skip for now */}
-          {!state.logo && (
-            <button
-              onClick={() => setState((s) => ({ ...s, logo: 'skipped' as any }))}
-              className="mt-3 text-sm text-muted-foreground font-body hover:text-foreground transition-smooth underline underline-offset-2"
-            >
-              Skip for now — you can upload later in cart
-            </button>
-          )}
         </div>
       )}
 
@@ -323,9 +314,12 @@ function Customizer({
       {/* ── Add to Cart (no duplicate upload section) ── */}
       <div className="pt-4 border-t border-border">
         <button
-          onClick={() => onComplete(state)}
-          disabled={!state.logo && isCustomStamp}
-          className="w-full bg-foreground text-white py-4 rounded-xl font-body font-semibold text-base hover:opacity-90 transition-smooth disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+          onClick={() => {
+            // Auto-mark logo as skipped if user didn't upload one
+            const finalState = (!state.logo && isCustomStamp) ? { ...state, logo: 'skipped' as any } : state;
+            onComplete(finalState);
+          }}
+          className="w-full bg-foreground text-white py-4 rounded-xl font-body font-semibold text-base hover:opacity-90 transition-smooth flex items-center justify-center gap-2"
         >
           <ShoppingCart className="w-4 h-4" />
           {isEditing ? `Save Changes — $${total.toFixed(2)}` : `Add to Cart — $${total.toFixed(2)}`}

@@ -56,7 +56,7 @@ export default function Index() {
         </div>
 
         <div className="relative container mx-auto px-4 py-20 flex justify-center">
-          <div className="max-w-3xl w-full bg-[#1e3a5f]/90 backdrop-blur-md border border-white/10 p-10 md:p-14 rounded-[2rem] shadow-2xl text-center animate-fade-in">
+          <div className="max-w-3xl w-full bg-[#0f2640]/90 backdrop-blur-md border border-white/10 p-10 md:p-14 rounded-[2rem] shadow-2xl text-center animate-fade-in">
             <div className="inline-flex items-center justify-center gap-2 bg-gold/20 border border-gold/40 rounded-full px-4 py-1.5 mb-6">
               <span className="w-2 h-2 rounded-full bg-gold animate-pulse" />
               <span className="text-gold text-sm font-body font-medium tracking-wide">
@@ -194,7 +194,7 @@ export default function Index() {
       </section>
 
       {/* How It Works */}
-      <section className="py-16 bg-[#e8f0fe] text-foreground border-y border-border">
+      <section className="py-16 bg-[#f5f0e8] text-foreground border-y border-border">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="font-display text-3xl font-bold mb-3">How It Works</h2>
