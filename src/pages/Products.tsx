@@ -20,7 +20,8 @@ export default function Products() {
   const [view, setView] = useState<"grid" | "list">("grid");
 
   const activeCategory = searchParams.get("category");
-  const { data: products = [], isLoading } = useShopifyProducts();
+  const { data, isLoading } = useShopifyProducts();
+  const products = data?.display ?? [];
 
   const filteredProducts = useMemo(() => {
     let list = activeCategory

@@ -36,7 +36,8 @@ const testimonials = [
 ];
 
 export default function Index() {
-  const { data: products = [], isLoading } = useShopifyProducts();
+  const { data, isLoading } = useShopifyProducts();
+  const products = data?.display ?? [];
   const featuredProducts = products.slice(0, 4);
 
   return (

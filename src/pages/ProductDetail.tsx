@@ -11,7 +11,7 @@ import { useCart } from "@/context/CartContext";
 
 interface CustomizerState {
   size: { label: string; size: string; price: number; variantId?: string } | null;
-  stampPad: { label: string; price: number } | null;
+  stampPad: { label: string; price: number; variantId?: string } | null;
   inkColor: string | null;
   logo: File | string | null;
   priority: boolean;
@@ -19,11 +19,13 @@ interface CustomizerState {
 
 function Customizer({
   product,
+  allProducts,
   onComplete,
   initialState,
   isEditing,
 }: {
   product: Product;
+  allProducts: Product[];
   onComplete: (state: CustomizerState) => void;
   initialState?: Partial<CustomizerState>;
   isEditing?: boolean;
@@ -33,18 +35,22 @@ function Customizer({
   const hasSizes = !!product.sizes && product.sizes.length > 0;
   const hasColors = !!product.inkColors && product.inkColors.length > 0;
 
-  const [state, setState] = useState<CustomizerState>({
-    size: initialState?.size ?? product.sizes?.[0] ?? null,
-    stampPad: initialState?.stampPad ?? null,
-    inkColor: initialState?.inkColor ?? product.inkColors?.[0] ?? null,
-    logo: initialState?.logo ?? null,
-    priority: initialState?.priority ?? false,
-  });
+  // ── Fetch stamp pad products from Shopify for add-ons ──
+  const stampPadProducts = allProducts.filter(p => p.category === "stamp-pad");
 
-  const padOptions = [
-    { label: 'Matching Ink Pad', desc: `Sized perfectly (${state.size?.label ?? "4×4"})`, price: 15 },
-    { label: 'Extra Ink Bottle (30ml)', desc: 'Black Archival Ink', price: 8 },
-  ];
+  // Build stamp pad options from Shopify data – 3 sizes (M, L, XL)
+  const stampPadOptions = stampPadProducts
+    .sort((a, b) => a.price - b.price)
+    .map(p => ({
+      label: p.name,
+      sizeLabel: p.name.includes("M") ? "M" : p.name.includes("XL") ? "XL" : p.name.includes("L") ? "L" : p.name.split("–").pop()?.trim() || "Pad",
+      price: p.price,
+      variantId: p.defaultVariantId,
+    }));
+
+  // ── Fetch priority processing price from Shopify ──
+  const priorityProduct = allProducts.find(p => p.name.toLowerCase().includes("priority processing"));
+  const priorityPrice = priorityProduct?.price ?? 4.99;
 
   const inkColors = product.inkColors ?? ["Black", "Blue", "Red", "Green", "Purple"];
   const colorSwatches: Record<string, string> = {
@@ -56,10 +62,27 @@ function Customizer({
     Violet: "#6d28d9",
   };
 
+  // Ink bottle add-on colors
+  const inkBottleColors = [
+    { color: "Black", label: "Top Seller" },
+    { color: "Blue", label: "Top Seller" },
+    { color: "Red", label: null },
+  ];
+
+  const [state, setState] = useState<CustomizerState>({
+    size: initialState?.size ?? product.sizes?.[0] ?? null,
+    stampPad: initialState?.stampPad ?? null,
+    inkColor: initialState?.inkColor ?? product.inkColors?.[0] ?? null,
+    logo: initialState?.logo ?? null,
+    priority: initialState?.priority ?? false,
+  });
+
+  const [selectedInkBottle, setSelectedInkBottle] = useState<string | null>(null);
+
   const basePrice = state.size?.price ?? product.price;
   const padPrice = state.stampPad?.price ?? 0;
-  const priorityPrice = state.priority ? 19 : 0;
-  const total = basePrice + padPrice + priorityPrice;
+  const actualPriorityPrice = state.priority ? priorityPrice : 0;
+  const total = basePrice + padPrice + actualPriorityPrice;
 
   /* ── Section Number Counter ── */
   let sectionNum = 0;
@@ -135,39 +158,78 @@ function Customizer({
         </div>
       )}
 
-      {/* ── 3. Add-ons (Optional) ── */}
+      {/* ── 3. Add-ons section ── */}
       {isCustomStamp && (
         <div>
           <h3 className="font-display text-lg font-bold text-foreground mb-4">{++sectionNum}. Add-ons (Optional)</h3>
-          <div className="border border-border rounded-xl divide-y divide-border bg-white">
-            {padOptions.map((pad) => {
-              const isSelected = state.stampPad?.label === pad.label;
-              return (
-                <div
-                  key={pad.label}
-                  className="flex items-center justify-between px-5 py-4"
+
+          {/* Why add an Ink Pad? */}
+          <div className="mb-5 p-4 bg-amber-50/60 border border-amber-100 rounded-xl">
+            <h4 className="font-body font-semibold text-sm text-foreground mb-1.5 flex items-center gap-1.5">
+              ✨ Why should you add an Ink Pad?
+            </h4>
+            <p className="text-xs text-muted-foreground font-body leading-relaxed">
+              Your custom stamp deserves the perfect ink pad. Our premium pads are precisely sized to match your stamp, ensuring every impression is crisp, even, and professional. No smudging, no mess — just flawless results straight out of the box. Save time and avoid the hassle of finding the right pad later.
+            </p>
+          </div>
+
+          {/* Stamp Pad Sizes — from Shopify */}
+          <div className="mb-5">
+            <h4 className="font-body font-medium text-sm text-foreground mb-3">Stamp Pad</h4>
+            <div className="border border-border rounded-xl divide-y divide-border bg-white">
+              {stampPadOptions.map((pad) => {
+                const isSelected = state.stampPad?.label === pad.label;
+                return (
+                  <div
+                    key={pad.label}
+                    className="flex items-center justify-between px-5 py-4"
+                  >
+                    <div>
+                      <div className="font-body font-medium text-sm text-foreground">{pad.sizeLabel} – Stamp Pad</div>
+                      <div className="text-xs text-muted-foreground font-body">{pad.label}</div>
+                    </div>
+                    <div className="flex items-center gap-3">
+                      <span className="text-sm font-body text-muted-foreground">+${pad.price.toFixed(2)}</span>
+                      <button
+                        onClick={() => setState((s) => ({
+                          ...s,
+                          stampPad: isSelected ? null : { label: pad.label, price: pad.price, variantId: pad.variantId },
+                        }))}
+                        className={`relative w-11 h-6 rounded-full transition-smooth ${isSelected ? "bg-foreground" : "bg-gray-200"}`}
+                      >
+                        <span
+                          className={`absolute top-0.5 left-0.5 w-5 h-5 rounded-full bg-white shadow transition-transform ${isSelected ? "translate-x-5" : "translate-x-0"}`}
+                        />
+                      </button>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* Ink Bottle — 3 colors */}
+          <div>
+            <h4 className="font-body font-medium text-sm text-foreground mb-3">Ink Bottle</h4>
+            <div className="flex flex-wrap gap-3">
+              {inkBottleColors.map(({ color, label }) => (
+                <button
+                  key={color}
+                  onClick={() => setSelectedInkBottle(prev => prev === color ? null : color)}
+                  className={`flex items-center gap-2.5 px-4 py-2.5 rounded-full border-2 transition-smooth
+                    ${selectedInkBottle === color ? "border-foreground bg-gray-50" : "border-border hover:border-foreground/30 bg-white"}`}
                 >
-                  <div>
-                    <div className="font-body font-medium text-sm text-foreground">{pad.label}</div>
-                    <div className="text-xs text-muted-foreground font-body">{pad.desc}</div>
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <span className="text-sm font-body text-muted-foreground">+${pad.price}</span>
-                    <button
-                      onClick={() => setState((s) => ({
-                        ...s,
-                        stampPad: isSelected ? null : pad,
-                      }))}
-                      className={`relative w-11 h-6 rounded-full transition-smooth ${isSelected ? "bg-foreground" : "bg-gray-200"}`}
-                    >
-                      <span
-                        className={`absolute top-0.5 left-0.5 w-5 h-5 rounded-full bg-white shadow transition-transform ${isSelected ? "translate-x-5" : "translate-x-0"}`}
-                      />
-                    </button>
-                  </div>
-                </div>
-              );
-            })}
+                  <div
+                    className="w-5 h-5 rounded-full border border-gray-200"
+                    style={{ backgroundColor: colorSwatches[color] ?? "#333" }}
+                  />
+                  <span className="font-body text-sm font-medium text-foreground">{color}</span>
+                  {label && (
+                    <span className="text-[10px] text-amber-600 font-medium">{label}</span>
+                  )}
+                </button>
+              ))}
+            </div>
           </div>
         </div>
       )}
@@ -234,7 +296,7 @@ function Customizer({
               </div>
             </div>
             <div className="flex items-center gap-3">
-              <span className="text-sm font-body text-muted-foreground">+$19</span>
+              <span className="text-sm font-body text-muted-foreground">+${priorityPrice.toFixed(2)}</span>
               <button
                 onClick={() => setState((s) => ({ ...s, priority: !s.priority }))}
                 className={`relative w-11 h-6 rounded-full transition-smooth ${state.priority ? "bg-foreground" : "bg-gray-200"}`}
@@ -248,27 +310,8 @@ function Customizer({
         </div>
       )}
 
-      {/* ── Add to Cart ── */}
+      {/* ── Add to Cart (no duplicate upload section) ── */}
       <div className="pt-4 border-t border-border">
-        {!state.logo && isCustomStamp && (
-          <div className="mb-4 p-4 border border-destructive/30 bg-destructive/5 rounded-xl text-center">
-            <p className="text-sm font-semibold text-destructive mb-3">A custom design is required to proceed.</p>
-            <input
-              type="file"
-              accept="image/*"
-              id="review-logo-upload"
-              className="hidden"
-              onChange={(e) => {
-                const file = e.target.files?.[0];
-                if (file) setState((s) => ({ ...s, logo: file }));
-              }}
-            />
-            <label htmlFor="review-logo-upload" className="cursor-pointer inline-flex items-center justify-center gap-2 bg-white border border-border px-4 py-2.5 rounded-lg text-sm font-body font-medium hover:bg-gray-50 transition-smooth">
-              <Upload className="w-4 h-4 text-muted-foreground" />
-              Upload Design
-            </label>
-          </div>
-        )}
         <button
           onClick={() => onComplete(state)}
           disabled={!state.logo && isCustomStamp}
@@ -290,12 +333,18 @@ export default function ProductDetail() {
   const [searchParams] = useSearchParams();
   const editId = searchParams.get('editId');
   const { addItem, updateItem, items } = useCart();
-  const { data: products = [], isLoading } = useShopifyProducts();
+  const { data, isLoading } = useShopifyProducts();
+  const products = data?.display ?? [];
+  const allProducts = data?.all ?? [];
 
   const product = products.find((p) => p.slug === slug);
 
   // Find the cart item being edited (if any)
   const editingItem = editId ? items.find((i) => i.id === editId) : null;
+
+  // Get priority processing price from Shopify
+  const priorityProduct = allProducts.find(p => p.name.toLowerCase().includes("priority processing"));
+  const priorityPrice = priorityProduct?.price ?? 4.99;
 
   if (isLoading) {
     return (
@@ -329,8 +378,8 @@ export default function ProductDetail() {
   const handleCustomizerComplete = (state: CustomizerState) => {
     const basePrice = state.size?.price ?? product.price;
     const padPrice = state.stampPad?.price ?? 0;
-    const priorityPrice = state.priority ? 19 : 0;
-    const total = basePrice + padPrice + priorityPrice;
+    const actualPriorityPrice = state.priority ? priorityPrice : 0;
+    const total = basePrice + padPrice + actualPriorityPrice;
     const variantId = state.size?.variantId ?? product.defaultVariantId;
 
     const itemData = {
@@ -424,7 +473,7 @@ export default function ProductDetail() {
               {product.description}
             </p>
 
-            {/* Features — only shown when product has features */}
+            {/* Features */}
             {product.features && product.features.length > 0 && (
               <div className="mb-6">
                 <h3 className="font-display font-semibold text-base text-foreground mb-3">What's Included</h3>
@@ -449,6 +498,7 @@ export default function ProductDetail() {
             {/* Customizer */}
             <Customizer
               product={product}
+              allProducts={allProducts}
               onComplete={handleCustomizerComplete}
               isEditing={!!editingItem}
               initialState={editingItem ? {
@@ -457,7 +507,7 @@ export default function ProductDetail() {
                   : null,
                 inkColor: editingItem.inkColor ?? null,
                 stampPad: editingItem.stampPad
-                  ? { label: editingItem.stampPad, price: editingItem.stampPad.includes('Matching') ? 15 : 8 }
+                  ? { label: editingItem.stampPad, price: 0 }
                   : null,
                 logo: editingItem.logo ?? null,
                 priority: editingItem.priorityProcessing ?? false,

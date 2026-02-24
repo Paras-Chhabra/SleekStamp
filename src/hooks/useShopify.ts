@@ -126,7 +126,7 @@ function mapShopifyProduct(node: any): Product {
 export function useShopifyProducts() {
   return useQuery({
     queryKey: ['shopify-products'],
-    queryFn: async (): Promise<Product[]> => {
+    queryFn: async (): Promise<{ display: Product[]; all: Product[] }> => {
       const response = await shopifyFetch({ query: GET_PRODUCTS_QUERY });
 
       if (response.status !== 200 || response.error) {
@@ -134,18 +134,19 @@ export function useShopifyProducts() {
       }
 
       const productsData = response.body.data?.products?.edges || [];
-      return productsData
-        .map((edge: any) => mapShopifyProduct(edge.node))
-        .filter((p: Product) => !p.name.toLowerCase().includes('priority processing'));
+      const allProducts = productsData.map((edge: any) => mapShopifyProduct(edge.node));
+      const displayProducts = allProducts.filter((p: Product) => !p.name.toLowerCase().includes('priority processing'));
+      return { display: displayProducts, all: allProducts };
     },
+    select: undefined,
   });
 }
 
 export function useShopifyProduct(slug: string) {
-  const { data: products, isLoading, error } = useShopifyProducts();
+  const { data, isLoading, error } = useShopifyProducts();
 
   return {
-    product: products?.find((p) => p.slug === slug),
+    product: data?.display?.find((p) => p.slug === slug),
     isLoading,
     error,
   };
