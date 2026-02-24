@@ -1,13 +1,13 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Trash2, Plus, Minus, ArrowRight, ArrowLeft, ShoppingBag, ShoppingCart, Pencil } from "lucide-react";
+import { Trash2, Plus, Minus, ArrowRight, ArrowLeft, ShoppingBag, ShoppingCart, Pencil, Upload } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { useCart } from "@/context/CartContext";
 import { createShopifyCheckout } from "@/utils/shopify";
 
 export default function Cart() {
-  const { items, total, itemCount, removeItem, updateQuantity } = useCart();
+  const { items, total, itemCount, removeItem, updateQuantity, updateItem } = useCart();
   const navigate = useNavigate();
   const [isCheckingOut, setIsCheckingOut] = useState(false);
 
@@ -146,6 +146,42 @@ export default function Cart() {
               </div>
             ))}
 
+            {/* Logo upload requirement for skipped items */}
+            {items.some((item) => item.logo === 'skipped') && (
+              <div className="bg-amber-50 border border-amber-200 rounded-xl p-5">
+                <h3 className="font-body font-semibold text-sm text-foreground mb-3 flex items-center gap-2">
+                  <Upload className="w-4 h-4 text-amber-600" />
+                  Upload Your Design
+                </h3>
+                <p className="text-xs text-muted-foreground font-body mb-4">
+                  Please upload your logo/design for the following items before checking out:
+                </p>
+                <div className="space-y-3">
+                  {items.filter((item) => item.logo === 'skipped').map((item) => (
+                    <div key={item.id} className="flex items-center gap-3 bg-white rounded-lg border border-border p-3">
+                      <img src={item.image} alt={item.name} className="w-10 h-10 rounded object-cover shrink-0" />
+                      <div className="flex-1 min-w-0">
+                        <p className="text-sm font-body font-medium text-foreground truncate">{item.name}</p>
+                      </div>
+                      <label className="cursor-pointer inline-flex items-center gap-1.5 px-3 py-1.5 bg-foreground text-white text-xs font-body font-semibold rounded-lg hover:opacity-90 transition-smooth">
+                        <Upload className="w-3 h-3" />
+                        Upload
+                        <input
+                          type="file"
+                          accept="image/*"
+                          className="hidden"
+                          onChange={(e) => {
+                            const file = e.target.files?.[0];
+                            if (file) updateItem(item.id, { logo: file });
+                          }}
+                        />
+                      </label>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
             {/* Free shipping progress */}
             {shipping > 0 && (
               <div className="bg-cream rounded-xl border border-border p-4">
@@ -200,11 +236,13 @@ export default function Cart() {
                     setIsCheckingOut(false);
                   }
                 }}
-                disabled={isCheckingOut || items.length === 0}
+                disabled={isCheckingOut || items.length === 0 || items.some((item) => item.logo === 'skipped')}
                 className="w-full flex items-center justify-center gap-2 bg-gold text-accent-foreground py-3.5 rounded-xl font-body font-semibold text-base hover:bg-gold-dark transition-smooth disabled:opacity-50"
               >
                 {isCheckingOut ? (
                   "Preparing Checkout..."
+                ) : items.some((item) => item.logo === 'skipped') ? (
+                  <>Upload all designs to continue</>
                 ) : (
                   <>Proceed to Checkout <ArrowRight className="w-4 h-4" /></>
                 )}

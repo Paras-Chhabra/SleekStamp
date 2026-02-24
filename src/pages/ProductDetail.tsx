@@ -67,6 +67,7 @@ function Customizer({
     { color: "Black", label: "Top Seller" },
     { color: "Blue", label: "Top Seller" },
     { color: "Red", label: null },
+    { color: "Green", label: null },
   ];
 
   const [state, setState] = useState<CustomizerState>({
@@ -155,6 +156,15 @@ function Customizer({
               </label>
             )}
           </div>
+          {/* Skip for now */}
+          {!state.logo && (
+            <button
+              onClick={() => setState((s) => ({ ...s, logo: 'skipped' as any }))}
+              className="mt-3 text-sm text-muted-foreground font-body hover:text-foreground transition-smooth underline underline-offset-2"
+            >
+              Skip for now — you can upload later in cart
+            </button>
+          )}
         </div>
       )}
 
