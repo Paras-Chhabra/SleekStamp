@@ -52,11 +52,11 @@ export default function Index() {
             alt="Premium custom stamps on desk"
             className="w-full h-full object-cover"
           />
-          <div className="absolute inset-0 bg-navy/40 backdrop-blur-[2px]" />
+          <div className="absolute inset-0 bg-cream/40 backdrop-blur-[2px]" />
         </div>
 
         <div className="relative container mx-auto px-4 py-20 flex justify-center">
-          <div className="max-w-3xl w-full bg-navy/80 backdrop-blur-md border border-white/10 p-10 md:p-14 rounded-[2rem] shadow-2xl text-center animate-fade-in">
+          <div className="max-w-3xl w-full bg-white/90 backdrop-blur-md border border-border p-10 md:p-14 rounded-[2rem] shadow-2xl text-center animate-fade-in">
             <div className="inline-flex items-center justify-center gap-2 bg-gold/20 border border-gold/40 rounded-full px-4 py-1.5 mb-6">
               <span className="w-2 h-2 rounded-full bg-gold animate-pulse" />
               <span className="text-gold text-sm font-body font-medium tracking-wide">
@@ -64,13 +64,13 @@ export default function Index() {
               </span>
             </div>
 
-            <h1 className="font-display text-5xl md:text-6xl font-bold text-primary-foreground leading-tight mb-6">
+            <h1 className="font-display text-5xl md:text-6xl font-bold text-foreground leading-tight mb-6">
               Custom Stamps
               <br />
-              <span className="text-gold">Crafted for You</span>
+              <span className="text-foreground/80">Crafted for You</span>
             </h1>
 
-            <p className="text-lg text-primary-foreground/90 font-body mb-10 max-w-2xl mx-auto leading-relaxed">
+            <p className="text-lg text-foreground/80 font-body mb-10 max-w-2xl mx-auto leading-relaxed">
               From self-inking business stamps to notary seals — precision-made, fast-shipped, and guaranteed to impress. Trusted by 45,000+ businesses.
             </p>
 
@@ -85,14 +85,14 @@ export default function Index() {
             </div>
 
             <div className="mt-10 flex flex-wrap items-center justify-center gap-x-8 gap-y-3">
-              <div className="text-primary-foreground/90 text-sm font-body flex items-center gap-2">
-                <span className="text-gold font-bold">✓</span> Free artwork setup
+              <div className="text-foreground/80 text-sm font-body flex items-center gap-2">
+                <span className="text-foreground font-bold">✓</span> Free artwork setup
               </div>
-              <div className="text-primary-foreground/90 text-sm font-body flex items-center gap-2">
-                <span className="text-gold font-bold">✓</span> Free proof before printing
+              <div className="text-foreground/80 text-sm font-body flex items-center gap-2">
+                <span className="text-foreground font-bold">✓</span> Free proof before printing
               </div>
-              <div className="text-primary-foreground/90 text-sm font-body flex items-center gap-2">
-                <span className="text-gold font-bold">✓</span> 100% satisfaction guarantee
+              <div className="text-foreground/80 text-sm font-body flex items-center gap-2">
+                <span className="text-foreground font-bold">✓</span> 100% satisfaction guarantee
               </div>
             </div>
           </div>
@@ -135,8 +135,8 @@ export default function Index() {
                 to={`/products?category=${cat.id}`}
                 className="group bg-card rounded-xl p-5 border border-border hover:border-gold/50 hover:shadow-hover transition-smooth text-center"
               >
-                <div className="w-10 h-10 bg-navy rounded-lg mx-auto mb-3 flex items-center justify-center group-hover:bg-gold transition-smooth">
-                  <span className="text-primary-foreground group-hover:text-accent-foreground font-display font-bold text-sm transition-smooth">
+                <div className="w-10 h-10 bg-secondary rounded-lg mx-auto mb-3 flex items-center justify-center group-hover:bg-foreground transition-smooth">
+                  <span className="text-foreground group-hover:text-white font-display font-bold text-sm transition-smooth">
                     {cat.name.charAt(0)}
                   </span>
                 </div>
@@ -164,7 +164,7 @@ export default function Index() {
             </div>
             <Link
               to="/products"
-              className="hidden sm:inline-flex items-center gap-1.5 text-navy font-body font-semibold text-sm hover:text-gold transition-smooth"
+              className="hidden sm:inline-flex items-center gap-1.5 text-foreground font-body font-semibold text-sm hover:underline transition-smooth"
             >
               View All <ArrowRight className="w-4 h-4" />
             </Link>
@@ -185,7 +185,7 @@ export default function Index() {
           <div className="mt-8 text-center sm:hidden">
             <Link
               to="/products"
-              className="inline-flex items-center gap-2 border border-navy text-navy px-6 py-2.5 rounded-lg font-body font-semibold text-sm hover:bg-navy hover:text-primary-foreground transition-smooth"
+              className="inline-flex items-center gap-2 border border-foreground text-foreground px-6 py-2.5 rounded-lg font-body font-semibold text-sm hover:bg-foreground hover:text-white transition-smooth"
             >
               View All Products <ArrowRight className="w-4 h-4" />
             </Link>
@@ -194,11 +194,11 @@ export default function Index() {
       </section>
 
       {/* How It Works */}
-      <section className="py-16 bg-navy text-primary-foreground">
+      <section className="py-16 bg-cream text-foreground border-y border-border">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="font-display text-3xl font-bold mb-3">How It Works</h2>
-            <p className="text-primary-foreground/70 font-body max-w-md mx-auto">
+            <p className="text-muted-foreground font-body max-w-md mx-auto">
               Ordering a custom stamp has never been easier.
             </p>
           </div>
@@ -212,13 +212,13 @@ export default function Index() {
             ].map(({ step, title, desc }, i) => (
               <div key={step} className="text-center relative">
                 {i < 3 && (
-                  <div className="hidden md:block absolute top-6 left-[calc(50%+36px)] right-[calc(-50%+36px)] h-px bg-gold/30" />
+                  <div className="hidden md:block absolute top-6 left-[calc(50%+36px)] right-[calc(-50%+36px)] h-px bg-border" />
                 )}
-                <div className="w-12 h-12 bg-gold rounded-full flex items-center justify-center mx-auto mb-4 font-display font-bold text-lg text-accent-foreground">
+                <div className="w-12 h-12 bg-foreground rounded-full flex items-center justify-center mx-auto mb-4 font-display font-bold text-lg text-white">
                   {step}
                 </div>
                 <h3 className="font-display font-semibold text-base mb-2">{title}</h3>
-                <p className="text-sm text-primary-foreground/70 font-body leading-relaxed">{desc}</p>
+                <p className="text-sm text-muted-foreground font-body leading-relaxed">{desc}</p>
               </div>
             ))}
           </div>
@@ -270,7 +270,7 @@ export default function Index() {
           </p>
           <Link
             to="/products"
-            className="inline-flex items-center gap-2 bg-navy text-primary-foreground px-8 py-3.5 rounded-lg font-body font-semibold text-base hover:bg-navy-dark transition-smooth shadow-lg"
+            className="inline-flex items-center gap-2 bg-foreground text-white px-8 py-3.5 rounded-lg font-body font-semibold text-base hover:bg-foreground/90 transition-smooth shadow-lg"
           >
             Browse All Stamps <ArrowRight className="w-4 h-4" />
           </Link>
