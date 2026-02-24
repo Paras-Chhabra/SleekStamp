@@ -52,11 +52,11 @@ export default function Index() {
             alt="Premium custom stamps on desk"
             className="w-full h-full object-cover"
           />
-          <div className="absolute inset-0 bg-cream/40 backdrop-blur-[2px]" />
+          <div className="absolute inset-0 bg-black/10" />
         </div>
 
         <div className="relative container mx-auto px-4 py-20 flex justify-center">
-          <div className="max-w-3xl w-full bg-[#0f2640]/90 backdrop-blur-md border border-white/10 p-10 md:p-14 rounded-[2rem] shadow-2xl text-center animate-fade-in">
+          <div className="max-w-3xl w-full bg-[#162233]/95 backdrop-blur-md border border-white/10 p-10 md:p-14 rounded-[2rem] shadow-2xl text-center animate-fade-in">
             <div className="inline-flex items-center justify-center gap-2 bg-gold/20 border border-gold/40 rounded-full px-4 py-1.5 mb-6">
               <span className="w-2 h-2 rounded-full bg-gold animate-pulse" />
               <span className="text-gold text-sm font-body font-medium tracking-wide">
