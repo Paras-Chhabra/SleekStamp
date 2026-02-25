@@ -90,16 +90,32 @@ function Customizer({
   // ── Filter stamp pads based on selected size ──
   // Stamp sizes and pads are both sorted by price (ascending).
   // Map by position: 1st size → 1st pad, 2nd size → 2nd pad, etc.
+  // Exception: For M-4inch (1st size), show L-Stamp pad.
   // If user picked the "All Sizes" bundle or no size, show all pads.
   const filteredStampPadOptions = (() => {
     if (!state.size || !product.sizes) return stampPadOptions;
     // Find the index of the selected size in the product's sizes array
     const selectedIndex = product.sizes.findIndex(s => s.label === state.size?.label);
+
     // If "All Sizes" variant (usually last/extra), or not found, show all pads
     if (selectedIndex < 0 || state.size.label?.toLowerCase().includes('all')) return stampPadOptions;
+
+    // Find matching pad index
+    let padIndex = selectedIndex;
+
+    // Hardcoded exception: M-4inch (index 0) gets L-Stamp Pad
+    if (selectedIndex === 0) {
+      const lPadIndex = stampPadOptions.findIndex(p => p.sizeLabel === 'L' || p.label.includes('L -'));
+      if (lPadIndex >= 0) {
+        padIndex = lPadIndex;
+      } else if (stampPadOptions.length > 1) {
+        padIndex = 1; // Assuming 2nd pad by price is L
+      }
+    }
+
     // Return only the matching pad by index, or all if index out of range
-    if (selectedIndex < stampPadOptions.length) {
-      return [stampPadOptions[selectedIndex]];
+    if (padIndex >= 0 && padIndex < stampPadOptions.length) {
+      return [stampPadOptions[padIndex]];
     }
     return stampPadOptions;
   })();
