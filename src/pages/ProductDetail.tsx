@@ -69,6 +69,7 @@ function Customizer({
     { color: "Blue", label: "Top Seller" },
     { color: "Red", label: null },
     { color: "Green", label: null },
+    { color: "Purple", label: null },
   ];
 
   const [state, setState] = useState<CustomizerState>({
@@ -97,8 +98,15 @@ function Customizer({
     // Find the index of the selected size in the product's sizes array
     const selectedIndex = product.sizes.findIndex(s => s.label === state.size?.label);
 
-    // If "All Sizes" variant (usually last/extra), or not found, show all pads
-    if (selectedIndex < 0 || state.size.label?.toLowerCase().includes('all')) return stampPadOptions;
+    // If "All Sizes" variant (usually last/extra), show XL pad (index 2 or find by name)
+    if (state.size.label?.toLowerCase().includes('all')) {
+      const xlPadIndex = stampPadOptions.findIndex(p => p.sizeLabel === 'XL' || p.label.includes('XL -'));
+      if (xlPadIndex >= 0) return [stampPadOptions[xlPadIndex]];
+      if (stampPadOptions.length > 2) return [stampPadOptions[2]]; // Fallback to 3rd pad
+      return stampPadOptions;
+    }
+
+    if (selectedIndex < 0) return stampPadOptions;
 
     // Find matching pad index
     let padIndex = selectedIndex;
