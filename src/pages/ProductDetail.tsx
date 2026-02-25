@@ -88,17 +88,20 @@ function Customizer({
   const total = basePrice + padPrice + actualPriorityPrice;
 
   // ── Filter stamp pads based on selected size ──
+  // Stamp sizes and pads are both sorted by price (ascending).
+  // Map by position: 1st size → 1st pad, 2nd size → 2nd pad, etc.
+  // If user picked the "All Sizes" bundle or no size, show all pads.
   const filteredStampPadOptions = (() => {
-    if (!state.size) return stampPadOptions; // show all when no size selected
-    const sizeName = state.size.label?.toLowerCase() || '';
-    const sizeStr = state.size.size?.toLowerCase() || '';
-    // Extract the inch number from the selected size (e.g. "4" from "M - 4 Inch")
-    const inchMatch = (sizeName + ' ' + sizeStr).match(/(\d+)/);
-    if (!inchMatch) return stampPadOptions;
-    const inch = inchMatch[1]; // e.g. "4", "6", "8"
-    // Filter stamp pads whose name contains that inch number
-    const filtered = stampPadOptions.filter(p => p.label.includes(inch));
-    return filtered.length > 0 ? filtered : stampPadOptions; // fallback to all if no match
+    if (!state.size || !product.sizes) return stampPadOptions;
+    // Find the index of the selected size in the product's sizes array
+    const selectedIndex = product.sizes.findIndex(s => s.label === state.size?.label);
+    // If "All Sizes" variant (usually last/extra), or not found, show all pads
+    if (selectedIndex < 0 || state.size.label?.toLowerCase().includes('all')) return stampPadOptions;
+    // Return only the matching pad by index, or all if index out of range
+    if (selectedIndex < stampPadOptions.length) {
+      return [stampPadOptions[selectedIndex]];
+    }
+    return stampPadOptions;
   })();
 
   // Check if upload is required
@@ -118,7 +121,7 @@ function Customizer({
             {product.sizes!.map((sz) => (
               <button
                 key={sz.label}
-                onClick={() => setState((s) => ({ ...s, size: sz }))}
+                onClick={() => setState((s) => ({ ...s, size: sz, stampPad: null }))}
                 className={`p-4 rounded-xl border-2 text-center transition-smooth
                   ${state.size?.label === sz.label
                     ? "border-foreground bg-blue-50"
