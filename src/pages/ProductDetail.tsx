@@ -89,18 +89,16 @@ function Customizer({
 
   // ── Filter stamp pads based on selected size ──
   const filteredStampPadOptions = (() => {
-    if (!state.size) return stampPadOptions;
-    const sizeLabel = state.size.label?.toLowerCase() || '';
-    if (sizeLabel.includes('4')) {
-      return stampPadOptions.filter(p => p.sizeLabel === 'L' && p.label.toLowerCase().includes('4'));
-    }
-    if (sizeLabel.includes('6')) {
-      return stampPadOptions.filter(p => p.sizeLabel === 'L' && p.label.toLowerCase().includes('6'));
-    }
-    if (sizeLabel.includes('8')) {
-      return stampPadOptions.filter(p => p.sizeLabel === 'XL');
-    }
-    return stampPadOptions;
+    if (!state.size) return stampPadOptions; // show all when no size selected
+    const sizeName = state.size.label?.toLowerCase() || '';
+    const sizeStr = state.size.size?.toLowerCase() || '';
+    // Extract the inch number from the selected size (e.g. "4" from "M - 4 Inch")
+    const inchMatch = (sizeName + ' ' + sizeStr).match(/(\d+)/);
+    if (!inchMatch) return stampPadOptions;
+    const inch = inchMatch[1]; // e.g. "4", "6", "8"
+    // Filter stamp pads whose name contains that inch number
+    const filtered = stampPadOptions.filter(p => p.label.includes(inch));
+    return filtered.length > 0 ? filtered : stampPadOptions; // fallback to all if no match
   })();
 
   // Check if upload is required

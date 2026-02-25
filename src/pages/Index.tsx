@@ -52,7 +52,7 @@ export default function Index() {
             alt="Premium custom stamps on desk"
             className="w-full h-full object-cover"
           />
-          <div className="absolute inset-0 bg-black/20" />
+          <div className="absolute inset-0 bg-black/20 backdrop-blur-[1px]" />
         </div>
 
         <div className="relative container mx-auto px-4 py-20 flex justify-center">
