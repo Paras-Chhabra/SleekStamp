@@ -52,11 +52,11 @@ export default function Index() {
             alt="Premium custom stamps on desk"
             className="w-full h-full object-cover"
           />
-          <div className="absolute inset-0 bg-black/10" />
+          <div className="absolute inset-0 bg-black/20" />
         </div>
 
         <div className="relative container mx-auto px-4 py-20 flex justify-center">
-          <div className="max-w-3xl w-full bg-[#162233]/95 backdrop-blur-md border border-white/10 p-10 md:p-14 rounded-[2rem] shadow-2xl text-center animate-fade-in">
+          <div className="max-w-3xl w-full bg-[#1a2d47]/95 backdrop-blur-md border border-white/10 p-10 md:p-14 rounded-[2rem] shadow-2xl text-center animate-fade-in">
             <div className="inline-flex items-center justify-center gap-2 bg-gold/20 border border-gold/40 rounded-full px-4 py-1.5 mb-6">
               <span className="w-2 h-2 rounded-full bg-gold animate-pulse" />
               <span className="text-gold text-sm font-body font-medium tracking-wide">
@@ -67,7 +67,7 @@ export default function Index() {
             <h1 className="font-display text-5xl md:text-6xl font-bold text-white leading-tight mb-6">
               Custom Stamps
               <br />
-              <span className="text-white/80">Crafted for You</span>
+              <span className="text-gold italic">Crafted for You</span>
             </h1>
 
             <p className="text-lg text-white/80 font-body mb-10 max-w-2xl mx-auto leading-relaxed">
@@ -86,13 +86,13 @@ export default function Index() {
 
             <div className="mt-10 flex flex-wrap items-center justify-center gap-x-8 gap-y-3">
               <div className="text-white/80 text-sm font-body flex items-center gap-2">
-                <span className="text-white font-bold">✓</span> Free artwork setup
+                <span className="text-blue-400 font-bold">✓</span> Free artwork setup
               </div>
               <div className="text-white/80 text-sm font-body flex items-center gap-2">
-                <span className="text-white font-bold">✓</span> Free proof before printing
+                <span className="text-blue-400 font-bold">✓</span> Free proof before printing
               </div>
               <div className="text-white/80 text-sm font-body flex items-center gap-2">
-                <span className="text-white font-bold">✓</span> 100% satisfaction guarantee
+                <span className="text-blue-400 font-bold">✓</span> 100% satisfaction guarantee
               </div>
             </div>
           </div>

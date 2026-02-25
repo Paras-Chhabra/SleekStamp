@@ -1,11 +1,12 @@
 import { useState } from "react";
 import { useParams, Link, useNavigate, useSearchParams } from "react-router-dom";
-import { Star, ChevronRight, Check, ArrowLeft, ShoppingCart, Zap, Upload } from "lucide-react";
+import { Star, ChevronRight, Check, ArrowLeft, ShoppingCart, Zap, Upload, ArrowRight } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { products as hardcodedProducts, Product } from "@/data/products";
 import { useShopifyProducts } from "@/hooks/useShopify";
 import { useCart } from "@/context/CartContext";
+import { createShopifyCheckout } from "@/utils/shopify";
 
 // ── Single-Page Customizer ────────────────────────────────────────────────────
 
@@ -79,11 +80,32 @@ function Customizer({
   });
 
   const [selectedInkBottle, setSelectedInkBottle] = useState<string | null>(null);
+  const [isBuying, setIsBuying] = useState(false);
 
   const basePrice = state.size?.price ?? product.price;
   const padPrice = state.stampPad?.price ?? 0;
   const actualPriorityPrice = state.priority ? priorityPrice : 0;
   const total = basePrice + padPrice + actualPriorityPrice;
+
+  // ── Filter stamp pads based on selected size ──
+  const filteredStampPadOptions = (() => {
+    if (!state.size) return stampPadOptions;
+    const sizeLabel = state.size.label?.toLowerCase() || '';
+    if (sizeLabel.includes('4')) {
+      return stampPadOptions.filter(p => p.sizeLabel === 'L' && p.label.toLowerCase().includes('4'));
+    }
+    if (sizeLabel.includes('6')) {
+      return stampPadOptions.filter(p => p.sizeLabel === 'L' && p.label.toLowerCase().includes('6'));
+    }
+    if (sizeLabel.includes('8')) {
+      return stampPadOptions.filter(p => p.sizeLabel === 'XL');
+    }
+    return stampPadOptions;
+  })();
+
+  // Check if upload is required
+  const needsLogo = isCustomStamp || product.category === 'face-stamps' || product.category === 'wooden-stamps';
+  const hasValidLogo = state.logo instanceof File;
 
   /* ── Section Number Counter ── */
   let sectionNum = 0;
@@ -119,7 +141,7 @@ function Customizer({
       {/* ── 2. Upload Design ── */}
       {(isCustomStamp || product.category === "face-stamps" || product.category === "wooden-stamps") && (
         <div>
-          <h3 className="font-display text-lg font-bold text-foreground mb-4">{++sectionNum}. Upload Design <span className="text-muted-foreground font-body text-sm font-normal">(Optional)</span></h3>
+          <h3 className="font-display text-lg font-bold text-foreground mb-4">{++sectionNum}. Upload Your Design <span className="text-red-500">*</span></h3>
           <div className="border-2 border-dashed border-border rounded-xl bg-gray-50 p-8 text-center hover:border-foreground/30 transition-smooth">
             <input
               type="file"
@@ -178,7 +200,7 @@ function Customizer({
           <div className="mb-5">
             <h4 className="font-body font-medium text-sm text-foreground mb-3">Stamp Pad</h4>
             <div className="border border-border rounded-xl divide-y divide-border bg-white">
-              {stampPadOptions.map((pad) => {
+              {filteredStampPadOptions.map((pad) => {
                 const isSelected = state.stampPad?.label === pad.label;
                 return (
                   <div
@@ -311,18 +333,58 @@ function Customizer({
         </div>
       )}
 
-      {/* ── Add to Cart (no duplicate upload section) ── */}
+      {/* ── Order Summary ── */}
       <div className="pt-4 border-t border-border">
+        <h3 className="font-display text-lg font-bold text-foreground mb-3">Order Summary</h3>
+        <div className="bg-gray-50 rounded-xl border border-border p-4 mb-4 space-y-2">
+          <div className="flex justify-between text-sm font-body">
+            <span className="text-muted-foreground">{product.name}{state.size ? ` (${state.size.size})` : ''}</span>
+            <span className="font-medium">${basePrice.toFixed(2)}</span>
+          </div>
+          {state.stampPad && (
+            <div className="flex justify-between text-sm font-body">
+              <span className="text-muted-foreground">Stamp Pad – {state.stampPad.label}</span>
+              <span className="font-medium">+${padPrice.toFixed(2)}</span>
+            </div>
+          )}
+          {state.priority && (
+            <div className="flex justify-between text-sm font-body">
+              <span className="text-muted-foreground">Priority Processing</span>
+              <span className="font-medium">+${actualPriorityPrice.toFixed(2)}</span>
+            </div>
+          )}
+          <div className="border-t border-border pt-2 flex justify-between font-body font-bold text-base">
+            <span>Total</span>
+            <span>${total.toFixed(2)}</span>
+          </div>
+        </div>
+
+        {/* Warning if logo not uploaded */}
+        {needsLogo && !hasValidLogo && (
+          <div className="mb-3 p-3 bg-red-50 border border-red-200 rounded-lg text-sm text-red-700 font-body">
+            ⚠️ Please upload your design before proceeding.
+          </div>
+        )}
+
         <button
-          onClick={() => {
-            // Auto-mark logo as skipped if user didn't upload one
-            const finalState = (!state.logo && isCustomStamp) ? { ...state, logo: 'skipped' as any } : state;
-            onComplete(finalState);
+          onClick={async () => {
+            try {
+              setIsBuying(true);
+              onComplete(state);
+            } catch (e: any) {
+              console.error(e);
+              alert(e.message || 'Failed to create checkout. Please try again.');
+              setIsBuying(false);
+            }
           }}
-          className="w-full bg-foreground text-white py-4 rounded-xl font-body font-semibold text-base hover:opacity-90 transition-smooth flex items-center justify-center gap-2"
+          disabled={isBuying || (needsLogo && !hasValidLogo)}
+          className="w-full bg-gold text-accent-foreground py-4 rounded-xl font-body font-semibold text-base hover:bg-gold-dark transition-smooth disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center gap-2"
         >
-          <ShoppingCart className="w-4 h-4" />
-          {isEditing ? `Save Changes — $${total.toFixed(2)}` : `Add to Cart — $${total.toFixed(2)}`}
+          {isBuying ? (
+            'Preparing Checkout...'
+          ) : (
+            <><ArrowRight className="w-4 h-4" /> Buy Now — ${total.toFixed(2)}</>
+          )}
         </button>
       </div>
     </div>
@@ -379,35 +441,53 @@ export default function ProductDetail() {
     );
   }
 
-  const handleCustomizerComplete = (state: CustomizerState) => {
-    const basePrice = state.size?.price ?? product.price;
-    const padPrice = state.stampPad?.price ?? 0;
-    const actualPriorityPrice = state.priority ? priorityPrice : 0;
-    const total = basePrice + padPrice + actualPriorityPrice;
+  const handleCustomizerComplete = async (state: CustomizerState) => {
     const variantId = state.size?.variantId ?? product.defaultVariantId;
 
-    const itemData = {
-      productId: product.id,
-      slug: product.slug,
-      name: product.name,
-      image: product.image,
-      price: total,
-      quantity: editingItem?.quantity ?? 1,
-      size: state.size?.size,
-      inkColor: state.inkColor ?? undefined,
+    // Build line items for direct Shopify checkout
+    const lineItems: any[] = [];
+
+    // Main product
+    const customAttributes: { key: string; value: string }[] = [];
+    if (state.stampPad) customAttributes.push({ key: "Stamp Pad", value: state.stampPad.label });
+    if (state.priority) customAttributes.push({ key: "Priority Processing", value: "Yes" });
+    if (state.inkColor) customAttributes.push({ key: "Ink Color", value: state.inkColor });
+    if (state.logo && typeof state.logo === "string") customAttributes.push({ key: "Logo", value: "Uploaded" });
+
+    lineItems.push({
+      variantId,
+      quantity: 1,
       stampPad: state.stampPad?.label,
       priorityProcessing: state.priority,
       logo: state.logo,
-      variantId,
-    };
+    });
 
-    if (editId && editingItem) {
-      updateItem(editId, itemData);
-    } else {
-      addItem(itemData);
+    // Add stamp pad as separate line item
+    if (state.stampPad?.variantId) {
+      lineItems.push({
+        variantId: state.stampPad.variantId,
+        quantity: 1,
+      });
     }
 
-    navigate("/cart");
+    // Add priority processing as separate line item
+    if (state.priority) {
+      const priorityProduct = allProducts.find(p => p.name.toLowerCase().includes("priority processing"));
+      if (priorityProduct?.defaultVariantId) {
+        lineItems.push({
+          variantId: priorityProduct.defaultVariantId,
+          quantity: 1,
+        });
+      }
+    }
+
+    try {
+      const checkoutUrl = await createShopifyCheckout(lineItems);
+      window.location.href = checkoutUrl;
+    } catch (e: any) {
+      console.error(e);
+      alert(e.message || "Failed to create checkout. Please try again.");
+    }
   };
 
   const relatedProducts = products
