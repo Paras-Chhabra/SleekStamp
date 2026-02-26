@@ -59,11 +59,10 @@ export default function Navbar() {
               ))}
             </nav>
 
-            {/* Right Actions */}
             <div className="flex items-center gap-3">
               <Link
                 to="/cart"
-                className="relative flex items-center gap-1.5 bg-navy text-primary-foreground px-5 py-2.5 rounded font-body text-base font-medium hover:bg-navy-light transition-smooth"
+                className="relative flex items-center gap-1.5 bg-white text-navy px-5 py-2.5 rounded-full font-body text-base font-medium border border-border hover:bg-cream transition-smooth shadow-sm"
               >
                 <ShoppingCart className="w-4 h-4" />
                 <span className="hidden sm:inline">Cart</span>

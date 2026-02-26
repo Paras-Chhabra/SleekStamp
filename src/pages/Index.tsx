@@ -1,5 +1,7 @@
 import { Link } from "react-router-dom"; // rebuild trigger
-import { Star, ArrowRight, Shield, Truck, Clock, Award } from "lucide-react";
+import { useCallback } from "react";
+import useEmblaCarousel from "embla-carousel-react";
+import { Star, ArrowRight, Shield, Truck, Clock, Award, ChevronLeft, ChevronRight } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import ProductCard from "@/components/ProductCard";
@@ -50,6 +52,60 @@ const testimonials = [
     role: "Coffee Shop Owner",
     rating: 5,
     text: "Stamping hundreds of cups a day, and the impression is still as crisp as the first one. Huge money saver vs printing.",
+  },
+  {
+    name: "Rachel B.",
+    role: "Graphic Designer",
+    rating: 5,
+    text: "I order these for my clients' branding packages. They always look stunning and professional.",
+  },
+  {
+    name: "Tom W.",
+    role: "Restaurant Manager",
+    rating: 5,
+    text: "We use our stamp on every takeout bag. Looks way better than a sticker and is extremely cost-effective.",
+  },
+  {
+    name: "Amanda C.",
+    role: "Teacher",
+    rating: 5,
+    text: "Got a custom face stamp for grading papers. The kids love it! The ink is very consistent.",
+  },
+  {
+    name: "Chris L.",
+    role: "Photographer",
+    rating: 5,
+    text: "Perfect for stamping the back of my photo prints. The 4-inch stamp captures all my fine logo details perfectly.",
+  },
+  {
+    name: "Jessica P.",
+    role: "Boutique Owner",
+    rating: 5,
+    text: "A game changer for my custom packaging. Super fast turnaround and the wood quality is superb.",
+  },
+  {
+    name: "Daniel F.",
+    role: "Notary Public",
+    rating: 5,
+    text: "Crisp and clear every time. This is my go-to shop for notary and signature stamps.",
+  },
+  {
+    name: "Emily W.",
+    role: "Etsy Seller",
+    rating: 5,
+    text: "I was struggling with expensive custom boxes. Now I buy plain boxes and stamp my logo. Looks chic and saves a ton.",
+  },
+  {
+    name: "Mark J.",
+    role: "Gym Owner",
+    rating: 5,
+    text: "Got a massive 8-inch stamp for our promotional material. It's a beast and leaves an incredibly solid impression.",
+  },
+  {
+    name: "Sophie N.",
+    role: "Event Coordinator",
+    rating: 5,
+    text: "Used the custom stamps for event wristbands. Didn't smudge and looked super aesthetic.",
   }
 ];
 
@@ -70,6 +126,16 @@ export default function Index() {
   const { data, isLoading } = useShopifyProducts();
   const products = data?.display ?? [];
   const featuredProducts = products.slice(0, 4);
+
+  const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true, align: "start", dragFree: true });
+
+  const scrollPrev = useCallback(() => {
+    if (emblaApi) emblaApi.scrollPrev();
+  }, [emblaApi]);
+
+  const scrollNext = useCallback(() => {
+    if (emblaApi) emblaApi.scrollNext();
+  }, [emblaApi]);
 
   return (
     <div className="min-h-screen flex flex-col bg-background">
@@ -291,21 +357,42 @@ export default function Index() {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {testimonials.map(({ name, role, rating, text }) => (
-              <div key={name} className="bg-card rounded-xl p-6 border border-border shadow-card">
-                <div className="flex gap-0.5 mb-3">
-                  {Array.from({ length: rating }).map((_, i) => (
-                    <Star key={i} className="w-3.5 h-3.5 fill-gold text-gold" />
-                  ))}
-                </div>
-                <p className="text-sm text-charcoal font-body leading-relaxed mb-4">"{text}"</p>
-                <div>
-                  <p className="font-body font-semibold text-sm text-foreground">{name}</p>
-                  <p className="font-body text-xs text-muted-foreground">{role}</p>
-                </div>
+          <div className="relative">
+            <div className="overflow-hidden cursor-grab active:cursor-grabbing pb-8 -mx-4 px-4 sm:mx-0 sm:px-0" ref={emblaRef}>
+              <div className="flex gap-6">
+                {testimonials.map(({ name, role, rating, text }, index) => (
+                  <div key={index} className="flex-[0_0_85%] md:flex-[0_0_45%] lg:flex-[0_0_30%] min-w-0 bg-card rounded-xl p-6 border border-border shadow-card flex flex-col justify-between">
+                    <div>
+                      <div className="flex gap-0.5 mb-3">
+                        {Array.from({ length: rating }).map((_, i) => (
+                          <Star key={i} className="w-3.5 h-3.5 fill-gold text-gold" />
+                        ))}
+                      </div>
+                      <p className="text-sm text-charcoal font-body leading-relaxed mb-4">"{text}"</p>
+                    </div>
+                    <div>
+                      <p className="font-body font-semibold text-sm text-foreground">{name}</p>
+                      <p className="font-body text-xs text-muted-foreground">{role}</p>
+                    </div>
+                  </div>
+                ))}
               </div>
-            ))}
+            </div>
+
+            <button
+              onClick={scrollPrev}
+              className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-1/2 z-10 w-12 h-12 bg-white rounded-full shadow-md border border-border flex items-center justify-center text-navy hover:bg-cream transition-smooth hidden sm:flex"
+              aria-label="Previous testimonials"
+            >
+              <ChevronLeft className="w-6 h-6" />
+            </button>
+            <button
+              onClick={scrollNext}
+              className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/2 z-10 w-12 h-12 bg-white rounded-full shadow-md border border-border flex items-center justify-center text-navy hover:bg-cream transition-smooth hidden sm:flex"
+              aria-label="Next testimonials"
+            >
+              <ChevronRight className="w-6 h-6" />
+            </button>
           </div>
         </div>
       </section>

@@ -81,7 +81,6 @@ function Customizer({
   });
 
   const [selectedInkBottle, setSelectedInkBottle] = useState<string | null>(null);
-  const [isBuying, setIsBuying] = useState(false);
 
   const basePrice = state.size?.price ?? product.price;
   const padPrice = state.stampPad?.price ?? 0;
@@ -392,24 +391,13 @@ function Customizer({
         )}
 
         <button
-          onClick={async () => {
-            try {
-              setIsBuying(true);
-              onComplete(state);
-            } catch (e: any) {
-              console.error(e);
-              alert(e.message || 'Failed to create checkout. Please try again.');
-              setIsBuying(false);
-            }
+          onClick={() => {
+            onComplete(state);
           }}
-          disabled={isBuying || (needsLogo && !hasValidLogo)}
+          disabled={needsLogo && !hasValidLogo}
           className="w-full bg-gold text-accent-foreground py-4 rounded-xl font-body font-semibold text-base hover:bg-gold-dark transition-smooth disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center gap-2"
         >
-          {isBuying ? (
-            'Preparing Checkout...'
-          ) : (
-            <><ArrowRight className="w-4 h-4" /> Buy Now — ${total.toFixed(2)}</>
-          )}
+          <ShoppingCart className="w-4 h-4" /> Add to Cart — ${total.toFixed(2)}
         </button>
       </div>
     </div>
@@ -466,53 +454,35 @@ export default function ProductDetail() {
     );
   }
 
-  const handleCustomizerComplete = async (state: CustomizerState) => {
+  const handleCustomizerComplete = (state: CustomizerState) => {
+    const basePrice = state.size?.price ?? product.price;
+    const padPrice = state.stampPad?.price ?? 0;
+    const actualPriorityPrice = state.priority ? priorityPrice : 0;
+    const total = basePrice + padPrice + actualPriorityPrice;
     const variantId = state.size?.variantId ?? product.defaultVariantId;
 
-    // Build line items for direct Shopify checkout
-    const lineItems: any[] = [];
-
-    // Main product
-    const customAttributes: { key: string; value: string }[] = [];
-    if (state.stampPad) customAttributes.push({ key: "Stamp Pad", value: state.stampPad.label });
-    if (state.priority) customAttributes.push({ key: "Priority Processing", value: "Yes" });
-    if (state.inkColor) customAttributes.push({ key: "Ink Color", value: state.inkColor });
-    if (state.logo && typeof state.logo === "string") customAttributes.push({ key: "Logo", value: "Uploaded" });
-
-    lineItems.push({
-      variantId,
-      quantity: 1,
+    const itemData = {
+      productId: product.id,
+      slug: product.slug,
+      name: product.name,
+      image: product.image,
+      price: total,
+      quantity: editingItem?.quantity ?? 1,
+      size: state.size?.size,
+      inkColor: state.inkColor ?? undefined,
       stampPad: state.stampPad?.label,
       priorityProcessing: state.priority,
       logo: state.logo,
-    });
+      variantId,
+    };
 
-    // Add stamp pad as separate line item
-    if (state.stampPad?.variantId) {
-      lineItems.push({
-        variantId: state.stampPad.variantId,
-        quantity: 1,
-      });
+    if (editId && editingItem) {
+      updateItem(editId, itemData);
+    } else {
+      addItem(itemData);
     }
 
-    // Add priority processing as separate line item
-    if (state.priority) {
-      const priorityProduct = allProducts.find(p => p.name.toLowerCase().includes("priority processing"));
-      if (priorityProduct?.defaultVariantId) {
-        lineItems.push({
-          variantId: priorityProduct.defaultVariantId,
-          quantity: 1,
-        });
-      }
-    }
-
-    try {
-      const checkoutUrl = await createShopifyCheckout(lineItems);
-      window.location.href = checkoutUrl;
-    } catch (e: any) {
-      console.error(e);
-      alert(e.message || "Failed to create checkout. Please try again.");
-    }
+    navigate("/cart");
   };
 
   const relatedProducts = products
