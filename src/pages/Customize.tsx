@@ -4,7 +4,7 @@ import { useShopifyProducts } from "@/hooks/useShopify";
 import { createShopifyCheckout } from "@/utils/shopify";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import { Upload, Check, ArrowRight, ArrowLeft, Zap } from "lucide-react";
+import { Upload, Check, ArrowRight, ArrowLeft, Zap, Droplets, Shield, Sparkles, Clock, Palette, Box, FileImage, Info, Star } from "lucide-react";
 
 /* ═══════════════════════════════════════════════════════════════════════════
    TYPES
@@ -84,21 +84,34 @@ function ProgressBar({ step, onStepClick }: { step: number; onStepClick: (s: num
    STEP 1 — SIZE
    ═══════════════════════════════════════════════════════════════════════ */
 
+const SIZE_META: Record<string, { icon: React.ReactNode; desc: string }> = {
+    "M - 4 Inch": { icon: <Box className="w-5 h-5" />, desc: "Perfect for envelopes & small boxes" },
+    "L - 6 Inch": { icon: <Box className="w-6 h-6" />, desc: "Best seller — ideal for shipping boxes" },
+    "XL - 8 Inch": { icon: <Box className="w-7 h-7" />, desc: "Maximum impact for large surfaces" },
+};
+
 function StepSize({ variants, selected, onSelect }: { variants: Variant[]; selected: Variant | null; onSelect: (v: Variant) => void }) {
     return (
         <div className="animate-fade-in">
-            <h2 className="font-display text-2xl font-bold mb-2">Select Your Stamp Size</h2>
-            <p className="text-muted-foreground font-body mb-8">Choose the size that fits your branding needs.</p>
+            <div className="flex items-center gap-3 mb-2">
+                <div className="w-8 h-8 rounded-full bg-gold/10 flex items-center justify-center">
+                    <Box className="w-4 h-4 text-gold" />
+                </div>
+                <h2 className="font-display text-2xl font-bold">Select Your Stamp Size</h2>
+            </div>
+            <p className="text-muted-foreground font-body mb-8 ml-11">Choose the size that fits your branding needs.</p>
+
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 {variants.map((v) => {
                     const active = selected?.id === v.id;
+                    const meta = SIZE_META[v.title];
                     return (
                         <button
                             key={v.id}
                             onClick={() => onSelect(v)}
                             disabled={!v.available}
-                            className={`relative p-6 rounded-2xl border-2 text-center transition-all duration-200
-                ${active ? "border-gold bg-gold/5 shadow-lg scale-[1.02]" : "border-border bg-white hover:border-gold/40 hover:shadow-md"}
+                            className={`relative p-6 rounded-2xl border-2 text-center transition-all duration-300
+                ${active ? "border-gold bg-gradient-to-b from-gold/8 to-gold/3 shadow-lg shadow-gold/10 scale-[1.02]" : "border-border bg-white hover:border-gold/40 hover:shadow-md"}
                 ${!v.available ? "opacity-40 cursor-not-allowed" : ""}`}
                         >
                             {active && (
@@ -106,8 +119,10 @@ function StepSize({ variants, selected, onSelect }: { variants: Variant[]; selec
                                     <Check className="w-3.5 h-3.5" />
                                 </div>
                             )}
+                            <div className="text-muted-foreground mb-3 flex justify-center">{meta?.icon}</div>
                             <div className="font-display font-bold text-lg mb-1">{v.title}</div>
-                            <div className="text-2xl font-bold text-gold font-body">${v.price.toFixed(2)}</div>
+                            <div className="text-2xl font-bold text-gold font-body mb-2">${v.price.toFixed(2)}</div>
+                            {meta && <p className="text-xs text-muted-foreground font-body leading-snug">{meta.desc}</p>}
                             {!v.available && <div className="text-xs text-red-500 mt-1">Out of stock</div>}
                         </button>
                     );
@@ -147,25 +162,30 @@ function StepLogo({
 
     return (
         <div className="animate-fade-in">
-            <h2 className="font-display text-2xl font-bold mb-2">Upload Your Design</h2>
-            <p className="text-muted-foreground font-body mb-8">
+            <div className="flex items-center gap-3 mb-2">
+                <div className="w-8 h-8 rounded-full bg-gold/10 flex items-center justify-center">
+                    <FileImage className="w-4 h-4 text-gold" />
+                </div>
+                <h2 className="font-display text-2xl font-bold">Upload Your Design</h2>
+            </div>
+            <p className="text-muted-foreground font-body mb-8 ml-11">
                 Upload your logo, artwork, or signature. We accept PNG, JPG, PDF, AI, and EPS files.
             </p>
 
             {logoPreview ? (
-                <div className="bg-white border border-border rounded-2xl p-8 text-center">
-                    <img src={logoPreview} alt="Logo preview" className="max-h-48 mx-auto rounded-xl mb-4 shadow-sm" />
-                    <p className="text-sm font-body text-muted-foreground mb-3">{logoFile?.name}</p>
+                <div className="bg-gradient-to-b from-cream/50 to-white border border-border rounded-2xl p-8 text-center">
+                    <img src={logoPreview} alt="Logo preview" className="max-h-48 mx-auto rounded-xl mb-4 shadow-md border border-border" />
+                    <p className="text-sm font-body text-muted-foreground mb-4">{logoFile?.name}</p>
                     <div className="flex gap-3 justify-center">
                         <button
                             onClick={() => inputRef.current?.click()}
-                            className="px-4 py-2 rounded-xl border border-border bg-white text-sm font-body font-medium hover:bg-cream transition-smooth"
+                            className="px-5 py-2.5 rounded-xl border border-border bg-white text-sm font-body font-medium hover:bg-cream transition-smooth shadow-sm"
                         >
                             Replace
                         </button>
                         <button
                             onClick={onRemove}
-                            className="px-4 py-2 rounded-xl border border-red-200 text-red-600 bg-red-50 text-sm font-body font-medium hover:bg-red-100 transition-smooth"
+                            className="px-5 py-2.5 rounded-xl border border-red-200 text-red-600 bg-red-50/80 text-sm font-body font-medium hover:bg-red-100 transition-smooth"
                         >
                             Remove
                         </button>
@@ -180,19 +200,23 @@ function StepLogo({
                     onDragLeave={() => setDragOver(false)}
                     onDrop={handleDrop}
                     onClick={() => inputRef.current?.click()}
-                    className={`cursor-pointer border-2 border-dashed rounded-2xl p-12 text-center transition-all duration-200
-            ${dragOver ? "border-gold bg-gold/5 scale-[1.01]" : "border-border bg-white hover:border-gold/40"}`}
+                    className={`cursor-pointer border-2 border-dashed rounded-2xl p-14 text-center transition-all duration-300
+            ${dragOver ? "border-gold bg-gold/5 scale-[1.01]" : "border-gray-300 bg-gradient-to-b from-cream/30 to-white hover:border-gold/50 hover:bg-gold/3"}`}
                 >
-                    <Upload className="w-10 h-10 text-gold mx-auto mb-4" />
+                    <div className="w-16 h-16 rounded-2xl bg-gold/10 flex items-center justify-center mx-auto mb-5">
+                        <Upload className="w-7 h-7 text-gold" />
+                    </div>
                     <p className="font-body font-semibold text-foreground mb-1">
                         Drag & drop your file here
                     </p>
                     <p className="text-sm text-muted-foreground font-body">
-                        or <span className="text-gold font-medium">click to browse</span>
+                        or <span className="text-gold font-medium underline underline-offset-2">click to browse</span>
                     </p>
-                    <p className="text-xs text-muted-foreground font-body mt-3">
-                        Accepted: PNG, JPG, PDF, AI, EPS
-                    </p>
+                    <div className="flex flex-wrap justify-center gap-2 mt-5">
+                        {["PNG", "JPG", "PDF", "AI", "EPS"].map((fmt) => (
+                            <span key={fmt} className="px-2.5 py-1 rounded-md bg-gray-100 text-[10px] font-body font-semibold text-gray-500 uppercase tracking-wider">{fmt}</span>
+                        ))}
+                    </div>
                 </div>
             )}
 
@@ -206,6 +230,14 @@ function StepLogo({
                     if (file) onUpload(file);
                 }}
             />
+
+            {/* Helpful note */}
+            <div className="mt-6 flex items-start gap-3 p-4 rounded-xl bg-blue-50/60 border border-blue-100">
+                <Info className="w-4 h-4 text-blue-500 mt-0.5 flex-shrink-0" />
+                <p className="text-xs font-body text-blue-700 leading-relaxed">
+                    We'll send a free digital proof before production. Don't worry — you can always swap or adjust your design later!
+                </p>
+            </div>
         </div>
     );
 }
@@ -225,35 +257,77 @@ function StepPad({
 }) {
     return (
         <div className="animate-fade-in">
-            <h2 className="font-display text-2xl font-bold mb-2">Add a Stamp Pad?</h2>
-            <p className="text-muted-foreground font-body mb-8">Optional — get a matching ink pad for crisp impressions.</p>
+            <div className="flex items-center gap-3 mb-2">
+                <div className="w-8 h-8 rounded-full bg-gold/10 flex items-center justify-center">
+                    <Droplets className="w-4 h-4 text-gold" />
+                </div>
+                <h2 className="font-display text-2xl font-bold">Add a Stamp Pad?</h2>
+            </div>
+            <p className="text-muted-foreground font-body mb-6 ml-11">Get a matching ink pad for crisp, professional impressions.</p>
+
+            {/* Why add a stamp pad? */}
+            <div className="mb-8 p-5 rounded-2xl bg-gradient-to-br from-amber-50/80 to-orange-50/50 border border-amber-100">
+                <div className="flex items-center gap-2 mb-3">
+                    <Sparkles className="w-4 h-4 text-amber-600" />
+                    <h3 className="font-display font-bold text-sm text-amber-900">Why add a stamp pad?</h3>
+                </div>
+                <ul className="space-y-2.5">
+                    {[
+                        { icon: <Droplets className="w-3.5 h-3.5" />, text: "Pre-inked pads deliver 5,000+ impressions — no re-inking needed" },
+                        { icon: <Shield className="w-3.5 h-3.5" />, text: "Engineered for your stamp size — ensures edge-to-edge coverage" },
+                        { icon: <Star className="w-3.5 h-3.5" />, text: "Water-based, eco-friendly ink that dries in seconds" },
+                        { icon: <Clock className="w-3.5 h-3.5" />, text: "Save time — stamp pad ships ready to use, no setup required" },
+                    ].map(({ icon, text }, i) => (
+                        <li key={i} className="flex items-start gap-2.5">
+                            <span className="text-amber-600 mt-0.5 flex-shrink-0">{icon}</span>
+                            <span className="text-xs font-body text-amber-800 leading-relaxed">{text}</span>
+                        </li>
+                    ))}
+                </ul>
+            </div>
 
             <div className="space-y-3">
-                <button
-                    onClick={() => onToggle(null)}
-                    className={`w-full flex items-center justify-between p-5 rounded-2xl border-2 transition-all duration-200
-            ${!selected ? "border-gold bg-gold/5" : "border-border bg-white hover:border-gold/40"}`}
-                >
-                    <span className="font-body font-medium">No stamp pad needed</span>
-                    <span className="font-body text-sm text-muted-foreground">$0.00</span>
-                </button>
-
+                {/* Stamp pad options FIRST */}
                 {options.map((opt) => {
                     const active = selected?.variantId === opt.variantId;
                     return (
                         <button
                             key={opt.variantId}
                             onClick={() => onToggle(opt)}
-                            className={`w-full flex items-center justify-between p-5 rounded-2xl border-2 transition-all duration-200
-                ${active ? "border-gold bg-gold/5" : "border-border bg-white hover:border-gold/40"}`}
+                            className={`w-full flex items-center justify-between p-5 rounded-2xl border-2 transition-all duration-300
+                ${active ? "border-gold bg-gradient-to-r from-gold/8 to-gold/3 shadow-md shadow-gold/10" : "border-border bg-white hover:border-gold/40 hover:shadow-sm"}`}
                         >
-                            <div className="text-left">
-                                <span className="font-body font-medium block">{opt.name}</span>
+                            <div className="text-left flex items-center gap-3">
+                                <div className={`w-8 h-8 rounded-lg flex items-center justify-center ${active ? "bg-gold/20" : "bg-gray-100"}`}>
+                                    <Droplets className={`w-4 h-4 ${active ? "text-gold" : "text-gray-400"}`} />
+                                </div>
+                                <div>
+                                    <span className="font-body font-medium block">{opt.name}</span>
+                                    <span className="text-[11px] text-muted-foreground font-body">Perfectly sized for your stamp</span>
+                                </div>
                             </div>
-                            <span className="font-body font-bold text-gold">+${opt.price.toFixed(2)}</span>
+                            <div className="flex items-center gap-2">
+                                <span className="font-body font-bold text-gold">+${opt.price.toFixed(2)}</span>
+                                {active && <Check className="w-4 h-4 text-gold" />}
+                            </div>
                         </button>
                     );
                 })}
+
+                {/* "Already have a stamp pad" — LAST */}
+                <button
+                    onClick={() => onToggle(null)}
+                    className={`w-full flex items-center justify-between p-5 rounded-2xl border-2 transition-all duration-300
+            ${!selected ? "border-gold bg-gradient-to-r from-gold/8 to-gold/3 shadow-md shadow-gold/10" : "border-border bg-white hover:border-gold/40"}`}
+                >
+                    <div className="flex items-center gap-3">
+                        <div className={`w-8 h-8 rounded-lg flex items-center justify-center ${!selected ? "bg-gold/20" : "bg-gray-100"}`}>
+                            <Check className={`w-4 h-4 ${!selected ? "text-gold" : "text-gray-400"}`} />
+                        </div>
+                        <span className="font-body font-medium">Already have a stamp pad</span>
+                    </div>
+                    <span className="font-body text-sm text-muted-foreground">$0.00</span>
+                </button>
             </div>
         </div>
     );
@@ -266,26 +340,45 @@ function StepPad({
 function StepInk({ selected, onSelect }: { selected: string; onSelect: (c: string) => void }) {
     return (
         <div className="animate-fade-in">
-            <h2 className="font-display text-2xl font-bold mb-2">Choose Ink Color</h2>
-            <p className="text-muted-foreground font-body mb-8">Select the ink color for your stamp impression.</p>
+            <div className="flex items-center gap-3 mb-2">
+                <div className="w-8 h-8 rounded-full bg-gold/10 flex items-center justify-center">
+                    <Palette className="w-4 h-4 text-gold" />
+                </div>
+                <h2 className="font-display text-2xl font-bold">Choose Ink Color</h2>
+            </div>
+            <p className="text-muted-foreground font-body mb-8 ml-11">Select the ink color for your stamp impression.</p>
 
-            <div className="flex flex-wrap gap-4">
+            <div className="grid grid-cols-2 sm:grid-cols-5 gap-3">
                 {INK_COLORS.map(({ name, hex }) => {
                     const active = selected === name;
                     return (
                         <button
                             key={name}
                             onClick={() => onSelect(name)}
-                            className={`flex items-center gap-3 px-5 py-3.5 rounded-full border-2 transition-all duration-200
-                ${active ? "border-gold bg-gold/5 shadow-md" : "border-border bg-white hover:border-gold/40"}`}
+                            className={`flex flex-col items-center gap-3 p-5 rounded-2xl border-2 transition-all duration-300
+                ${active ? "border-gold bg-gradient-to-b from-gold/8 to-gold/3 shadow-md shadow-gold/10 scale-[1.02]" : "border-border bg-white hover:border-gold/40 hover:shadow-sm"}`}
                         >
-                            <div className="w-6 h-6 rounded-full border border-gray-200 shadow-inner" style={{ backgroundColor: hex }} />
+                            <div className="relative">
+                                <div className="w-10 h-10 rounded-full shadow-md border-2 border-white" style={{ backgroundColor: hex, boxShadow: `0 4px 12px ${hex}40` }} />
+                                {active && (
+                                    <div className="absolute -bottom-1 -right-1 w-5 h-5 rounded-full bg-gold text-white flex items-center justify-center">
+                                        <Check className="w-3 h-3" />
+                                    </div>
+                                )}
+                            </div>
                             <span className="font-body font-medium text-sm">{name}</span>
-                            {active && <Check className="w-4 h-4 text-gold" />}
                         </button>
                     );
                 })}
             </div>
+
+            {/* Preview hint */}
+            {selected && (
+                <div className="mt-6 flex items-center gap-3 p-4 rounded-xl bg-gray-50 border border-border">
+                    <div className="w-5 h-5 rounded-full shadow-sm" style={{ backgroundColor: INK_COLORS.find(c => c.name === selected)?.hex }} />
+                    <span className="text-sm font-body text-muted-foreground">Your stamp will use <strong className="text-foreground">{selected}</strong> ink</span>
+                </div>
+            )}
         </div>
     );
 }
@@ -305,29 +398,46 @@ function StepSpeed({
 }) {
     return (
         <div className="animate-fade-in">
-            <h2 className="font-display text-2xl font-bold mb-2">Priority Processing</h2>
-            <p className="text-muted-foreground font-body mb-8">Want your stamp made and shipped faster? Skip the queue!</p>
+            <div className="flex items-center gap-3 mb-2">
+                <div className="w-8 h-8 rounded-full bg-gold/10 flex items-center justify-center">
+                    <Clock className="w-4 h-4 text-gold" />
+                </div>
+                <h2 className="font-display text-2xl font-bold">Priority Processing</h2>
+            </div>
+            <p className="text-muted-foreground font-body mb-8 ml-11">Want your stamp made and shipped faster? Skip the queue!</p>
 
             <div className="space-y-3">
                 <button
                     onClick={() => selected && onToggle()}
-                    className={`w-full flex items-center justify-between p-5 rounded-2xl border-2 transition-all duration-200
-            ${!selected ? "border-gold bg-gold/5" : "border-border bg-white hover:border-gold/40"}`}
+                    className={`w-full flex items-center justify-between p-6 rounded-2xl border-2 transition-all duration-300
+            ${!selected ? "border-gold bg-gradient-to-r from-gold/8 to-gold/3 shadow-md shadow-gold/10" : "border-border bg-white hover:border-gold/40 hover:shadow-sm"}`}
                 >
-                    <div className="text-left">
-                        <span className="font-body font-medium block">Standard Processing</span>
-                        <span className="text-xs text-muted-foreground font-body">Ships in 1–3 business days</span>
+                    <div className="text-left flex items-center gap-3">
+                        <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${!selected ? "bg-gold/15" : "bg-gray-100"}`}>
+                            <Clock className={`w-5 h-5 ${!selected ? "text-gold" : "text-gray-400"}`} />
+                        </div>
+                        <div>
+                            <span className="font-body font-medium block">Standard Processing</span>
+                            <span className="text-xs text-muted-foreground font-body">Ships in 1–3 business days</span>
+                        </div>
                     </div>
                     <span className="font-body text-sm text-muted-foreground">Included</span>
                 </button>
 
                 <button
                     onClick={() => !selected && onToggle()}
-                    className={`w-full flex items-center justify-between p-5 rounded-2xl border-2 transition-all duration-200
-            ${selected ? "border-gold bg-gold/5" : "border-border bg-white hover:border-gold/40"}`}
+                    className={`w-full flex items-center justify-between p-6 rounded-2xl border-2 transition-all duration-300 relative overflow-hidden
+            ${selected ? "border-gold bg-gradient-to-r from-gold/8 to-amber-50/50 shadow-md shadow-gold/10" : "border-border bg-white hover:border-gold/40 hover:shadow-sm"}`}
                 >
-                    <div className="text-left flex items-center gap-2">
-                        <Zap className="w-4 h-4 text-amber-500" />
+                    {selected && (
+                        <div className="absolute top-3 right-3">
+                            <span className="px-2 py-0.5 rounded-full bg-amber-100 text-amber-700 text-[10px] font-body font-bold uppercase tracking-wider">Popular</span>
+                        </div>
+                    )}
+                    <div className="text-left flex items-center gap-3">
+                        <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${selected ? "bg-amber-100" : "bg-gray-100"}`}>
+                            <Zap className={`w-5 h-5 ${selected ? "text-amber-600" : "text-gray-400"}`} />
+                        </div>
                         <div>
                             <span className="font-body font-medium block">Priority Processing</span>
                             <span className="text-xs text-muted-foreground font-body">Ships within 24 hours</span>
@@ -343,6 +453,14 @@ function StepSpeed({
 /* ═══════════════════════════════════════════════════════════════════════════
    STEP 6 — REVIEW
    ═══════════════════════════════════════════════════════════════════════ */
+
+const REVIEW_ICONS = [
+    <Box className="w-4 h-4" />,
+    <FileImage className="w-4 h-4" />,
+    <Droplets className="w-4 h-4" />,
+    <Palette className="w-4 h-4" />,
+    <Clock className="w-4 h-4" />,
+];
 
 function StepReview({
     selections,
@@ -367,22 +485,32 @@ function StepReview({
 
     return (
         <div className="animate-fade-in">
-            <h2 className="font-display text-2xl font-bold mb-2">Review Your Order</h2>
-            <p className="text-muted-foreground font-body mb-8">Make sure everything looks perfect before checkout.</p>
+            <div className="flex items-center gap-3 mb-2">
+                <div className="w-8 h-8 rounded-full bg-green-100 flex items-center justify-center">
+                    <Check className="w-4 h-4 text-green-600" />
+                </div>
+                <h2 className="font-display text-2xl font-bold">Review Your Order</h2>
+            </div>
+            <p className="text-muted-foreground font-body mb-8 ml-11">Make sure everything looks perfect before checkout.</p>
 
-            <div className="bg-white rounded-2xl border border-border overflow-hidden">
+            <div className="bg-white rounded-2xl border border-border overflow-hidden shadow-sm">
                 {rows.map(({ label, value, price, step }, i) => (
                     <div
                         key={label}
-                        className={`flex items-center justify-between px-5 py-4 ${i < rows.length - 1 ? "border-b border-border" : ""}`}
+                        className={`flex items-center justify-between px-5 py-4 ${i < rows.length - 1 ? "border-b border-border" : ""} hover:bg-cream/30 transition-colors`}
                     >
-                        <div className="flex-1">
-                            <div className="text-xs text-muted-foreground font-body uppercase tracking-wider mb-0.5">{label}</div>
-                            <div className="font-body font-medium text-sm">{value}</div>
+                        <div className="flex items-center gap-3 flex-1">
+                            <div className="w-8 h-8 rounded-lg bg-gray-100 flex items-center justify-center text-gray-400 flex-shrink-0">
+                                {REVIEW_ICONS[i]}
+                            </div>
+                            <div>
+                                <div className="text-[10px] text-muted-foreground font-body uppercase tracking-wider mb-0.5">{label}</div>
+                                <div className="font-body font-medium text-sm">{value}</div>
+                            </div>
                         </div>
                         <div className="flex items-center gap-3">
                             {price > 0 && <span className="font-body font-bold text-sm">${price.toFixed(2)}</span>}
-                            <button onClick={() => onEdit(step)} className="text-xs text-gold font-body font-medium hover:underline">
+                            <button onClick={() => onEdit(step)} className="text-xs text-gold font-body font-semibold hover:underline underline-offset-2">
                                 Edit
                             </button>
                         </div>
@@ -390,8 +518,8 @@ function StepReview({
                 ))}
 
                 {selections.logoPreview && (
-                    <div className="p-5 border-t border-border bg-gray-50 flex items-center gap-4">
-                        <img src={selections.logoPreview} alt="Logo" className="w-16 h-16 object-contain rounded-lg border border-border bg-white p-1" />
+                    <div className="p-5 border-t border-border bg-cream/20 flex items-center gap-4">
+                        <img src={selections.logoPreview} alt="Logo" className="w-16 h-16 object-contain rounded-lg border border-border bg-white p-1 shadow-sm" />
                         <span className="text-sm font-body text-muted-foreground">Your uploaded design</span>
                     </div>
                 )}
@@ -405,7 +533,7 @@ function StepReview({
             <button
                 onClick={onCheckout}
                 disabled={isSubmitting || !selections.variant}
-                className="mt-6 w-full bg-gold text-navy py-4 rounded-2xl font-body font-bold text-base hover:bg-gold-dark transition-all duration-200 disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center gap-2 shadow-lg"
+                className="mt-6 w-full bg-gold text-navy py-4 rounded-2xl font-body font-bold text-base hover:bg-gold-dark transition-all duration-300 disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center gap-2 shadow-lg hover:shadow-xl"
             >
                 {isSubmitting ? (
                     <span className="flex items-center gap-2">
@@ -418,6 +546,18 @@ function StepReview({
                     </>
                 )}
             </button>
+
+            {/* Trust badges */}
+            <div className="mt-5 flex items-center justify-center gap-6 text-muted-foreground">
+                <div className="flex items-center gap-1.5">
+                    <Shield className="w-3.5 h-3.5" />
+                    <span className="text-[11px] font-body">Secure Checkout</span>
+                </div>
+                <div className="flex items-center gap-1.5">
+                    <Star className="w-3.5 h-3.5" />
+                    <span className="text-[11px] font-body">Satisfaction Guaranteed</span>
+                </div>
+            </div>
         </div>
     );
 }
@@ -534,15 +674,16 @@ export default function Customize() {
         <div className="min-h-screen flex flex-col bg-background">
             <Navbar />
 
-            <section ref={builderRef} className="flex-1 py-12 md:py-16 bg-white" id="builder">
+            <section ref={builderRef} className="flex-1 py-12 md:py-16 bg-gradient-to-b from-cream/40 via-white to-cream/20" id="builder">
                 <div className="container mx-auto px-4">
-                    <div className="text-center mb-8">
+                    <div className="text-center mb-10">
+                        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-gold/10 text-gold text-xs font-body font-semibold mb-4 tracking-wide uppercase">Step {step + 1} of 6</div>
                         <h1 className="font-display text-3xl md:text-4xl font-bold mb-2">Build Your Custom Stamp</h1>
                         <p className="text-muted-foreground font-body">Complete each step to customize your stamp.</p>
                     </div>
 
                     {/* Sticky progress bar */}
-                    <div className="sticky top-16 z-30 bg-white/95 backdrop-blur-sm border-b border-border -mx-4 px-4 mb-8 shadow-sm">
+                    <div className="sticky top-16 z-30 bg-white/95 backdrop-blur-md border-b border-border/60 -mx-4 px-4 mb-10 shadow-sm">
                         <ProgressBar step={step} onStepClick={(s) => setStep(s)} />
 
                         {selections.variant && (
