@@ -7,6 +7,7 @@ import { products as hardcodedProducts, Product } from "@/data/products";
 import { useShopifyProducts } from "@/hooks/useShopify";
 import { useCart } from "@/context/CartContext";
 import { createShopifyCheckout } from "@/utils/shopify";
+import StampBuilder from "@/pages/StampBuilder";
 
 // ── Single-Page Customizer ────────────────────────────────────────────────────
 
@@ -452,6 +453,11 @@ export default function ProductDetail() {
         <Footer />
       </div>
     );
+  }
+
+  // ── If this is the Big Custom Stamps product, render the full builder experience ──
+  if (product.category === "custom-stamps") {
+    return <StampBuilder />;
   }
 
   const handleCustomizerComplete = (state: CustomizerState) => {
