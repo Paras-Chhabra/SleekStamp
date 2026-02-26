@@ -200,7 +200,7 @@ export default function StampBuilder() {
             </section>
 
             {/* ═══ COMPARISON TABLE ═══ */}
-            <section className="py-16 bg-white border-t border-border">
+            <section className="py-16 bg-cream/50 border-t border-border">
                 <div className="container mx-auto px-4">
                     <div className="text-center mb-10">
                         <p className="text-xs text-gold font-body font-semibold uppercase tracking-widest mb-2">Why Choose a Stamp?</p>

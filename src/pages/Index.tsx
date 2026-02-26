@@ -232,8 +232,8 @@ export default function Index() {
                 to={`/products?category=${cat.id}`}
                 className="group bg-card rounded-xl p-5 border border-border hover:border-gold/50 hover:shadow-hover transition-smooth text-center"
               >
-                <div className="w-10 h-10 bg-secondary rounded-lg mx-auto mb-3 flex items-center justify-center group-hover:bg-foreground transition-smooth">
-                  <span className="text-foreground group-hover:text-white font-display font-bold text-sm transition-smooth">
+                <div className="w-10 h-10 bg-navy rounded-lg mx-auto mb-3 flex items-center justify-center group-hover:bg-gold transition-smooth">
+                  <span className="text-white font-display font-bold text-sm transition-smooth">
                     {cat.name.charAt(0)}
                   </span>
                 </div>
