@@ -167,7 +167,7 @@ function Customizer({
       {(isCustomStamp || product.category === "face-stamps" || product.category === "wooden-stamps") && (
         <div>
           <h3 className="font-display text-lg font-bold text-foreground mb-4">{++sectionNum}. Upload Your Design <span className="text-red-500">*</span></h3>
-          <div className="border-2 border-dashed border-border rounded-xl bg-gray-50 p-8 text-center hover:border-foreground/30 transition-smooth">
+          <div className="border-2 border-dashed border-border rounded-xl bg-white p-8 text-center hover:border-gold transition-smooth">
             <input
               type="file"
               accept="image/*"

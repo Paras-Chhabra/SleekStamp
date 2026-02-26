@@ -14,7 +14,7 @@ export default {
     },
     extend: {
       fontFamily: {
-        display: ["Playfair Display", "Georgia", "serif"],
+        display: ["Poppins", "sans-serif"],
         body: ["Inter", "system-ui", "sans-serif"],
       },
       colors: {
@@ -52,17 +52,17 @@ export default {
           foreground: "hsl(var(--card-foreground))",
         },
         navy: {
-          DEFAULT: "hsl(0, 0%, 10%)",
-          light: "hsl(0, 0%, 22%)",
-          dark: "hsl(0, 0%, 5%)",
+          DEFAULT: "hsl(0, 0%, 12%)",
+          light: "hsl(0, 0%, 23%)",
+          dark: "hsl(0, 0%, 8%)",
         },
         gold: {
-          DEFAULT: "hsl(36, 30%, 52%)",
-          dark: "hsl(34, 30%, 42%)",
-          light: "hsl(40, 25%, 70%)",
+          DEFAULT: "hsl(37, 60%, 61%)",
+          dark: "hsl(37, 70%, 50%)",
+          light: "hsl(37, 50%, 80%)",
         },
-        cream: "hsl(40, 18%, 96%)",
-        charcoal: "hsl(0, 0%, 22%)",
+        cream: "hsl(35, 33%, 93%)",
+        charcoal: "hsl(0, 0%, 23%)",
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",
           foreground: "hsl(var(--sidebar-foreground))",
@@ -78,6 +78,10 @@ export default {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
+        "small": "10px",
+        "medium": "14px",
+        "large": "18px",
+        "xlarge": "24px",
       },
       keyframes: {
         "accordion-down": {

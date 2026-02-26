@@ -22,10 +22,10 @@ const testimonials = [
     text: "Ordered 12 custom stamps for our office. The quality is exceptional and they arrived in 2 days. Will absolutely reorder.",
   },
   {
-    name: "James T.",
-    role: "Notary Public",
+    name: "David H.",
+    role: "E-commerce Founder",
     rating: 5,
-    text: "My notary stamp is perfect — exactly what I needed. The compliance team verified everything. Highly recommend.",
+    text: "Our logo looks incredible. The wood handle feels super premium, and it makes branding our packaging boxes effortless.",
   },
   {
     name: "Linda K.",
@@ -33,6 +33,37 @@ const testimonials = [
     rating: 5,
     text: "I've tried several stamp companies. SleekStamp is in a different league. Crisp impressions, fast shipping, great prices.",
   },
+  {
+    name: "Michael T.",
+    role: "Wedding Planner",
+    rating: 5,
+    text: "Used these for custom wedding invitations. The fine details in the botanical design came out flawlessly. Highly recommend!",
+  },
+  {
+    name: "Elena R.",
+    role: "Ceramics Artist",
+    rating: 5,
+    text: "I use the stamp to brand my paper bags. The ink is rich, and the 6-inch size is perfect for maximum impact.",
+  },
+  {
+    name: "Jenny S.",
+    role: "Coffee Shop Owner",
+    rating: 5,
+    text: "Stamping hundreds of cups a day, and the impression is still as crisp as the first one. Huge money saver vs printing.",
+  }
+];
+
+const worksOnImages = [
+  "https://cdn.shopify.com/s/files/1/0676/7401/3807/files/ChatGPT_Image_Feb_26_2026_03_45_40_PM.webp?v=1772102150",
+  "https://cdn.shopify.com/s/files/1/0676/7401/3807/files/ChatGPT_Image_Feb_26_2026_03_44_18_PM.webp?v=1772102133",
+  "https://cdn.shopify.com/s/files/1/0676/7401/3807/files/ChatGPT_Image_Feb_26_2026_03_42_03_PM.webp?v=1772102125",
+  "https://cdn.shopify.com/s/files/1/0676/7401/3807/files/ChatGPT_Image_Feb_26_2026_03_40_33_PM.webp?v=1772102120",
+  "https://cdn.shopify.com/s/files/1/0676/7401/3807/files/ChatGPT_Image_Feb_26_2026_03_46_43_PM.webp?v=1772102114",
+  "https://cdn.shopify.com/s/files/1/0676/7401/3807/files/ChatGPT_Image_Feb_26_2026_03_48_19_PM.webp?v=1772102092",
+  "https://cdn.shopify.com/s/files/1/0676/7401/3807/files/ChatGPT_Image_Feb_26_2026_03_49_15_PM.webp?v=1772102080",
+  "https://cdn.shopify.com/s/files/1/0676/7401/3807/files/ChatGPT_Image_Feb_26_2026_03_50_30_PM.webp?v=1772102064",
+  "https://cdn.shopify.com/s/files/1/0676/7401/3807/files/ChatGPT_Image_Feb_26_2026_03_51_22_PM.webp?v=1772101965",
+  "https://cdn.shopify.com/s/files/1/0676/7401/3807/files/ChatGPT_Image_Feb_26_2026_03_52_20_PM.webp?v=1772101944"
 ];
 
 export default function Index() {
@@ -205,9 +236,9 @@ export default function Index() {
 
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8 relative">
             {[
-              { step: "1", title: "Choose Your Stamp", desc: "Select the stamp type, size, and ink color that fits your needs." },
+              { step: "1", title: "Choose your stamp size", desc: "Pick 4\", 6\", or 8\" inch stamp size that fits your need." },
               { step: "2", title: "Upload Your Design", desc: "Upload your logo, text, or signature. We handle the artwork setup for free." },
-              { step: "3", title: "Approve Your Proof", desc: "We send you a digital proof to review before we produce your stamp." },
+              { step: "3", title: "Approve Your Proof", desc: "We send you a digital proof to review before we dispatch your stamp." },
               { step: "4", title: "Delivered Fast", desc: "Your stamp is produced and shipped within 1–3 business days." },
             ].map(({ step, title, desc }, i) => (
               <div key={step} className="text-center relative">
@@ -219,6 +250,26 @@ export default function Index() {
                 </div>
                 <h3 className="font-display font-semibold text-base mb-2">{title}</h3>
                 <p className="text-sm text-muted-foreground font-body leading-relaxed">{desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Works on Everything */}
+      <section className="py-16 bg-white border-b border-border">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-12">
+            <h2 className="font-display text-4xl font-bold mb-3">Works on everything</h2>
+            <p className="text-muted-foreground font-body text-lg max-w-md mx-auto">
+              One stamp. Endless possibilities.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+            {worksOnImages.map((src, i) => (
+              <div key={i} className="aspect-square md:aspect-[4/5] rounded-xl overflow-hidden shadow-sm">
+                <img src={src} alt={`Stamp application ${i + 1}`} className="w-full h-full object-cover hover:scale-105 transition-transform duration-500" loading="lazy" />
               </div>
             ))}
           </div>
