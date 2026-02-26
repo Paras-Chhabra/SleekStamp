@@ -1,5 +1,4 @@
 import { useState, useRef, useCallback } from "react";
-import { Link } from "react-router-dom";
 import { useShopifyProducts } from "@/hooks/useShopify";
 import { createShopifyCheckout } from "@/utils/shopify";
 import Navbar from "@/components/Navbar";
@@ -54,7 +53,7 @@ const INK_COLORS: { name: string; hex: string }[] = [
 
 function ProgressBar({ step, onStepClick }: { step: number; onStepClick: (s: number) => void }) {
     return (
-        <div className="flex items-center justify-between max-w-2xl mx-auto py-4 px-2">
+        <div className="flex items-center justify-between max-w-2xl mx-auto py-2.5 px-2">
             {STEP_LABELS.map((label, i) => {
                 const done = i < step;
                 const active = i === step;
@@ -62,15 +61,15 @@ function ProgressBar({ step, onStepClick }: { step: number; onStepClick: (s: num
                     <button
                         key={label}
                         onClick={() => i < step && onStepClick(i)}
-                        className={`flex flex-col items-center gap-1.5 transition-all ${i < step ? "cursor-pointer" : "cursor-default"}`}
+                        className={`flex flex-col items-center gap-1 transition-all ${i < step ? "cursor-pointer" : "cursor-default"}`}
                     >
                         <div
-                            className={`w-9 h-9 rounded-full flex items-center justify-center text-sm font-semibold transition-all
-                ${done ? "bg-green-500 text-white" : active ? "bg-gold text-white ring-4 ring-gold/20" : "bg-gray-200 text-gray-500"}`}
+                            className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-semibold transition-all
+                ${done ? "bg-green-500 text-white" : active ? "bg-gold text-white ring-3 ring-gold/20" : "bg-gray-200 text-gray-500"}`}
                         >
-                            {done ? <Check className="w-4 h-4" /> : i + 1}
+                            {done ? <Check className="w-3.5 h-3.5" /> : i + 1}
                         </div>
-                        <span className={`text-[11px] font-body font-medium ${active ? "text-foreground" : "text-muted-foreground"}`}>
+                        <span className={`text-[10px] font-body font-medium ${active ? "text-foreground" : "text-muted-foreground"}`}>
                             {label}
                         </span>
                     </button>
@@ -93,15 +92,15 @@ const SIZE_META: Record<string, { icon: React.ReactNode; desc: string }> = {
 function StepSize({ variants, selected, onSelect }: { variants: Variant[]; selected: Variant | null; onSelect: (v: Variant) => void }) {
     return (
         <div className="animate-fade-in">
-            <div className="flex items-center gap-3 mb-2">
-                <div className="w-8 h-8 rounded-full bg-gold/10 flex items-center justify-center">
-                    <Box className="w-4 h-4 text-gold" />
+            <div className="flex items-center gap-2 mb-1">
+                <div className="w-6 h-6 rounded-full bg-gold/10 flex items-center justify-center">
+                    <Box className="w-3 h-3 text-gold" />
                 </div>
-                <h2 className="font-display text-2xl font-bold">Select Your Stamp Size</h2>
+                <h2 className="font-display text-xl font-bold">Select Your Stamp Size</h2>
             </div>
-            <p className="text-muted-foreground font-body mb-8 ml-11">Choose the size that fits your branding needs.</p>
+            <p className="text-muted-foreground font-body text-sm mb-4 ml-8">Choose the size that fits your branding needs.</p>
 
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
                 {variants.map((v) => {
                     const active = selected?.id === v.id;
                     const meta = SIZE_META[v.title];
@@ -110,20 +109,19 @@ function StepSize({ variants, selected, onSelect }: { variants: Variant[]; selec
                             key={v.id}
                             onClick={() => onSelect(v)}
                             disabled={!v.available}
-                            className={`relative p-6 rounded-2xl border-2 text-center transition-all duration-300
-                ${active ? "border-gold bg-gradient-to-b from-gold/8 to-gold/3 shadow-lg shadow-gold/10 scale-[1.02]" : "border-border bg-white hover:border-gold/40 hover:shadow-md"}
+                            className={`relative p-4 rounded-xl border-2 text-center transition-all duration-300
+                ${active ? "border-gold bg-gradient-to-b from-gold/8 to-gold/3 shadow-md shadow-gold/10 scale-[1.02]" : "border-border bg-white hover:border-gold/40 hover:shadow-sm"}
                 ${!v.available ? "opacity-40 cursor-not-allowed" : ""}`}
                         >
                             {active && (
-                                <div className="absolute top-3 right-3 w-6 h-6 rounded-full bg-gold text-white flex items-center justify-center">
-                                    <Check className="w-3.5 h-3.5" />
+                                <div className="absolute top-2 right-2 w-5 h-5 rounded-full bg-gold text-white flex items-center justify-center">
+                                    <Check className="w-3 h-3" />
                                 </div>
                             )}
-                            <div className="text-muted-foreground mb-3 flex justify-center">{meta?.icon}</div>
-                            <div className="font-display font-bold text-lg mb-1">{v.title}</div>
-                            <div className="text-2xl font-bold text-gold font-body mb-2">${v.price.toFixed(2)}</div>
-                            {meta && <p className="text-xs text-muted-foreground font-body leading-snug">{meta.desc}</p>}
-                            {!v.available && <div className="text-xs text-red-500 mt-1">Out of stock</div>}
+                            <div className="font-display font-bold text-sm mb-0.5">{v.title}</div>
+                            <div className="text-lg font-bold text-gold font-body mb-1">${v.price.toFixed(2)}</div>
+                            {meta && <p className="text-[10px] text-muted-foreground font-body leading-snug">{meta.desc}</p>}
+                            {!v.available && <div className="text-[10px] text-red-500 mt-0.5">Out of stock</div>}
                         </button>
                     );
                 })}
@@ -162,13 +160,13 @@ function StepLogo({
 
     return (
         <div className="animate-fade-in">
-            <div className="flex items-center gap-3 mb-2">
-                <div className="w-8 h-8 rounded-full bg-gold/10 flex items-center justify-center">
-                    <FileImage className="w-4 h-4 text-gold" />
+            <div className="flex items-center gap-2 mb-1">
+                <div className="w-6 h-6 rounded-full bg-gold/10 flex items-center justify-center">
+                    <FileImage className="w-3 h-3 text-gold" />
                 </div>
-                <h2 className="font-display text-2xl font-bold">Upload Your Design</h2>
+                <h2 className="font-display text-xl font-bold">Upload Your Design</h2>
             </div>
-            <p className="text-muted-foreground font-body mb-8 ml-11">
+            <p className="text-muted-foreground font-body text-sm mb-4 ml-8">
                 Upload your logo, artwork, or signature. We accept PNG, JPG, PDF, AI, and EPS files.
             </p>
 
@@ -200,19 +198,19 @@ function StepLogo({
                     onDragLeave={() => setDragOver(false)}
                     onDrop={handleDrop}
                     onClick={() => inputRef.current?.click()}
-                    className={`cursor-pointer border-2 border-dashed rounded-2xl p-14 text-center transition-all duration-300
+                    className={`cursor-pointer border-2 border-dashed rounded-2xl p-8 text-center transition-all duration-300
             ${dragOver ? "border-gold bg-gold/5 scale-[1.01]" : "border-gray-300 bg-gradient-to-b from-cream/30 to-white hover:border-gold/50 hover:bg-gold/3"}`}
                 >
-                    <div className="w-16 h-16 rounded-2xl bg-gold/10 flex items-center justify-center mx-auto mb-5">
-                        <Upload className="w-7 h-7 text-gold" />
+                    <div className="w-12 h-12 rounded-xl bg-gold/10 flex items-center justify-center mx-auto mb-3">
+                        <Upload className="w-5 h-5 text-gold" />
                     </div>
-                    <p className="font-body font-semibold text-foreground mb-1">
+                    <p className="font-body font-semibold text-foreground text-sm mb-1">
                         Drag & drop your file here
                     </p>
                     <p className="text-sm text-muted-foreground font-body">
                         or <span className="text-gold font-medium underline underline-offset-2">click to browse</span>
                     </p>
-                    <div className="flex flex-wrap justify-center gap-2 mt-5">
+                    <div className="flex flex-wrap justify-center gap-2 mt-3">
                         {["PNG", "JPG", "PDF", "AI", "EPS"].map((fmt) => (
                             <span key={fmt} className="px-2.5 py-1 rounded-md bg-gray-100 text-[10px] font-body font-semibold text-gray-500 uppercase tracking-wider">{fmt}</span>
                         ))}
@@ -232,10 +230,10 @@ function StepLogo({
             />
 
             {/* Helpful note */}
-            <div className="mt-6 flex items-start gap-3 p-4 rounded-xl bg-blue-50/60 border border-blue-100">
-                <Info className="w-4 h-4 text-blue-500 mt-0.5 flex-shrink-0" />
-                <p className="text-xs font-body text-blue-700 leading-relaxed">
-                    We'll send a free digital proof before production. Don't worry — you can always swap or adjust your design later!
+            <div className="mt-4 flex items-start gap-2 p-3 rounded-lg bg-blue-50/60 border border-blue-100">
+                <Info className="w-3.5 h-3.5 text-blue-500 mt-0.5 flex-shrink-0" />
+                <p className="text-[11px] font-body text-blue-700 leading-relaxed">
+                    We'll send a free digital proof before production. You can always swap or adjust your design later!
                 </p>
             </div>
         </div>
@@ -257,36 +255,36 @@ function StepPad({
 }) {
     return (
         <div className="animate-fade-in">
-            <div className="flex items-center gap-3 mb-2">
-                <div className="w-8 h-8 rounded-full bg-gold/10 flex items-center justify-center">
-                    <Droplets className="w-4 h-4 text-gold" />
+            <div className="flex items-center gap-2 mb-1">
+                <div className="w-6 h-6 rounded-full bg-gold/10 flex items-center justify-center">
+                    <Droplets className="w-3 h-3 text-gold" />
                 </div>
-                <h2 className="font-display text-2xl font-bold">Add a Stamp Pad?</h2>
+                <h2 className="font-display text-xl font-bold">Add a Stamp Pad?</h2>
             </div>
-            <p className="text-muted-foreground font-body mb-6 ml-11">Get a matching ink pad for crisp, professional impressions.</p>
+            <p className="text-muted-foreground font-body text-sm mb-4 ml-8">Get a matching ink pad for crisp, professional impressions.</p>
 
             {/* Why add a stamp pad? */}
-            <div className="mb-8 p-5 rounded-2xl bg-gradient-to-br from-amber-50/80 to-orange-50/50 border border-amber-100">
-                <div className="flex items-center gap-2 mb-3">
-                    <Sparkles className="w-4 h-4 text-amber-600" />
-                    <h3 className="font-display font-bold text-sm text-amber-900">Why add a stamp pad?</h3>
+            <div className="mb-5 p-3.5 rounded-xl bg-gradient-to-br from-amber-50/80 to-orange-50/50 border border-amber-100">
+                <div className="flex items-center gap-2 mb-2">
+                    <Sparkles className="w-3.5 h-3.5 text-amber-600" />
+                    <h3 className="font-display font-bold text-xs text-amber-900">Why add a stamp pad?</h3>
                 </div>
-                <ul className="space-y-2.5">
+                <ul className="space-y-1.5">
                     {[
                         { icon: <Droplets className="w-3.5 h-3.5" />, text: "Pre-inked pads deliver 5,000+ impressions — no re-inking needed" },
                         { icon: <Shield className="w-3.5 h-3.5" />, text: "Engineered for your stamp size — ensures edge-to-edge coverage" },
                         { icon: <Star className="w-3.5 h-3.5" />, text: "Water-based, eco-friendly ink that dries in seconds" },
                         { icon: <Clock className="w-3.5 h-3.5" />, text: "Save time — stamp pad ships ready to use, no setup required" },
                     ].map(({ icon, text }, i) => (
-                        <li key={i} className="flex items-start gap-2.5">
+                        <li key={i} className="flex items-start gap-2">
                             <span className="text-amber-600 mt-0.5 flex-shrink-0">{icon}</span>
-                            <span className="text-xs font-body text-amber-800 leading-relaxed">{text}</span>
+                            <span className="text-[11px] font-body text-amber-800 leading-snug">{text}</span>
                         </li>
                     ))}
                 </ul>
             </div>
 
-            <div className="space-y-3">
+            <div className="space-y-2">
                 {/* Stamp pad options FIRST */}
                 {options.map((opt) => {
                     const active = selected?.variantId === opt.variantId;
@@ -294,16 +292,16 @@ function StepPad({
                         <button
                             key={opt.variantId}
                             onClick={() => onToggle(opt)}
-                            className={`w-full flex items-center justify-between p-5 rounded-2xl border-2 transition-all duration-300
+                            className={`w-full flex items-center justify-between p-3.5 rounded-xl border-2 transition-all duration-300
                 ${active ? "border-gold bg-gradient-to-r from-gold/8 to-gold/3 shadow-md shadow-gold/10" : "border-border bg-white hover:border-gold/40 hover:shadow-sm"}`}
                         >
-                            <div className="text-left flex items-center gap-3">
-                                <div className={`w-8 h-8 rounded-lg flex items-center justify-center ${active ? "bg-gold/20" : "bg-gray-100"}`}>
-                                    <Droplets className={`w-4 h-4 ${active ? "text-gold" : "text-gray-400"}`} />
+                            <div className="text-left flex items-center gap-2">
+                                <div className={`w-7 h-7 rounded-lg flex items-center justify-center ${active ? "bg-gold/20" : "bg-gray-100"}`}>
+                                    <Droplets className={`w-3.5 h-3.5 ${active ? "text-gold" : "text-gray-400"}`} />
                                 </div>
                                 <div>
-                                    <span className="font-body font-medium block">{opt.name}</span>
-                                    <span className="text-[11px] text-muted-foreground font-body">Perfectly sized for your stamp</span>
+                                    <span className="font-body font-medium text-sm block">{opt.name}</span>
+                                    <span className="text-[10px] text-muted-foreground font-body">Perfectly sized for your stamp</span>
                                 </div>
                             </div>
                             <div className="flex items-center gap-2">
@@ -317,12 +315,12 @@ function StepPad({
                 {/* "Already have a stamp pad" — LAST */}
                 <button
                     onClick={() => onToggle(null)}
-                    className={`w-full flex items-center justify-between p-5 rounded-2xl border-2 transition-all duration-300
+                    className={`w-full flex items-center justify-between p-3.5 rounded-xl border-2 transition-all duration-300
             ${!selected ? "border-gold bg-gradient-to-r from-gold/8 to-gold/3 shadow-md shadow-gold/10" : "border-border bg-white hover:border-gold/40"}`}
                 >
-                    <div className="flex items-center gap-3">
-                        <div className={`w-8 h-8 rounded-lg flex items-center justify-center ${!selected ? "bg-gold/20" : "bg-gray-100"}`}>
-                            <Check className={`w-4 h-4 ${!selected ? "text-gold" : "text-gray-400"}`} />
+                    <div className="flex items-center gap-2">
+                        <div className={`w-7 h-7 rounded-lg flex items-center justify-center ${!selected ? "bg-gold/20" : "bg-gray-100"}`}>
+                            <Check className={`w-3.5 h-3.5 ${!selected ? "text-gold" : "text-gray-400"}`} />
                         </div>
                         <span className="font-body font-medium">Already have a stamp pad</span>
                     </div>
@@ -340,26 +338,26 @@ function StepPad({
 function StepInk({ selected, onSelect }: { selected: string; onSelect: (c: string) => void }) {
     return (
         <div className="animate-fade-in">
-            <div className="flex items-center gap-3 mb-2">
-                <div className="w-8 h-8 rounded-full bg-gold/10 flex items-center justify-center">
-                    <Palette className="w-4 h-4 text-gold" />
+            <div className="flex items-center gap-2 mb-1">
+                <div className="w-6 h-6 rounded-full bg-gold/10 flex items-center justify-center">
+                    <Palette className="w-3 h-3 text-gold" />
                 </div>
-                <h2 className="font-display text-2xl font-bold">Choose Ink Color</h2>
+                <h2 className="font-display text-xl font-bold">Choose Ink Color</h2>
             </div>
-            <p className="text-muted-foreground font-body mb-8 ml-11">Select the ink color for your stamp impression.</p>
+            <p className="text-muted-foreground font-body text-sm mb-4 ml-8">Select the ink color for your stamp impression.</p>
 
-            <div className="grid grid-cols-2 sm:grid-cols-5 gap-3">
+            <div className="grid grid-cols-3 sm:grid-cols-5 gap-2">
                 {INK_COLORS.map(({ name, hex }) => {
                     const active = selected === name;
                     return (
                         <button
                             key={name}
                             onClick={() => onSelect(name)}
-                            className={`flex flex-col items-center gap-3 p-5 rounded-2xl border-2 transition-all duration-300
+                            className={`flex flex-col items-center gap-2 p-3.5 rounded-xl border-2 transition-all duration-300
                 ${active ? "border-gold bg-gradient-to-b from-gold/8 to-gold/3 shadow-md shadow-gold/10 scale-[1.02]" : "border-border bg-white hover:border-gold/40 hover:shadow-sm"}`}
                         >
                             <div className="relative">
-                                <div className="w-10 h-10 rounded-full shadow-md border-2 border-white" style={{ backgroundColor: hex, boxShadow: `0 4px 12px ${hex}40` }} />
+                                <div className="w-8 h-8 rounded-full shadow-md border-2 border-white" style={{ backgroundColor: hex, boxShadow: `0 4px 12px ${hex}40` }} />
                                 {active && (
                                     <div className="absolute -bottom-1 -right-1 w-5 h-5 rounded-full bg-gold text-white flex items-center justify-center">
                                         <Check className="w-3 h-3" />
@@ -374,7 +372,7 @@ function StepInk({ selected, onSelect }: { selected: string; onSelect: (c: strin
 
             {/* Preview hint */}
             {selected && (
-                <div className="mt-6 flex items-center gap-3 p-4 rounded-xl bg-gray-50 border border-border">
+                <div className="mt-4 flex items-center gap-2 p-3 rounded-lg bg-gray-50 border border-border">
                     <div className="w-5 h-5 rounded-full shadow-sm" style={{ backgroundColor: INK_COLORS.find(c => c.name === selected)?.hex }} />
                     <span className="text-sm font-body text-muted-foreground">Your stamp will use <strong className="text-foreground">{selected}</strong> ink</span>
                 </div>
@@ -398,23 +396,23 @@ function StepSpeed({
 }) {
     return (
         <div className="animate-fade-in">
-            <div className="flex items-center gap-3 mb-2">
-                <div className="w-8 h-8 rounded-full bg-gold/10 flex items-center justify-center">
-                    <Clock className="w-4 h-4 text-gold" />
+            <div className="flex items-center gap-2 mb-1">
+                <div className="w-6 h-6 rounded-full bg-gold/10 flex items-center justify-center">
+                    <Clock className="w-3 h-3 text-gold" />
                 </div>
-                <h2 className="font-display text-2xl font-bold">Priority Processing</h2>
+                <h2 className="font-display text-xl font-bold">Priority Processing</h2>
             </div>
-            <p className="text-muted-foreground font-body mb-8 ml-11">Want your stamp made and shipped faster? Skip the queue!</p>
+            <p className="text-muted-foreground font-body text-sm mb-4 ml-8">Want your stamp made and shipped faster? Skip the queue!</p>
 
-            <div className="space-y-3">
+            <div className="space-y-2">
                 <button
                     onClick={() => selected && onToggle()}
-                    className={`w-full flex items-center justify-between p-6 rounded-2xl border-2 transition-all duration-300
+                    className={`w-full flex items-center justify-between p-4 rounded-xl border-2 transition-all duration-300
             ${!selected ? "border-gold bg-gradient-to-r from-gold/8 to-gold/3 shadow-md shadow-gold/10" : "border-border bg-white hover:border-gold/40 hover:shadow-sm"}`}
                 >
-                    <div className="text-left flex items-center gap-3">
-                        <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${!selected ? "bg-gold/15" : "bg-gray-100"}`}>
-                            <Clock className={`w-5 h-5 ${!selected ? "text-gold" : "text-gray-400"}`} />
+                    <div className="text-left flex items-center gap-2">
+                        <div className={`w-8 h-8 rounded-lg flex items-center justify-center ${!selected ? "bg-gold/15" : "bg-gray-100"}`}>
+                            <Clock className={`w-4 h-4 ${!selected ? "text-gold" : "text-gray-400"}`} />
                         </div>
                         <div>
                             <span className="font-body font-medium block">Standard Processing</span>
@@ -426,17 +424,17 @@ function StepSpeed({
 
                 <button
                     onClick={() => !selected && onToggle()}
-                    className={`w-full flex items-center justify-between p-6 rounded-2xl border-2 transition-all duration-300 relative overflow-hidden
+                    className={`w-full flex items-center justify-between p-4 rounded-xl border-2 transition-all duration-300 relative overflow-hidden
             ${selected ? "border-gold bg-gradient-to-r from-gold/8 to-amber-50/50 shadow-md shadow-gold/10" : "border-border bg-white hover:border-gold/40 hover:shadow-sm"}`}
                 >
                     {selected && (
-                        <div className="absolute top-3 right-3">
-                            <span className="px-2 py-0.5 rounded-full bg-amber-100 text-amber-700 text-[10px] font-body font-bold uppercase tracking-wider">Popular</span>
+                        <div className="absolute top-2 right-2">
+                            <span className="px-2 py-0.5 rounded-full bg-amber-100 text-amber-700 text-[9px] font-body font-bold uppercase tracking-wider">Popular</span>
                         </div>
                     )}
-                    <div className="text-left flex items-center gap-3">
-                        <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${selected ? "bg-amber-100" : "bg-gray-100"}`}>
-                            <Zap className={`w-5 h-5 ${selected ? "text-amber-600" : "text-gray-400"}`} />
+                    <div className="text-left flex items-center gap-2">
+                        <div className={`w-8 h-8 rounded-lg flex items-center justify-center ${selected ? "bg-amber-100" : "bg-gray-100"}`}>
+                            <Zap className={`w-4 h-4 ${selected ? "text-amber-600" : "text-gray-400"}`} />
                         </div>
                         <div>
                             <span className="font-body font-medium block">Priority Processing</span>
@@ -485,27 +483,27 @@ function StepReview({
 
     return (
         <div className="animate-fade-in">
-            <div className="flex items-center gap-3 mb-2">
-                <div className="w-8 h-8 rounded-full bg-green-100 flex items-center justify-center">
-                    <Check className="w-4 h-4 text-green-600" />
+            <div className="flex items-center gap-2 mb-1">
+                <div className="w-6 h-6 rounded-full bg-green-100 flex items-center justify-center">
+                    <Check className="w-3 h-3 text-green-600" />
                 </div>
-                <h2 className="font-display text-2xl font-bold">Review Your Order</h2>
+                <h2 className="font-display text-xl font-bold">Review Your Order</h2>
             </div>
-            <p className="text-muted-foreground font-body mb-8 ml-11">Make sure everything looks perfect before checkout.</p>
+            <p className="text-muted-foreground font-body text-sm mb-4 ml-8">Make sure everything looks perfect before checkout.</p>
 
             <div className="bg-white rounded-2xl border border-border overflow-hidden shadow-sm">
                 {rows.map(({ label, value, price, step }, i) => (
                     <div
                         key={label}
-                        className={`flex items-center justify-between px-5 py-4 ${i < rows.length - 1 ? "border-b border-border" : ""} hover:bg-cream/30 transition-colors`}
+                        className={`flex items-center justify-between px-4 py-3 ${i < rows.length - 1 ? "border-b border-border" : ""} hover:bg-cream/30 transition-colors`}
                     >
-                        <div className="flex items-center gap-3 flex-1">
-                            <div className="w-8 h-8 rounded-lg bg-gray-100 flex items-center justify-center text-gray-400 flex-shrink-0">
+                        <div className="flex items-center gap-2 flex-1">
+                            <div className="w-6 h-6 rounded-md bg-gray-100 flex items-center justify-center text-gray-400 flex-shrink-0">
                                 {REVIEW_ICONS[i]}
                             </div>
                             <div>
-                                <div className="text-[10px] text-muted-foreground font-body uppercase tracking-wider mb-0.5">{label}</div>
-                                <div className="font-body font-medium text-sm">{value}</div>
+                                <div className="text-[9px] text-muted-foreground font-body uppercase tracking-wider mb-0.5">{label}</div>
+                                <div className="font-body font-medium text-xs">{value}</div>
                             </div>
                         </div>
                         <div className="flex items-center gap-3">
@@ -524,16 +522,16 @@ function StepReview({
                     </div>
                 )}
 
-                <div className="flex items-center justify-between px-5 py-5 bg-navy text-white">
-                    <span className="font-display font-bold text-lg">Total</span>
-                    <span className="font-display font-bold text-2xl">${totalPrice.toFixed(2)}</span>
+                <div className="flex items-center justify-between px-4 py-4 bg-navy text-white">
+                    <span className="font-display font-bold">Total</span>
+                    <span className="font-display font-bold text-xl">${totalPrice.toFixed(2)}</span>
                 </div>
             </div>
 
             <button
                 onClick={onCheckout}
                 disabled={isSubmitting || !selections.variant}
-                className="mt-6 w-full bg-gold text-navy py-4 rounded-2xl font-body font-bold text-base hover:bg-gold-dark transition-all duration-300 disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center gap-2 shadow-lg hover:shadow-xl"
+                className="mt-4 w-full bg-gold text-navy py-3.5 rounded-xl font-body font-bold text-sm hover:bg-gold-dark transition-all duration-300 disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center gap-2 shadow-lg hover:shadow-xl"
             >
                 {isSubmitting ? (
                     <span className="flex items-center gap-2">
@@ -542,7 +540,7 @@ function StepReview({
                     </span>
                 ) : (
                     <>
-                        <ArrowRight className="w-5 h-5" /> Add to Cart & Checkout — ${totalPrice.toFixed(2)}
+                        <ArrowRight className="w-4 h-4" /> Checkout — ${totalPrice.toFixed(2)}
                     </>
                 )}
             </button>
@@ -674,16 +672,16 @@ export default function Customize() {
         <div className="min-h-screen flex flex-col bg-background">
             <Navbar />
 
-            <section ref={builderRef} className="flex-1 py-12 md:py-16 bg-gradient-to-b from-cream/40 via-white to-cream/20" id="builder">
+            <section ref={builderRef} className="flex-1 py-6 md:py-8 bg-gradient-to-b from-cream/40 via-white to-cream/20" id="builder">
                 <div className="container mx-auto px-4">
-                    <div className="text-center mb-10">
-                        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-gold/10 text-gold text-xs font-body font-semibold mb-4 tracking-wide uppercase">Step {step + 1} of 6</div>
-                        <h1 className="font-display text-3xl md:text-4xl font-bold mb-2">Build Your Custom Stamp</h1>
-                        <p className="text-muted-foreground font-body">Complete each step to customize your stamp.</p>
+                    <div className="text-center mb-4">
+                        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-gold/10 text-gold text-[10px] font-body font-semibold mb-2 tracking-wide uppercase">Step {step + 1} of 6</div>
+                        <h1 className="font-display text-2xl md:text-3xl font-bold mb-1">Build Your Custom Stamp</h1>
+                        <p className="text-muted-foreground font-body text-sm">Complete each step to customize your stamp.</p>
                     </div>
 
                     {/* Sticky progress bar */}
-                    <div className="sticky top-16 z-30 bg-white/95 backdrop-blur-md border-b border-border/60 -mx-4 px-4 mb-10 shadow-sm">
+                    <div className="sticky top-16 z-30 bg-white/95 backdrop-blur-md border-b border-border/60 -mx-4 px-4 mb-4 shadow-sm">
                         <ProgressBar step={step} onStepClick={(s) => setStep(s)} />
 
                         {selections.variant && (
@@ -695,7 +693,7 @@ export default function Customize() {
                     </div>
 
                     {/* Step content */}
-                    <div className="max-w-2xl mx-auto min-h-[320px]">
+                    <div className="max-w-2xl mx-auto min-h-[240px]">
                         {step === 0 && (
                             <StepSize
                                 variants={variants}
@@ -747,7 +745,7 @@ export default function Customize() {
 
                     {/* Sticky bottom navigation */}
                     {step < 5 && (
-                        <div className="sticky bottom-0 z-30 bg-white/95 backdrop-blur-sm border-t border-border -mx-4 px-4 py-4 mt-8 shadow-[0_-4px_16px_rgba(0,0,0,0.06)]">
+                        <div className="sticky bottom-0 z-30 bg-white/95 backdrop-blur-sm border-t border-border -mx-4 px-4 py-3 mt-4 shadow-[0_-4px_16px_rgba(0,0,0,0.06)]">
                             <div className="max-w-2xl mx-auto flex items-center justify-between">
                                 <button
                                     onClick={() => setStep((s) => Math.max(0, s - 1))}
