@@ -53,7 +53,7 @@ const INK_COLORS: { name: string; hex: string }[] = [
 
 function ProgressBar({ step, onStepClick }: { step: number; onStepClick: (s: number) => void }) {
     return (
-        <div className="flex items-center justify-between max-w-2xl mx-auto py-2.5 px-2">
+        <div className="flex items-center justify-between max-w-2xl mx-auto py-3 px-2">
             {STEP_LABELS.map((label, i) => {
                 const done = i < step;
                 const active = i === step;
@@ -61,15 +61,15 @@ function ProgressBar({ step, onStepClick }: { step: number; onStepClick: (s: num
                     <button
                         key={label}
                         onClick={() => i < step && onStepClick(i)}
-                        className={`flex flex-col items-center gap-1 transition-all ${i < step ? "cursor-pointer" : "cursor-default"}`}
+                        className={`flex flex-col items-center gap-1.5 transition-all ${i < step ? "cursor-pointer" : "cursor-default"}`}
                     >
                         <div
-                            className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-semibold transition-all
-                ${done ? "bg-green-500 text-white" : active ? "bg-gold text-white ring-3 ring-gold/20" : "bg-gray-200 text-gray-500"}`}
+                            className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold transition-all
+                ${done ? "bg-green-500 text-white" : active ? "bg-gold text-white ring-4 ring-gold/20" : "bg-gray-200 text-gray-500"}`}
                         >
-                            {done ? <Check className="w-3.5 h-3.5" /> : i + 1}
+                            {done ? <Check className="w-4 h-4" /> : i + 1}
                         </div>
-                        <span className={`text-[10px] font-body font-medium ${active ? "text-foreground" : "text-muted-foreground"}`}>
+                        <span className={`text-xs font-body font-medium ${active ? "text-foreground" : "text-muted-foreground"}`}>
                             {label}
                         </span>
                     </button>
@@ -100,7 +100,7 @@ function StepSize({ variants, selected, onSelect }: { variants: Variant[]; selec
             </div>
             <p className="text-muted-foreground font-body text-sm mb-4 ml-8">Choose the size that fits your branding needs.</p>
 
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
                 {variants.map((v) => {
                     const active = selected?.id === v.id;
                     const meta = SIZE_META[v.title];
@@ -109,19 +109,19 @@ function StepSize({ variants, selected, onSelect }: { variants: Variant[]; selec
                             key={v.id}
                             onClick={() => onSelect(v)}
                             disabled={!v.available}
-                            className={`relative p-4 rounded-xl border-2 text-center transition-all duration-300
-                ${active ? "border-gold bg-gradient-to-b from-gold/8 to-gold/3 shadow-md shadow-gold/10 scale-[1.02]" : "border-border bg-white hover:border-gold/40 hover:shadow-sm"}
+                            className={`relative p-6 rounded-2xl border-2 text-center transition-all duration-300
+                ${active ? "border-gold bg-gradient-to-b from-gold/8 to-gold/3 shadow-lg shadow-gold/10 scale-[1.03]" : "border-border bg-white hover:border-gold/40 hover:shadow-md"}
                 ${!v.available ? "opacity-40 cursor-not-allowed" : ""}`}
                         >
                             {active && (
-                                <div className="absolute top-2 right-2 w-5 h-5 rounded-full bg-gold text-white flex items-center justify-center">
-                                    <Check className="w-3 h-3" />
+                                <div className="absolute top-3 right-3 w-6 h-6 rounded-full bg-gold text-white flex items-center justify-center">
+                                    <Check className="w-3.5 h-3.5" />
                                 </div>
                             )}
-                            <div className="font-display font-bold text-sm mb-0.5">{v.title}</div>
-                            <div className="text-lg font-bold text-gold font-body mb-1">${v.price.toFixed(2)}</div>
-                            {meta && <p className="text-[10px] text-muted-foreground font-body leading-snug">{meta.desc}</p>}
-                            {!v.available && <div className="text-[10px] text-red-500 mt-0.5">Out of stock</div>}
+                            <div className="font-display font-bold text-base mb-1">{v.title}</div>
+                            <div className="text-xl font-bold text-gold font-body mb-1.5">${v.price.toFixed(2)}</div>
+                            {meta && <p className="text-xs text-muted-foreground font-body leading-snug">{meta.desc}</p>}
+                            {!v.available && <div className="text-xs text-red-500 mt-1">Out of stock</div>}
                         </button>
                     );
                 })}
