@@ -100,7 +100,7 @@ function StepSize({ variants, selected, onSelect }: { variants: Variant[]; selec
             </div>
             <p className="text-muted-foreground font-body text-sm mb-4 ml-8">Choose the size that fits your branding needs.</p>
 
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+            <div className="grid grid-cols-2 gap-4">
                 {variants.map((v) => {
                     const active = selected?.id === v.id;
                     const meta = SIZE_META[v.title];
