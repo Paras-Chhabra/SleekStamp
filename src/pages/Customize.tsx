@@ -26,6 +26,8 @@ interface BuilderSelections {
     variant: Variant | null;
     logoFile: File | null;
     logoPreview: string | null;
+    logoUrl: string | null;
+    logoUploading: boolean;
     stampPad: StampPadOption | null;
     inkColor: string;
     priorityProcessing: boolean;
@@ -585,6 +587,8 @@ export default function Customize() {
         variant: null,
         logoFile: null,
         logoPreview: null,
+        logoUrl: null,
+        logoUploading: false,
         stampPad: null,
         inkColor: "Black",
         priorityProcessing: false,
@@ -623,13 +627,10 @@ export default function Customize() {
         setIsSubmitting(true);
 
         try {
-            // 1. Upload logo to Cloudinary if provided
-            let logoUrl: string | null = null;
-            if (selections.logoFile) {
-                logoUrl = await uploadToCloudinary(selections.logoFile);
-            }
+            // Use the pre-uploaded logo URL (already uploaded in Step 2)
+            const logoUrl = selections.logoUrl;
 
-            // 2. Build line items with custom attributes
+            // Build line items with custom attributes
             const lineItems: any[] = [];
 
             lineItems.push({
@@ -714,9 +715,16 @@ export default function Customize() {
                                 logoPreview={selections.logoPreview}
                                 onUpload={(file) => {
                                     const preview = URL.createObjectURL(file);
-                                    setSelections((s) => ({ ...s, logoFile: file, logoPreview: preview }));
+                                    setSelections((s) => ({ ...s, logoFile: file, logoPreview: preview, logoUrl: null, logoUploading: true }));
+                                    // Pre-upload to Cloudinary in background
+                                    uploadToCloudinary(file)
+                                        .then((url) => setSelections((s) => ({ ...s, logoUrl: url, logoUploading: false })))
+                                        .catch((err) => {
+                                            console.error("Logo pre-upload failed:", err);
+                                            setSelections((s) => ({ ...s, logoUploading: false }));
+                                        });
                                 }}
-                                onRemove={() => setSelections((s) => ({ ...s, logoFile: null, logoPreview: null }))}
+                                onRemove={() => setSelections((s) => ({ ...s, logoFile: null, logoPreview: null, logoUrl: null, logoUploading: false }))}
                             />
                         )}
                         {step === 2 && (
