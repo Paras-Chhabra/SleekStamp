@@ -3,7 +3,6 @@ import { useShopifyProducts } from "@/hooks/useShopify";
 import { createShopifyCheckout } from "@/utils/shopify";
 import { uploadToCloudinary } from "@/utils/cloudinary";
 import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
 import { Upload, Check, ArrowRight, ArrowLeft, Zap, Droplets, Shield, Sparkles, Clock, Palette, Box, FileImage, Info, Star } from "lucide-react";
 
 /* ═══════════════════════════════════════════════════════════════════════════
@@ -672,7 +671,6 @@ export default function Customize() {
                 <div className="flex-1 flex items-center justify-center">
                     <div className="w-10 h-10 border-4 border-gold/30 border-t-gold rounded-full animate-spin" />
                 </div>
-                <Footer />
             </div>
         );
     }
@@ -786,8 +784,6 @@ export default function Customize() {
                     )}
                 </div>
             </section>
-
-            <Footer />
         </div>
     );
 }
