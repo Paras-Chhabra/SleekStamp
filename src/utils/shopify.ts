@@ -50,11 +50,11 @@ export async function createShopifyCheckout(cartItems: any[]) {
 
     // Convert our items to Shopify's line item format
     const lineItems = cartItems.map(item => {
-        // We send line item custom attributes for the customization details
-        const customAttributes = [];
+        const customAttributes: { key: string; value: string }[] = [];
+        if (item.logoUrl) customAttributes.push({ key: "Logo URL", value: item.logoUrl });
+        if (item.inkColor) customAttributes.push({ key: "Ink Color", value: item.inkColor });
         if (item.stampPad) customAttributes.push({ key: "Stamp Pad", value: item.stampPad });
         if (item.priorityProcessing) customAttributes.push({ key: "Priority Processing", value: "Yes" });
-        if (item.logo && typeof item.logo === "string") customAttributes.push({ key: "Logo", value: "Uploaded" });
 
         return {
             merchandiseId: item.variantId,

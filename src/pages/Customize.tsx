@@ -1,6 +1,7 @@
 import { useState, useRef, useCallback } from "react";
 import { useShopifyProducts } from "@/hooks/useShopify";
 import { createShopifyCheckout } from "@/utils/shopify";
+import { uploadToCloudinary } from "@/utils/cloudinary";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { Upload, Check, ArrowRight, ArrowLeft, Zap, Droplets, Shield, Sparkles, Clock, Palette, Box, FileImage, Info, Star } from "lucide-react";
@@ -623,14 +624,22 @@ export default function Customize() {
         setIsSubmitting(true);
 
         try {
+            // 1. Upload logo to Cloudinary if provided
+            let logoUrl: string | null = null;
+            if (selections.logoFile) {
+                logoUrl = await uploadToCloudinary(selections.logoFile);
+            }
+
+            // 2. Build line items with custom attributes
             const lineItems: any[] = [];
 
             lineItems.push({
                 variantId: selections.variant.id,
                 quantity: 1,
-                stampPad: selections.stampPad?.name,
+                logoUrl: logoUrl,
+                inkColor: selections.inkColor,
+                stampPad: selections.stampPad?.name ?? null,
                 priorityProcessing: selections.priorityProcessing,
-                logo: selections.logoFile?.name ?? null,
             });
 
             if (selections.stampPad) {
