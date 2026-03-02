@@ -33,7 +33,7 @@ export default function Products() {
     else if (sort === "rating") list = [...list].sort((a, b) => b.rating - a.rating);
 
     return list;
-  }, [activeCategory, sort]);
+  }, [activeCategory, sort, products]);
 
   const activeCategoryData = categories.find((c) => c.id === activeCategory);
 

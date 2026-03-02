@@ -268,7 +268,7 @@ export default function StampBuilder() {
             {/* ═══ TRUSTED BY ═══ */}
             <section className="py-12 bg-white">
                 <div className="container mx-auto px-4 max-w-5xl">
-                    <div className="bg-[#e4e4e6] rounded-3xl p-10 md:p-14 shadow-inner border border-black/5">
+                    <div className="p-10 md:p-14">
                         <h3 className="text-center font-display font-bold text-navy tracking-[0.2em] text-sm mb-12 opacity-80 uppercase">
                             Trusted By
                         </h3>
