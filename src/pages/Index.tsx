@@ -221,7 +221,7 @@ export default function Index() {
           <div className="text-center mb-10">
             <h2 className="font-display text-3xl font-bold text-navy mb-3">Shop by Category</h2>
             <p className="text-muted-foreground font-body max-w-md mx-auto">
-              Find the perfect stamp for every need — from the office to the craft table.
+              Shop precision-crafted stamps for business, personal, and creative needs
             </p>
           </div>
 

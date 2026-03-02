@@ -33,6 +33,7 @@ interface BuilderSelections {
     priorityProcessing: boolean;
     priorityVariantId: string | null;
     priorityPrice: number;
+    designFee: number;
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
@@ -154,15 +155,18 @@ function StepLogo({
     logoPreview,
     onUpload,
     onRemove,
+    designOption,
+    onDesignOptionChange,
 }: {
     logoFile: File | null;
     logoPreview: string | null;
     onUpload: (file: File) => void;
     onRemove: () => void;
+    designOption: "upload" | "design";
+    onDesignOptionChange: (opt: "upload" | "design") => void;
 }) {
     const inputRef = useRef<HTMLInputElement>(null);
     const [dragOver, setDragOver] = useState(false);
-    const [designOption, setDesignOption] = useState<"upload" | "design">("upload");
 
     const handleDrop = useCallback(
         (e: React.DragEvent) => {
@@ -182,7 +186,7 @@ function StepLogo({
             {/* Radio options */}
             <div className="space-y-2 mb-6">
                 <button
-                    onClick={() => setDesignOption("upload")}
+                    onClick={() => onDesignOptionChange("upload")}
                     className={`w-full flex items-center gap-3 p-4 rounded-xl border-2 transition-all duration-300 text-left
                         ${designOption === "upload" ? "border-gold bg-gold/5" : "border-border bg-white hover:border-gold/40"}`}
                 >
@@ -195,7 +199,7 @@ function StepLogo({
                 </button>
 
                 <button
-                    onClick={() => setDesignOption("design")}
+                    onClick={() => onDesignOptionChange("design")}
                     className={`w-full flex items-center gap-3 p-4 rounded-xl border-2 transition-all duration-300 text-left
                         ${designOption === "design" ? "border-gold bg-gold/5" : "border-border bg-white hover:border-gold/40"}`}
                 >
@@ -611,6 +615,7 @@ export default function Customize() {
         priorityProcessing: false,
         priorityVariantId: priorityProduct?.defaultVariantId ?? null,
         priorityPrice,
+        designFee: 0,
     });
     const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -626,12 +631,13 @@ export default function Customize() {
     const totalPrice =
         (selections.variant?.price ?? 0) +
         (selections.stampPad?.price ?? 0) +
-        (selections.priorityProcessing ? priorityPrice : 0);
+        (selections.priorityProcessing ? priorityPrice : 0) +
+        selections.designFee;
 
     const canContinue = () => {
         switch (step) {
             case 0: return !!selections.variant;
-            case 1: return !!selections.logoFile;
+            case 1: return !!selections.logoFile || selections.designFee > 0;
             case 2: return true;
             case 3: return !!selections.inkColor;
             case 4: return true;
@@ -732,6 +738,10 @@ export default function Customize() {
                             <StepLogo
                                 logoFile={selections.logoFile}
                                 logoPreview={selections.logoPreview}
+                                designOption={selections.designFee > 0 ? "design" : "upload"}
+                                onDesignOptionChange={(opt) => {
+                                    setSelections((s) => ({ ...s, designFee: opt === "design" ? 30 : 0 }));
+                                }}
                                 onUpload={(file) => {
                                     const preview = URL.createObjectURL(file);
                                     setSelections((s) => ({ ...s, logoFile: file, logoPreview: preview, logoUrl: null, logoUploading: true }));
