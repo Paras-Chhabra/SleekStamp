@@ -99,7 +99,7 @@ export default function About() {
           </p>
           <Link
             to="/products"
-            className="inline-flex items-center gap-2 bg-gold text-accent-foreground px-8 py-3.5 rounded-lg font-body font-semibold text-base hover:bg-gold-dark transition-smooth shadow-lg"
+            className="inline-flex items-center gap-2 bg-black text-white px-8 py-3.5 rounded-lg font-body font-semibold text-base hover:bg-[#222222] transition-smooth shadow-lg"
           >
             Shop All Stamps <ArrowRight className="w-4 h-4" />
           </Link>

@@ -79,11 +79,9 @@ export default function StampBuilder() {
                             </p>
                             <Link
                                 to="/customize"
-                                className="inline-flex items-center gap-2 bg-gold text-navy px-8 py-4 rounded-2xl font-body font-bold text-base hover:bg-gold-dark transition-all duration-200 shadow-lg"
                             >
                                 Build Your Custom Stamp <ArrowRight className="w-5 h-5" />
                             </Link>
-                            <p className="text-muted-foreground text-sm font-body mt-3">Takes less than 2 minutes</p>
                         </div>
 
                         <div className="flex justify-center">
@@ -157,7 +155,7 @@ export default function StampBuilder() {
 
                             <Link
                                 to="/customize"
-                                className="mt-8 inline-flex items-center gap-2 bg-gold text-navy px-8 py-4 rounded-2xl font-body font-bold text-base hover:bg-gold-dark transition-all duration-200 shadow-lg"
+                                className="mt-8 inline-flex items-center gap-2 bg-black text-white hover:bg-[#222222] px-8 py-4 rounded-2xl font-body font-bold text-base transition-all duration-200 shadow-lg"
                             >
                                 Start Customizing <ArrowRight className="w-5 h-5" />
                             </Link>
@@ -191,7 +189,7 @@ export default function StampBuilder() {
                         </p>
                         <Link
                             to="/customize"
-                            className="inline-flex items-center gap-2 bg-gold text-navy px-8 py-4 rounded-2xl font-body font-bold text-base hover:bg-gold-dark transition-all duration-200 shadow-lg"
+                            className="inline-flex items-center gap-2 bg-black text-white hover:bg-[#222222] px-8 py-4 rounded-2xl font-body font-bold text-base transition-all duration-200 shadow-lg"
                         >
                             Start Customizing <ArrowRight className="w-5 h-5" />
                         </Link>
@@ -253,7 +251,7 @@ export default function StampBuilder() {
                             <div className="bg-navy rounded-b-2xl py-3 md:py-4 px-3 md:px-4 text-center">
                                 <Link
                                     to="/customize"
-                                    className="inline-flex items-center gap-1.5 bg-gold text-navy px-4 md:px-5 py-2 md:py-2.5 rounded-xl font-body font-bold text-xs hover:bg-gold-dark transition-all duration-200 shadow-md"
+                                    className="inline-flex items-center gap-1.5 bg-black text-white hover:bg-[#222222] px-4 md:px-5 py-2 md:py-2.5 rounded-xl font-body font-bold text-xs transition-all duration-200 shadow-md"
                                 >
                                     Get Started <ArrowRight className="w-3.5 h-3.5" />
                                 </Link>

@@ -153,7 +153,7 @@ export default function Index() {
         </div>
 
         <div className="relative container mx-auto px-4 py-20 flex justify-center">
-          <div className="max-w-3xl w-full bg-[#1a2d47]/95 backdrop-blur-md border border-white/10 p-10 md:p-14 rounded-[2rem] shadow-2xl text-center animate-fade-in">
+          <div className="max-w-3xl w-full bg-[#B7A996] backdrop-blur-md border border-white/10 p-10 md:p-14 rounded-[2rem] shadow-2xl text-center animate-fade-in">
             <div className="inline-flex items-center justify-center gap-2 bg-gold/20 border border-gold/40 rounded-full px-4 py-1.5 mb-6">
               <span className="w-2 h-2 rounded-full bg-gold animate-pulse" />
               <span className="text-gold text-sm font-body font-medium tracking-wide">
@@ -174,7 +174,7 @@ export default function Index() {
             <div className="flex flex-wrap items-center justify-center gap-4">
               <Link
                 to="/products"
-                className="inline-flex items-center gap-2 bg-gold text-accent-foreground px-8 py-4 rounded-xl font-body font-bold text-base hover:bg-gold-dark transition-smooth shadow-lg shadow-gold/20"
+                className="inline-flex items-center gap-2 bg-black text-white px-8 py-4 rounded-xl font-body font-bold text-base hover:bg-[#222222] transition-smooth shadow-lg"
               >
                 Shop All Stamps
                 <ArrowRight className="w-5 h-5" />

@@ -237,7 +237,7 @@ export default function Cart() {
                   }
                 }}
                 disabled={isCheckingOut || items.length === 0 || items.some((item) => item.logo === 'skipped')}
-                className="w-full flex items-center justify-center gap-2 bg-gold text-accent-foreground py-3.5 rounded-xl font-body font-semibold text-base hover:bg-gold-dark transition-smooth disabled:opacity-50"
+                className="w-full flex items-center justify-center gap-2 bg-black text-white py-3.5 rounded-xl font-body font-semibold text-base hover:bg-[#222222] transition-smooth disabled:opacity-50"
               >
                 {isCheckingOut ? (
                   "Preparing Checkout..."

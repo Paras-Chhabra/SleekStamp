@@ -396,7 +396,7 @@ function Customizer({
             onComplete(state);
           }}
           disabled={needsLogo && !hasValidLogo}
-          className="w-full bg-gold text-accent-foreground py-4 rounded-xl font-body font-semibold text-base hover:bg-gold-dark transition-smooth disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+          className="w-full bg-black text-white py-4 rounded-xl font-body font-semibold text-base hover:bg-[#222222] transition-smooth disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center gap-2"
         >
           <ShoppingCart className="w-4 h-4" /> Add to Cart — ${total.toFixed(2)}
         </button>

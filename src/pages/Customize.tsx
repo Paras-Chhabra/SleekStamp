@@ -807,7 +807,7 @@ export default function Customize() {
                                 window.scrollTo({ top: 0, behavior: "smooth" });
                             }}
                             disabled={!canContinue()}
-                            className="flex-1 bg-gold text-white py-3.5 rounded-xl font-body font-bold text-sm hover:bg-gold-dark transition-all duration-200 disabled:opacity-40 disabled:cursor-not-allowed text-center"
+                            className="flex-1 bg-black text-white hover:bg-[#222222] py-3.5 rounded-xl font-body font-bold text-sm transition-all duration-200 disabled:opacity-40 disabled:cursor-not-allowed text-center"
                         >
                             Continue
                         </button>
@@ -815,7 +815,7 @@ export default function Customize() {
                         <button
                             onClick={handleCheckout}
                             disabled={isSubmitting || !selections.variant}
-                            className="flex-1 bg-gold text-white py-3.5 rounded-xl font-body font-bold text-sm hover:bg-gold-dark transition-all duration-200 disabled:opacity-40 disabled:cursor-not-allowed text-center"
+                            className="flex-1 bg-black text-white hover:bg-[#222222] py-3.5 rounded-xl font-body font-bold text-sm transition-all duration-200 disabled:opacity-40 disabled:cursor-not-allowed text-center"
                         >
                             {isSubmitting ? "Processing..." : `Checkout — $${totalPrice.toFixed(2)}`}
                         </button>
