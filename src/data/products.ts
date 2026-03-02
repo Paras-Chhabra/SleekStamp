@@ -41,6 +41,7 @@ export const products: Product[] = [
     slug: "big-custom-stamps-by-sleekstamp",
     category: "custom-stamps",
     price: 59.99,
+    originalPrice: 119.99,
     description:
       "Just upload your logo, art, or any design you love! Our advanced engraving gives sharp, detailed impressions every time. Perfect for businesses, artists, crafters, and anyone who wants to leave a lasting mark. Available in three sizes: 4×4\", 6×6\", and 8×8\". We print only once you're happy with your proof — satisfaction guaranteed.",
     shortDescription: "Upload your logo, art, or any design. Sharp, detailed impressions every time.",
@@ -71,6 +72,7 @@ export const products: Product[] = [
     slug: "stamp-pad-refill-ink-3-pcs",
     category: "refill-ink",
     price: 29.99,
+    originalPrice: 59.99,
     description:
       "Keep your impressions bold and clear with SleekStamp's premium refill inks. Designed for smooth flow and lasting color, this set of 3 refill ink bottles is compatible with all standard stamp pads. Available in Black, Blue, Red, and Green. Water-based, fast-drying, and 100% safe.",
     shortDescription: "Bold, clear impressions. 3-pack refill ink for all stamp pads.",
@@ -95,6 +97,7 @@ export const products: Product[] = [
     slug: "big-stamp-pad-ink-pad-l",
     category: "stamp-pad",
     price: 57.99,
+    originalPrice: 115.99,
     description:
       "Experience stamping perfection with our Premium Wooden Stamp Pad — designed for flawless performance and professional results. The large size (L) offers a generous inking surface, perfect for big custom stamps. Available in Black, Blue, Red, Green, and Purple. Re-inkable for extended use.",
     shortDescription: "Premium wooden stamp pad, large size. Flawless, professional results.",
@@ -119,6 +122,7 @@ export const products: Product[] = [
     slug: "big-stamp-pad-ink-pad-xl",
     category: "stamp-pad",
     price: 87.99,
+    originalPrice: 175.99,
     description:
       "Our XL Premium Wooden Stamp Pad delivers flawless stamping for the largest custom stamp sizes. Engineered for professional results every time. The extra-large surface ensures complete, even ink coverage for 8×8\" stamps. Available in Black, Blue, Red, Green, and Purple.",
     shortDescription: "Extra-large premium stamp pad. Perfect for 8×8\" custom stamps.",
@@ -142,6 +146,7 @@ export const products: Product[] = [
     slug: "self-inking-face-logo-stamp",
     category: "face-stamps",
     price: 39.99,
+    originalPrice: 79.99,
     description:
       "Upload a picture of your face and we'll make a rubber stamp with your likeness. Also perfect for any logo or custom design. Our self-inking face & logo stamp delivers crisp impressions without needing a separate ink pad. A unique, fun, and professional way to personalize your packaging, mail, and more.",
     shortDescription: "Your face or logo as a self-inking stamp. Unique and personal.",
@@ -167,6 +172,7 @@ export const products: Product[] = [
     slug: "wooden-stamp",
     category: "wooden-stamps",
     price: 34.99,
+    originalPrice: 69.99,
     description:
       "Classic wooden handle stamps crafted for artisans, crafters, and business owners. Upload your custom design and we'll laser-engrave it onto a premium rubber die mounted on a solid hardwood handle. Use with any stamp pad (sold separately) for versatile, beautiful impressions on paper, fabric, clay, and more.",
     shortDescription: "Classic hardwood handle, laser-engraved rubber die. Works with any ink pad.",

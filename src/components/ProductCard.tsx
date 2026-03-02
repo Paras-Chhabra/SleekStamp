@@ -1,10 +1,32 @@
 import { Link } from "react-router-dom";
-import { Star, ShoppingCart } from "lucide-react";
+import { Star, StarHalf, ShoppingCart } from "lucide-react";
 import { Product } from "@/data/products";
 import { useCart } from "@/context/CartContext";
 
 interface ProductCardProps {
   product: Product;
+}
+
+function RatingStars({ rating }: { rating: number }) {
+  const full = Math.floor(rating);
+  const decimal = rating - full;
+  const hasHalf = decimal >= 0.3 && decimal < 0.8;
+  const roundUp = decimal >= 0.8;
+  const fullCount = roundUp ? full + 1 : full;
+  const halfCount = hasHalf ? 1 : 0;
+  const emptyCount = 5 - fullCount - halfCount;
+
+  return (
+    <div className="flex gap-0.5">
+      {Array.from({ length: fullCount }).map((_, i) => (
+        <Star key={`f-${i}`} className="w-3 h-3 fill-gold text-gold" />
+      ))}
+      {halfCount > 0 && <StarHalf key="h" className="w-3 h-3 fill-gold text-gold" />}
+      {Array.from({ length: emptyCount }).map((_, i) => (
+        <Star key={`e-${i}`} className="w-3 h-3 text-border" />
+      ))}
+    </div>
+  );
 }
 
 export default function ProductCard({ product }: ProductCardProps) {
@@ -70,14 +92,7 @@ export default function ProductCard({ product }: ProductCardProps) {
 
         {/* Rating */}
         <div className="flex items-center gap-1.5 mb-3">
-          <div className="flex gap-0.5">
-            {Array.from({ length: 5 }).map((_, i) => (
-              <Star
-                key={i}
-                className={`w-3 h-3 ${i < Math.round(product.rating) ? "fill-gold text-gold" : "text-border"}`}
-              />
-            ))}
-          </div>
+          <RatingStars rating={product.rating} />
           <span className="text-xs text-muted-foreground font-body">
             {product.rating} ({product.reviewCount.toLocaleString()})
           </span>
@@ -86,7 +101,7 @@ export default function ProductCard({ product }: ProductCardProps) {
         {/* Price */}
         <div className="flex items-center justify-between">
           <div className="flex items-baseline gap-2">
-            <span className="font-body font-bold text-lg text-navy">
+            <span className="font-body font-bold text-lg text-foreground">
               ${product.price.toFixed(2)}
             </span>
             {product.originalPrice && (

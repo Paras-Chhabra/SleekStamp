@@ -86,44 +86,56 @@ function ProgressBar({ step, onStepClick }: { step: number; onStepClick: (s: num
    STEP 1 — SIZE
    ═══════════════════════════════════════════════════════════════════════ */
 
-const SIZE_META: Record<string, { icon: React.ReactNode; desc: string }> = {
-    "M - 4 Inch": { icon: <Box className="w-5 h-5" />, desc: "Perfect for envelopes & small boxes" },
-    "L - 6 Inch": { icon: <Box className="w-6 h-6" />, desc: "Best seller — ideal for shipping boxes" },
-    "XL - 8 Inch": { icon: <Box className="w-7 h-7" />, desc: "Maximum impact for large surfaces" },
+const SIZE_META: Record<string, { shortSize: string; desc: string }> = {
+    "M - 4 Inch": { shortSize: "4\" × 4\"", desc: "Small boxes & mailers" },
+    "L - 6 Inch": { shortSize: "6\" × 6\"", desc: "Medium boxes" },
+    "XL - 8 Inch": { shortSize: "8\" × 8\"", desc: "Large shipping boxes" },
 };
 
 function StepSize({ variants, selected, onSelect }: { variants: Variant[]; selected: Variant | null; onSelect: (v: Variant) => void }) {
+    // Extract size number from title like "M - 4 Inch" -> "4"
+    const getSizeNum = (title: string) => {
+        const match = title.match(/(\d+)/);
+        return match ? match[1] : "";
+    };
+    const isPopular = (title: string) => title.includes("6");
+
     return (
         <div className="animate-fade-in">
-            <div className="flex items-center gap-2 mb-1">
-                <div className="w-6 h-6 rounded-full bg-gold/10 flex items-center justify-center">
-                    <Box className="w-3 h-3 text-gold" />
-                </div>
-                <h2 className="font-display text-xl font-bold">Select Your Stamp Size</h2>
-            </div>
-            <p className="text-muted-foreground font-body text-sm mb-4 ml-8">Choose the size that fits your branding needs.</p>
+            <h2 className="font-display text-xl font-bold text-center mb-1">What size stamp do you need?</h2>
+            <p className="text-muted-foreground font-body text-sm mb-6 text-center">Choose based on your most common package size.</p>
 
-            <div className="grid grid-cols-2 gap-4">
+            <div className="space-y-3">
                 {variants.map((v) => {
                     const active = selected?.id === v.id;
                     const meta = SIZE_META[v.title];
+                    const sizeNum = getSizeNum(v.title);
                     return (
                         <button
                             key={v.id}
                             onClick={() => onSelect(v)}
                             disabled={!v.available}
-                            className={`relative p-6 rounded-2xl border-2 text-center transition-all duration-300
-                ${active ? "border-gold bg-gradient-to-b from-gold/8 to-gold/3 shadow-lg shadow-gold/10 scale-[1.03]" : "border-border bg-white hover:border-gold/40 hover:shadow-md"}
+                            className={`relative w-full flex items-center gap-4 p-4 md:p-5 rounded-2xl border-2 transition-all duration-300 text-left
+                ${active ? "border-gold bg-gradient-to-r from-gold/5 to-gold/2 shadow-md shadow-gold/10" : "border-border bg-white hover:border-gold/40 hover:shadow-sm"}
                 ${!v.available ? "opacity-40 cursor-not-allowed" : ""}`}
                         >
-                            {active && (
-                                <div className="absolute top-3 right-3 w-6 h-6 rounded-full bg-gold text-white flex items-center justify-center">
-                                    <Check className="w-3.5 h-3.5" />
+                            {/* Size number */}
+                            <span className="font-display font-bold text-2xl text-gold shrink-0 w-10">{sizeNum}"</span>
+
+                            {/* Details */}
+                            <div className="flex-1 min-w-0">
+                                <div className="flex items-center gap-2">
+                                    <span className="font-display font-semibold text-base">{meta?.shortSize ?? v.title}</span>
+                                    {isPopular(v.title) && (
+                                        <span className="px-2 py-0.5 rounded bg-red-500 text-white text-[10px] font-body font-bold uppercase">Popular</span>
+                                    )}
                                 </div>
-                            )}
-                            <div className="font-display font-semibold text-base mb-1">{v.title}</div>
-                            <div className="text-xl font-bold text-foreground font-body mb-1.5">${v.price.toFixed(2)}</div>
-                            {meta && <p className="text-xs text-muted-foreground font-body font-normal leading-snug">{meta.desc}</p>}
+                                {meta && <p className="text-xs text-muted-foreground font-body font-normal">{meta.desc}</p>}
+                            </div>
+
+                            {/* Price */}
+                            <span className="font-body font-bold text-lg text-foreground shrink-0">${v.price.toFixed(0)}</span>
+
                             {!v.available && <div className="text-xs text-red-500 mt-1">Out of stock</div>}
                         </button>
                     );
@@ -368,6 +380,9 @@ function StepInk({ selected, onSelect }: { selected: string; onSelect: (c: strin
                                 )}
                             </div>
                             <span className="font-body font-medium text-sm">{name}</span>
+                            {(name === "Black" || name === "Blue") && (
+                                <span className="px-1.5 py-0.5 rounded bg-gray-900 text-white text-[9px] font-body font-bold uppercase leading-none">Best Seller</span>
+                            )}
                         </button>
                     );
                 })}
@@ -663,7 +678,6 @@ export default function Customize() {
 
     return (
         <div className="min-h-screen flex flex-col bg-white">
-            <Navbar />
 
             {/* Top bar: back arrow | step title | running total */}
             <div className="border-b border-border bg-white">
