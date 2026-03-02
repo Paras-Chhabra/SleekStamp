@@ -49,34 +49,35 @@ const INK_COLORS: { name: string; hex: string }[] = [
     { name: "Purple", hex: "#7c3aed" },
 ];
 
-/* ═══════════════════════════════════════════════════════════════════════════
-   PROGRESS BAR
-   ═══════════════════════════════════════════════════════════════════════ */
+const STEP_TITLES = ["Select Size", "Your Logo", "Stamp Pad", "Ink Color", "Processing", "Review"];
 
 function ProgressBar({ step, onStepClick }: { step: number; onStepClick: (s: number) => void }) {
     return (
-        <div className="flex items-center justify-between max-w-2xl mx-auto py-3 px-2">
-            {STEP_LABELS.map((label, i) => {
-                const done = i < step;
-                const active = i === step;
-                return (
-                    <button
-                        key={label}
-                        onClick={() => i < step && onStepClick(i)}
-                        className={`flex flex-col items-center gap-1.5 transition-all ${i < step ? "cursor-pointer" : "cursor-default"}`}
-                    >
-                        <div
-                            className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold transition-all
-                ${done ? "bg-green-500 text-white" : active ? "bg-gold text-white ring-4 ring-gold/20" : "bg-gray-200 text-gray-500"}`}
+        <div className="w-full">
+            {/* Progress line */}
+            <div className="relative h-1 bg-gray-200 w-full mb-3">
+                <div
+                    className="absolute top-0 left-0 h-full bg-gold transition-all duration-500 ease-out"
+                    style={{ width: `${((step) / (STEP_LABELS.length - 1)) * 100}%` }}
+                />
+            </div>
+            {/* Labels */}
+            <div className="flex justify-between">
+                {STEP_LABELS.map((label, i) => {
+                    const done = i < step;
+                    const active = i === step;
+                    return (
+                        <button
+                            key={label}
+                            onClick={() => i < step && onStepClick(i)}
+                            className={`text-xs font-body font-medium transition-all ${i < step ? "cursor-pointer" : "cursor-default"}
+                                ${active ? "text-gold font-bold" : done ? "text-gold" : "text-gray-400"}`}
                         >
-                            {done ? <Check className="w-4 h-4" /> : i + 1}
-                        </div>
-                        <span className={`text-xs font-body font-medium ${active ? "text-foreground" : "text-muted-foreground"}`}>
                             {label}
-                        </span>
-                    </button>
-                );
-            })}
+                        </button>
+                    );
+                })}
+            </div>
         </div>
     );
 }
@@ -677,31 +678,34 @@ export default function Customize() {
     }
 
     return (
-        <div className="min-h-screen flex flex-col bg-background">
+        <div className="min-h-screen flex flex-col bg-white">
             <Navbar />
 
-            <section ref={builderRef} className="flex-1 py-6 md:py-8 bg-gradient-to-b from-cream/40 via-white to-cream/20" id="builder">
-                <div className="container mx-auto px-4">
-                    <div className="text-center mb-4">
-                        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-gold/10 text-gold text-[10px] font-body font-semibold mb-2 tracking-wide uppercase">Step {step + 1} of 6</div>
-                        <h1 className="font-display text-2xl md:text-3xl font-bold mb-1">Build Your Custom Stamp</h1>
-                        <p className="text-muted-foreground font-body text-sm">Complete each step to customize your stamp.</p>
-                    </div>
+            {/* Top bar: back arrow | step title | running total */}
+            <div className="border-b border-border bg-white">
+                <div className="container mx-auto px-4 flex items-center justify-between h-12">
+                    <button
+                        onClick={() => step > 0 ? setStep((s) => Math.max(0, s - 1)) : window.history.back()}
+                        className="text-foreground hover:text-navy transition-smooth"
+                    >
+                        <ArrowLeft className="w-5 h-5" />
+                    </button>
+                    <h2 className="font-display font-bold text-base">{STEP_TITLES[step]}</h2>
+                    <span className="font-display font-bold text-base text-gold">${totalPrice.toFixed(2)}</span>
+                </div>
+            </div>
 
-                    {/* Sticky progress bar */}
-                    <div className="sticky top-16 z-30 bg-white/95 backdrop-blur-md border-b border-border/60 -mx-4 px-4 mb-4 shadow-sm">
-                        <ProgressBar step={step} onStepClick={(s) => setStep(s)} />
+            {/* Progress bar */}
+            <div className="bg-white">
+                <div className="container mx-auto px-4 pt-2">
+                    <ProgressBar step={step} onStepClick={(s) => setStep(s)} />
+                </div>
+            </div>
 
-                        {selections.variant && (
-                            <div className="hidden md:flex items-center justify-end pb-3 gap-2">
-                                <span className="text-sm text-muted-foreground font-body">Live Total:</span>
-                                <span className="font-display font-bold text-xl text-gold">${totalPrice.toFixed(2)}</span>
-                            </div>
-                        )}
-                    </div>
-
-                    {/* Step content */}
-                    <div className="max-w-2xl mx-auto min-h-[240px]">
+            {/* Step content — fills available space */}
+            <section ref={builderRef} className="flex-1 bg-white" id="builder">
+                <div className="container mx-auto px-4 py-8">
+                    <div className="max-w-xl mx-auto">
                         {step === 0 && (
                             <StepSize
                                 variants={variants}
@@ -757,41 +761,42 @@ export default function Customize() {
                             />
                         )}
                     </div>
-
-                    {/* Sticky bottom navigation */}
-                    {step < 5 && (
-                        <div className="sticky bottom-0 z-30 bg-white/95 backdrop-blur-sm border-t border-border -mx-4 px-4 py-3 mt-4 shadow-[0_-4px_16px_rgba(0,0,0,0.06)]">
-                            <div className="max-w-2xl mx-auto flex items-center justify-between">
-                                <button
-                                    onClick={() => setStep((s) => Math.max(0, s - 1))}
-                                    disabled={step === 0}
-                                    className="flex items-center gap-2 px-6 py-3 rounded-xl border border-border bg-white font-body font-medium text-sm hover:bg-cream transition-smooth disabled:opacity-30 disabled:cursor-not-allowed"
-                                >
-                                    <ArrowLeft className="w-4 h-4" /> Back
-                                </button>
-
-                                {selections.variant && (
-                                    <div className="flex flex-col items-center md:hidden">
-                                        <span className="text-[10px] text-muted-foreground font-body uppercase">Total</span>
-                                        <span className="font-display font-bold text-lg text-gold">${totalPrice.toFixed(2)}</span>
-                                    </div>
-                                )}
-
-                                <button
-                                    onClick={() => {
-                                        setStep((s) => Math.min(5, s + 1));
-                                        window.scrollTo({ top: 0, behavior: "smooth" });
-                                    }}
-                                    disabled={!canContinue()}
-                                    className="flex items-center gap-2 bg-gold text-navy px-6 py-3 rounded-xl font-body font-bold text-sm hover:bg-gold-dark transition-all duration-200 disabled:opacity-40 disabled:cursor-not-allowed"
-                                >
-                                    Continue <ArrowRight className="w-4 h-4" />
-                                </button>
-                            </div>
-                        </div>
-                    )}
                 </div>
             </section>
+
+            {/* Fixed bottom bar */}
+            <div className="sticky bottom-0 z-30 bg-white border-t border-border px-4 py-3 shadow-[0_-4px_16px_rgba(0,0,0,0.06)]">
+                <div className="max-w-xl mx-auto flex items-center gap-3">
+                    {step > 0 && (
+                        <button
+                            onClick={() => setStep((s) => Math.max(0, s - 1))}
+                            className="px-5 py-3 rounded-xl font-body font-medium text-sm text-foreground hover:bg-gray-100 transition-smooth"
+                        >
+                            Back
+                        </button>
+                    )}
+                    {step < 5 ? (
+                        <button
+                            onClick={() => {
+                                setStep((s) => Math.min(5, s + 1));
+                                window.scrollTo({ top: 0, behavior: "smooth" });
+                            }}
+                            disabled={!canContinue()}
+                            className="flex-1 bg-gold text-white py-3.5 rounded-xl font-body font-bold text-sm hover:bg-gold-dark transition-all duration-200 disabled:opacity-40 disabled:cursor-not-allowed text-center"
+                        >
+                            Continue
+                        </button>
+                    ) : (
+                        <button
+                            onClick={handleCheckout}
+                            disabled={isSubmitting || !selections.variant}
+                            className="flex-1 bg-gold text-white py-3.5 rounded-xl font-body font-bold text-sm hover:bg-gold-dark transition-all duration-200 disabled:opacity-40 disabled:cursor-not-allowed text-center"
+                        >
+                            {isSubmitting ? "Processing..." : `Checkout — $${totalPrice.toFixed(2)}`}
+                        </button>
+                    )}
+                </div>
+            </div>
         </div>
     );
 }

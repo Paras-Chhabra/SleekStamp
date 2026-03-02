@@ -25,9 +25,9 @@ export default function Navbar() {
 
       <header className="bg-card border-b border-border sticky top-0 z-50 shadow-sm">
         <div className="container mx-auto px-4">
-          <div className="flex items-center justify-between h-16">
-            {/* Logo */}
-            <Link to="/" className="flex items-center gap-2 group">
+          <div className="flex items-center justify-between h-16 relative">
+            {/* Logo — far left */}
+            <Link to="/" className="flex items-center gap-2 group z-10">
               <div className="w-9 h-9 bg-navy rounded flex items-center justify-center">
                 <span className="text-gold font-display font-bold text-base">S</span>
               </div>
@@ -37,8 +37,8 @@ export default function Navbar() {
               </div>
             </Link>
 
-            {/* Desktop Nav */}
-            <nav className="hidden lg:flex items-center gap-1">
+            {/* Desktop Nav — centered */}
+            <nav className="hidden lg:flex items-center gap-1 absolute left-1/2 -translate-x-1/2">
               {navLinks.map((link) => (
                 <div
                   key={link.label}
