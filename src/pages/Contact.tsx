@@ -17,10 +17,10 @@ export default function Contact() {
       <Navbar />
 
       {/* Header */}
-      <section className="bg-navy text-primary-foreground py-16">
+      <section className="bg-cream text-foreground py-16">
         <div className="container mx-auto px-4 text-center">
           <h1 className="font-display text-4xl md:text-5xl font-bold mb-4">Contact Us</h1>
-          <p className="text-primary-foreground/75 font-body text-lg max-w-xl mx-auto">
+          <p className="text-muted-foreground font-body text-lg max-w-xl mx-auto">
             We would love to hear from you. Drop us a line anytime.
           </p>
         </div>

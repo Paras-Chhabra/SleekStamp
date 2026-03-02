@@ -66,15 +66,15 @@ export default function StampBuilder() {
             <Navbar />
 
             {/* ═══ HERO ═══ */}
-            <section className="relative overflow-hidden bg-navy">
+            <section className="relative overflow-hidden bg-cream">
                 <div className="container mx-auto px-4 py-16 md:py-24">
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
                         <div className="text-center lg:text-left">
-                            <h1 className="font-display text-4xl md:text-5xl font-bold text-white leading-tight mb-5">
+                            <h1 className="font-display text-4xl md:text-5xl font-bold text-navy leading-tight mb-5">
                                 Brand Every Package.<br />
                                 <span className="text-gold">Without the Printing Cost.</span>
                             </h1>
-                            <p className="font-body text-lg text-white/70 mb-8 max-w-lg mx-auto lg:mx-0">
+                            <p className="font-body text-lg text-muted-foreground mb-8 max-w-lg mx-auto lg:mx-0">
                                 Create one custom stamp and brand thousands of packages — without recurring printing expenses.
                             </p>
                             <Link
@@ -83,7 +83,7 @@ export default function StampBuilder() {
                             >
                                 Build Your Custom Stamp <ArrowRight className="w-5 h-5" />
                             </Link>
-                            <p className="text-white/40 text-sm font-body mt-3">Takes less than 2 minutes</p>
+                            <p className="text-muted-foreground text-sm font-body mt-3">Takes less than 2 minutes</p>
                         </div>
 
                         <div className="flex justify-center">
@@ -208,21 +208,21 @@ export default function StampBuilder() {
                         <p className="text-muted-foreground font-body max-w-xl mx-auto">See why thousands of small businesses choose stamps over costly printed packaging.</p>
                     </div>
 
-                    <div className="max-w-3xl mx-auto">
+                    <div className="max-w-3xl mx-auto overflow-x-auto">
                         {/* Table Header */}
-                        <div className="grid grid-cols-3 gap-3 mb-3">
+                        <div className="grid grid-cols-3 gap-2 md:gap-3 mb-3 min-w-[480px]">
                             <div />
-                            <div className="bg-navy rounded-t-2xl py-4 px-4 text-center">
-                                <div className="flex items-center justify-center gap-2">
-                                    <Package className="w-5 h-5 text-gold" />
-                                    <span className="font-display font-bold text-white text-sm">Custom Stamp</span>
+                            <div className="bg-navy rounded-t-2xl py-3 md:py-4 px-3 md:px-4 text-center">
+                                <div className="flex items-center justify-center gap-1.5 md:gap-2">
+                                    <Package className="w-4 h-4 md:w-5 md:h-5 text-gold" />
+                                    <span className="font-display font-bold text-white text-xs md:text-sm">Custom Stamp</span>
                                 </div>
-                                <span className="text-[10px] text-green-400 font-body font-semibold uppercase tracking-wider">Recommended</span>
+                                <span className="text-[9px] md:text-[10px] text-green-400 font-body font-semibold uppercase tracking-wider">Recommended</span>
                             </div>
-                            <div className="bg-gray-100 rounded-t-2xl py-4 px-4 text-center">
-                                <div className="flex items-center justify-center gap-2">
-                                    <Recycle className="w-5 h-5 text-gray-400" />
-                                    <span className="font-display font-bold text-gray-500 text-sm">Printed Packaging</span>
+                            <div className="bg-gray-100 rounded-t-2xl py-3 md:py-4 px-3 md:px-4 text-center">
+                                <div className="flex items-center justify-center gap-1.5 md:gap-2">
+                                    <Recycle className="w-4 h-4 md:w-5 md:h-5 text-gray-400" />
+                                    <span className="font-display font-bold text-gray-500 text-xs md:text-sm">Printed Packaging</span>
                                 </div>
                             </div>
                         </div>
@@ -231,35 +231,35 @@ export default function StampBuilder() {
                         {COMPARISON_ROWS.map(({ feature, stamp, printed, stampIcon, printedIcon }, i) => (
                             <div
                                 key={feature}
-                                className={`grid grid-cols-3 gap-3 ${i < COMPARISON_ROWS.length - 1 ? "mb-2" : ""}`}
+                                className={`grid grid-cols-3 gap-2 md:gap-3 min-w-[480px] ${i < COMPARISON_ROWS.length - 1 ? "mb-2" : ""}`}
                             >
-                                <div className="flex items-center px-4 py-4 bg-cream/40 rounded-xl">
-                                    <span className="font-body font-semibold text-sm text-foreground">{feature}</span>
+                                <div className="flex items-center px-3 md:px-4 py-3 md:py-4 bg-cream/40 rounded-xl">
+                                    <span className="font-body font-semibold text-xs md:text-sm text-foreground">{feature}</span>
                                 </div>
-                                <div className="flex items-center gap-2 px-4 py-4 bg-green-50 border border-green-100 rounded-xl">
+                                <div className="flex items-center gap-1.5 md:gap-2 px-3 md:px-4 py-3 md:py-4 bg-green-50 border border-green-100 rounded-xl">
                                     <span className="text-green-600 flex-shrink-0">{stampIcon}</span>
-                                    <span className="font-body font-medium text-sm text-green-800">{stamp}</span>
+                                    <span className="font-body font-medium text-xs md:text-sm text-green-800">{stamp}</span>
                                 </div>
-                                <div className="flex items-center gap-2 px-4 py-4 bg-red-50/60 border border-red-100/50 rounded-xl">
+                                <div className="flex items-center gap-1.5 md:gap-2 px-3 md:px-4 py-3 md:py-4 bg-red-50/60 border border-red-100/50 rounded-xl">
                                     <span className="text-red-400 flex-shrink-0">{printedIcon}</span>
-                                    <span className="font-body text-sm text-red-400">{printed}</span>
+                                    <span className="font-body text-xs md:text-sm text-red-400">{printed}</span>
                                 </div>
                             </div>
                         ))}
 
                         {/* Bottom CTA row */}
-                        <div className="grid grid-cols-3 gap-3 mt-3">
+                        <div className="grid grid-cols-3 gap-2 md:gap-3 mt-3 min-w-[480px]">
                             <div />
-                            <div className="bg-navy rounded-b-2xl py-4 px-4 text-center">
+                            <div className="bg-navy rounded-b-2xl py-3 md:py-4 px-3 md:px-4 text-center">
                                 <Link
                                     to="/customize"
-                                    className="inline-flex items-center gap-1.5 bg-gold text-navy px-5 py-2.5 rounded-xl font-body font-bold text-xs hover:bg-gold-dark transition-all duration-200 shadow-md"
+                                    className="inline-flex items-center gap-1.5 bg-gold text-navy px-4 md:px-5 py-2 md:py-2.5 rounded-xl font-body font-bold text-xs hover:bg-gold-dark transition-all duration-200 shadow-md"
                                 >
                                     Get Started <ArrowRight className="w-3.5 h-3.5" />
                                 </Link>
                             </div>
-                            <div className="bg-gray-100 rounded-b-2xl py-4 px-4 text-center">
-                                <span className="text-xs text-gray-400 font-body">Expensive & slow</span>
+                            <div className="bg-gray-100 rounded-b-2xl py-3 md:py-4 px-3 md:px-4 text-center">
+                                <span className="text-xs text-gray-400 font-body">Expensive &amp; slow</span>
                             </div>
                         </div>
                     </div>

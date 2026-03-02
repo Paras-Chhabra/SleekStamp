@@ -42,22 +42,22 @@ export default function Products() {
       <Navbar />
 
       {/* Page Header */}
-      <div className="bg-navy text-primary-foreground py-10">
+      <div className="bg-cream text-foreground py-10">
         <div className="container mx-auto px-4">
-          <nav className="text-xs text-primary-foreground/50 mb-3 font-body flex gap-1.5">
+          <nav className="text-xs text-muted-foreground mb-3 font-body flex gap-1.5">
             <Link to="/" className="hover:text-gold transition-smooth">Home</Link>
             <span>/</span>
-            <span className="text-primary-foreground/80">
+            <span className="text-foreground">
               {activeCategoryData ? activeCategoryData.name : "All Stamps"}
             </span>
           </nav>
           <h1 className="font-display text-3xl font-bold mb-2">
             {activeCategoryData ? activeCategoryData.name : "All Custom Stamps"}
           </h1>
-          <p className="text-primary-foreground/70 font-body text-sm max-w-xl">
+          <p className="text-muted-foreground font-body text-sm max-w-xl">
             {activeCategoryData
               ? activeCategoryData.description
-              : "Browse our complete collection of premium custom stamps, seals, and supplies."}
+              : "Browse our complete collection of premium custom stamps."}
           </p>
         </div>
       </div>

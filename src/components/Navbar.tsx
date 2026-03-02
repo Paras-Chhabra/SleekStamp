@@ -23,7 +23,7 @@ export default function Navbar() {
         <span>🚀 Free Shipping on Orders Over $150 · Fast 1–3 Day Processing</span>
       </div>
 
-      <header className="bg-card border-b border-border sticky top-0 z-50 shadow-sm">
+      <header className="bg-card border-b border-border shadow-sm">
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-between h-16 relative">
             {/* Logo — far left */}

@@ -236,7 +236,7 @@ function StepLogo({
             <div className="mt-4 flex items-start gap-2 p-3 rounded-lg bg-blue-50/60 border border-blue-100">
                 <Info className="w-3.5 h-3.5 text-blue-500 mt-0.5 flex-shrink-0" />
                 <p className="text-[11px] font-body text-blue-700 leading-relaxed">
-                    We'll send a free digital proof before production. You can always swap or adjust your design later!
+                    We send you a digital proof to review before we dispatch your stamp.
                 </p>
             </div>
         </div>
