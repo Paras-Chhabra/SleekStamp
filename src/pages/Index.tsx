@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom"; // rebuild trigger
 import { useCallback } from "react";
 import useEmblaCarousel from "embla-carousel-react";
-import { Star, ArrowRight, Shield, Truck, Clock, Award, ChevronLeft, ChevronRight } from "lucide-react";
+import { Star, ArrowRight, Shield, Truck, Clock, Award, ChevronLeft, ChevronRight, Check } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import ProductCard from "@/components/ProductCard";
@@ -153,43 +153,50 @@ export default function Index() {
         </div>
 
         <div className="relative container mx-auto px-4 py-20 flex justify-center">
-          <div className="max-w-3xl w-full bg-[#B7A996] backdrop-blur-md border border-white/10 p-10 md:p-14 rounded-[2rem] shadow-2xl text-center animate-fade-in">
-            <div className="inline-flex items-center justify-center gap-2 bg-gold/20 border border-gold/40 rounded-full px-4 py-1.5 mb-6">
-              <span className="w-2 h-2 rounded-full bg-gold animate-pulse" />
-              <span className="text-gold text-sm font-body font-medium tracking-wide">
+          <div className="max-w-3xl w-full bg-[#f6f5f3] backdrop-blur-md p-10 md:p-14 rounded-[2rem] shadow-2xl text-center animate-fade-in border border-black/5">
+            {/* Top Badge */}
+            <div className="inline-flex items-center justify-center gap-2 border border-[#Cca35a]/40 text-[#Cca35a] rounded-full px-5 py-1.5 mb-8 bg-transparent">
+              <Check className="w-4 h-4" />
+              <span className="text-sm font-body font-semibold tracking-wide">
                 Premium Custom Stamps
               </span>
             </div>
 
-            <h1 className="font-display text-5xl md:text-6xl font-bold text-white leading-tight mb-6">
+            {/* Headline */}
+            <h1 className="font-display text-5xl md:text-6xl font-extrabold text-[#1c1c1c] leading-tight mb-5 tracking-tight">
               Custom Stamps
               <br />
-              <span className="text-gold italic">Crafted for You</span>
+              <span className="text-[#Cca35a] italic font-serif tracking-normal">Crafted for You</span>
             </h1>
 
-            <p className="text-lg text-white/80 font-body mb-10 max-w-2xl mx-auto leading-relaxed">
-              One custom stamp. Unlimited imprints on boxes, napkins, tissue paper, bags — anything. Pay once, stamp forever. Trusted by 45,000+ businesses.
+            {/* Description */}
+            <p className="text-lg text-[#333333] font-body mb-10 max-w-2xl mx-auto leading-relaxed">
+              One custom stamp. Unlimited imprints on boxes, napkins, tissue paper,
+              <br className="hidden md:block" />
+              — anything. Pay once, stamp forever. Trusted by 45,000+ businesses.
             </p>
 
-            <div className="flex flex-wrap items-center justify-center gap-4">
+            {/* CTA Button */}
+            <div className="flex flex-wrap items-center justify-center gap-4 mb-10">
               <Link
                 to="/products"
-                className="inline-flex items-center gap-2 bg-black text-white px-8 py-4 rounded-xl font-body font-bold text-base hover:bg-[#222222] transition-smooth shadow-lg"
+                className="inline-flex items-center gap-2 bg-[#1a1a1a] text-white px-8 py-4 rounded-xl font-body font-bold text-base hover:bg-[#2b2b2b] transition-smooth shadow-lg"
               >
                 Shop All Stamps
                 <ArrowRight className="w-5 h-5" />
               </Link>
             </div>
 
-            <div className="mt-10 flex flex-wrap items-center justify-center gap-x-8 gap-y-3">
-              <div className="text-white/80 text-sm font-body flex items-center gap-2">
-                <span className="text-blue-400 font-bold">✓</span> Free artwork setup
+            {/* Bottom Checks */}
+            <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-3">
+              <div className="text-[#333333] text-sm font-body font-medium flex items-center gap-2">
+                <Check className="w-4 h-4 text-[#Cca35a]" /> Free artwork setup
               </div>
-              <div className="text-white/80 text-sm font-body flex items-center gap-2">
-                <span className="text-blue-400 font-bold">✓</span> Free proof before printing
+              <div className="text-[#333333] text-sm font-body font-medium flex items-center gap-2">
+                <Check className="w-4 h-4 text-[#Cca35a]" /> Free proof before printing
               </div>
-              <div className="text-white/80 text-sm font-body flex items-center gap-2">
-                <span className="text-blue-400 font-bold">✓</span> 100% satisfaction guarantee
+              <div className="text-[#333333] text-sm font-body font-medium flex items-center gap-2">
+                <Check className="w-4 h-4 text-[#Cca35a]" /> 100% satisfaction guarantee
               </div>
             </div>
           </div>

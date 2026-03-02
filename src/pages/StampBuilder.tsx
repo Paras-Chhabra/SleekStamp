@@ -79,6 +79,7 @@ export default function StampBuilder() {
                             </p>
                             <Link
                                 to="/customize"
+                                className="inline-flex items-center gap-2 bg-black text-white hover:bg-[#222222] px-8 py-4 rounded-2xl font-body font-bold text-base transition-all duration-200 shadow-lg"
                             >
                                 Build Your Custom Stamp <ArrowRight className="w-5 h-5" />
                             </Link>
@@ -261,6 +262,17 @@ export default function StampBuilder() {
                             </div>
                         </div>
                     </div>
+                </div>
+            </section>
+
+            {/* ═══ PROMO IMAGE ═══ */}
+            <section className="py-12 bg-white">
+                <div className="container mx-auto px-4 flex justify-center">
+                    <img
+                        src="https://cdn.shopify.com/s/files/1/0676/7401/3807/files/image_1.webp?v=1772443302"
+                        alt="Custom stamp preview"
+                        className="w-full max-w-4xl h-auto rounded-3xl shadow-xl"
+                    />
                 </div>
             </section>
 
