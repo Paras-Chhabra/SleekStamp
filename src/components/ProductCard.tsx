@@ -74,7 +74,7 @@ export default function ProductCard({ product }: ProductCardProps) {
             {Array.from({ length: 5 }).map((_, i) => (
               <Star
                 key={i}
-                className={`w-3 h-3 ${i < Math.floor(product.rating) ? "fill-gold text-gold" : "text-border"}`}
+                className={`w-3 h-3 ${i < Math.round(product.rating) ? "fill-gold text-gold" : "text-border"}`}
               />
             ))}
           </div>

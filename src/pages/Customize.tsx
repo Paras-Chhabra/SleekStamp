@@ -121,9 +121,9 @@ function StepSize({ variants, selected, onSelect }: { variants: Variant[]; selec
                                     <Check className="w-3.5 h-3.5" />
                                 </div>
                             )}
-                            <div className="font-display font-bold text-base mb-1">{v.title}</div>
-                            <div className="text-xl font-bold text-gold font-body mb-1.5">${v.price.toFixed(2)}</div>
-                            {meta && <p className="text-xs text-muted-foreground font-body leading-snug">{meta.desc}</p>}
+                            <div className="font-display font-semibold text-base mb-1">{v.title}</div>
+                            <div className="text-xl font-bold text-foreground font-body mb-1.5">${v.price.toFixed(2)}</div>
+                            {meta && <p className="text-xs text-muted-foreground font-body font-normal leading-snug">{meta.desc}</p>}
                             {!v.available && <div className="text-xs text-red-500 mt-1">Out of stock</div>}
                         </button>
                     );
@@ -531,22 +531,6 @@ function StepReview({
                 </div>
             </div>
 
-            <button
-                onClick={onCheckout}
-                disabled={isSubmitting || !selections.variant}
-                className="mt-4 w-full bg-gold text-navy py-3.5 rounded-xl font-body font-bold text-sm hover:bg-gold-dark transition-all duration-300 disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center gap-2 shadow-lg hover:shadow-xl"
-            >
-                {isSubmitting ? (
-                    <span className="flex items-center gap-2">
-                        <span className="w-5 h-5 border-2 border-navy/30 border-t-navy rounded-full animate-spin" />
-                        Creating Checkout…
-                    </span>
-                ) : (
-                    <>
-                        <ArrowRight className="w-4 h-4" /> Checkout — ${totalPrice.toFixed(2)}
-                    </>
-                )}
-            </button>
 
             {/* Trust badges */}
             <div className="mt-5 flex items-center justify-center gap-6 text-muted-foreground">

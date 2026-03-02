@@ -168,7 +168,7 @@ export default function Index() {
             </h1>
 
             <p className="text-lg text-white/80 font-body mb-10 max-w-2xl mx-auto leading-relaxed">
-              From self-inking business stamps to notary seals — precision-made, fast-shipped, and guaranteed to impress. Trusted by 45,000+ businesses.
+              One custom stamp. Unlimited imprints on boxes, napkins, tissue paper, bags — anything. Pay once, stamp forever. Trusted by 45,000+ businesses.
             </p>
 
             <div className="flex flex-wrap items-center justify-center gap-4">

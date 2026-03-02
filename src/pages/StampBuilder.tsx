@@ -109,17 +109,17 @@ export default function StampBuilder() {
                             <p className="text-xs text-muted-foreground font-body uppercase tracking-wider mb-2">Custom Stamps</p>
                             <h2 className="font-display text-3xl font-bold text-foreground mb-3">{product.name}</h2>
 
-                            {product.sizes && product.sizes.length > 0 && (
-                                <div className="flex items-baseline gap-2 mb-4">
-                                    <span className="font-display text-2xl font-bold text-gold">
-                                        ${Math.min(...product.sizes.map((s) => s.price)).toFixed(2)}
-                                    </span>
-                                    <span className="text-muted-foreground font-body">—</span>
-                                    <span className="font-display text-2xl font-bold text-gold">
-                                        ${Math.max(...product.sizes.map((s) => s.price)).toFixed(2)}
-                                    </span>
-                                </div>
-                            )}
+                            <div className="flex items-baseline gap-3 mb-4">
+                                <span className="font-display text-3xl font-bold text-gold">
+                                    $59.99
+                                </span>
+                                <span className="text-lg text-muted-foreground line-through font-body">
+                                    $119.99
+                                </span>
+                                <span className="px-2 py-0.5 rounded-full bg-red-100 text-red-600 text-xs font-body font-bold">
+                                    SAVE 50%
+                                </span>
+                            </div>
 
                             <div className="flex items-center gap-2 mb-6">
                                 <div className="flex gap-0.5">
