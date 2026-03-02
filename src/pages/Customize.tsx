@@ -98,7 +98,7 @@ function StepSize({ variants, selected, onSelect }: { variants: Variant[]; selec
         const match = title.match(/(\d+)/);
         return match ? match[1] : "";
     };
-    const isPopular = (title: string) => title.includes("6");
+    const isPopular = (title: string) => title === "L - 6 Inch";
 
     return (
         <div className="animate-fade-in">
@@ -162,6 +162,7 @@ function StepLogo({
 }) {
     const inputRef = useRef<HTMLInputElement>(null);
     const [dragOver, setDragOver] = useState(false);
+    const [designOption, setDesignOption] = useState<"upload" | "design">("upload");
 
     const handleDrop = useCallback(
         (e: React.DragEvent) => {
@@ -175,76 +176,92 @@ function StepLogo({
 
     return (
         <div className="animate-fade-in">
-            <div className="flex items-center gap-2 mb-1">
-                <div className="w-6 h-6 rounded-full bg-gold/10 flex items-center justify-center">
-                    <FileImage className="w-3 h-3 text-gold" />
-                </div>
-                <h2 className="font-display text-xl font-bold">Upload Your Design</h2>
-            </div>
-            <p className="text-muted-foreground font-body text-sm mb-4 ml-8">
-                Upload your logo, artwork, or signature. We accept PNG, JPG, PDF, AI, and EPS files.
-            </p>
+            <h2 className="font-display text-xl font-bold text-center mb-1">Your Logo</h2>
+            <p className="text-muted-foreground font-body text-sm mb-6 text-center">Upload your print-ready design or let us create one.</p>
 
-            {logoPreview ? (
-                <div className="bg-gradient-to-b from-cream/50 to-white border border-border rounded-2xl p-8 text-center">
-                    <img src={logoPreview} alt="Logo preview" className="max-h-48 mx-auto rounded-xl mb-4 shadow-md border border-border" />
-                    <p className="text-sm font-body text-muted-foreground mb-4">{logoFile?.name}</p>
-                    <div className="flex gap-3 justify-center">
-                        <button
-                            onClick={() => inputRef.current?.click()}
-                            className="px-5 py-2.5 rounded-xl border border-border bg-white text-sm font-body font-medium hover:bg-cream transition-smooth shadow-sm"
-                        >
-                            Replace
-                        </button>
-                        <button
-                            onClick={onRemove}
-                            className="px-5 py-2.5 rounded-xl border border-red-200 text-red-600 bg-red-50/80 text-sm font-body font-medium hover:bg-red-100 transition-smooth"
-                        >
-                            Remove
-                        </button>
-                    </div>
-                </div>
-            ) : (
-                <div
-                    onDragOver={(e) => {
-                        e.preventDefault();
-                        setDragOver(true);
-                    }}
-                    onDragLeave={() => setDragOver(false)}
-                    onDrop={handleDrop}
-                    onClick={() => inputRef.current?.click()}
-                    className={`cursor-pointer border-2 border-dashed rounded-2xl p-8 text-center transition-all duration-300
-            ${dragOver ? "border-gold bg-gold/5 scale-[1.01]" : "border-gray-300 bg-gradient-to-b from-cream/30 to-white hover:border-gold/50 hover:bg-gold/3"}`}
+            {/* Radio options */}
+            <div className="space-y-2 mb-6">
+                <button
+                    onClick={() => setDesignOption("upload")}
+                    className={`w-full flex items-center gap-3 p-4 rounded-xl border-2 transition-all duration-300 text-left
+                        ${designOption === "upload" ? "border-gold bg-gold/5" : "border-border bg-white hover:border-gold/40"}`}
                 >
-                    <div className="w-12 h-12 rounded-xl bg-gold/10 flex items-center justify-center mx-auto mb-3">
-                        <Upload className="w-5 h-5 text-gold" />
+                    <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center shrink-0
+                        ${designOption === "upload" ? "border-gold" : "border-gray-300"}`}>
+                        {designOption === "upload" && <div className="w-2.5 h-2.5 rounded-full bg-gold" />}
                     </div>
-                    <p className="font-body font-semibold text-foreground text-sm mb-1">
-                        Drag & drop your file here
-                    </p>
-                    <p className="text-sm text-muted-foreground font-body">
-                        or <span className="text-gold font-medium underline underline-offset-2">click to browse</span>
-                    </p>
-                    <div className="flex flex-wrap justify-center gap-2 mt-3">
-                        {["PNG", "JPG", "PDF", "AI", "EPS"].map((fmt) => (
-                            <span key={fmt} className="px-2.5 py-1 rounded-md bg-gray-100 text-[10px] font-body font-semibold text-gray-500 uppercase tracking-wider">{fmt}</span>
-                        ))}
+                    <span className="font-body font-semibold text-sm flex-1">I'll upload my logo</span>
+                    <span className="font-body text-sm text-muted-foreground">Free</span>
+                </button>
+
+                <button
+                    onClick={() => setDesignOption("design")}
+                    className={`w-full flex items-center gap-3 p-4 rounded-xl border-2 transition-all duration-300 text-left
+                        ${designOption === "design" ? "border-gold bg-gold/5" : "border-border bg-white hover:border-gold/40"}`}
+                >
+                    <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center shrink-0
+                        ${designOption === "design" ? "border-gold" : "border-gray-300"}`}>
+                        {designOption === "design" && <div className="w-2.5 h-2.5 rounded-full bg-gold" />}
                     </div>
-                </div>
+                    <span className="font-body font-semibold text-sm flex-1">We design for you</span>
+                    <span className="font-body text-sm text-muted-foreground">+ $30</span>
+                </button>
+            </div>
+
+            {/* Upload area (only when upload option selected) */}
+            {designOption === "upload" && (
+                <>
+                    {logoPreview ? (
+                        <div className="border border-border rounded-2xl p-8 text-center bg-white">
+                            <img src={logoPreview} alt="Logo preview" className="max-h-48 mx-auto rounded-xl mb-4 shadow-md border border-border" />
+                            <p className="text-sm font-body text-muted-foreground mb-4">{logoFile?.name}</p>
+                            <div className="flex gap-3 justify-center">
+                                <button
+                                    onClick={() => inputRef.current?.click()}
+                                    className="px-5 py-2.5 rounded-xl border border-border bg-white text-sm font-body font-medium hover:bg-cream transition-smooth shadow-sm"
+                                >
+                                    Replace
+                                </button>
+                                <button
+                                    onClick={onRemove}
+                                    className="px-5 py-2.5 rounded-xl border border-red-200 text-red-600 bg-red-50/80 text-sm font-body font-medium hover:bg-red-100 transition-smooth"
+                                >
+                                    Remove
+                                </button>
+                            </div>
+                        </div>
+                    ) : (
+                        <div
+                            onDragOver={(e) => {
+                                e.preventDefault();
+                                setDragOver(true);
+                            }}
+                            onDragLeave={() => setDragOver(false)}
+                            onDrop={handleDrop}
+                            onClick={() => inputRef.current?.click()}
+                            className={`cursor-pointer border-2 border-dashed rounded-2xl p-10 text-center transition-all duration-300
+                                ${dragOver ? "border-gold bg-gold/5" : "border-gray-300 bg-white hover:border-gold/50"}`}
+                        >
+                            <Upload className="w-6 h-6 text-gold mx-auto mb-3" />
+                            <p className="font-body font-semibold text-foreground text-sm mb-1">Tap to upload your logo</p>
+                            <p className="text-xs text-muted-foreground font-body">PNG, JPG, PDF, AI, EPS</p>
+                        </div>
+                    )}
+
+                    <input
+                        ref={inputRef}
+                        type="file"
+                        accept="image/*,.pdf,.ai,.eps"
+                        className="hidden"
+                        onChange={(e) => {
+                            const file = e.target.files?.[0];
+                            if (file) onUpload(file);
+                        }}
+                    />
+                </>
             )}
 
-            <input
-                ref={inputRef}
-                type="file"
-                accept="image/*,.pdf,.ai,.eps"
-                className="hidden"
-                onChange={(e) => {
-                    const file = e.target.files?.[0];
-                    if (file) onUpload(file);
-                }}
-            />
-
-            {/* Helpful note */}
+            {/* Info note */}
             <div className="mt-4 flex items-start gap-2 p-3 rounded-lg bg-blue-50/60 border border-blue-100">
                 <Info className="w-3.5 h-3.5 text-blue-500 mt-0.5 flex-shrink-0" />
                 <p className="text-[11px] font-body text-blue-700 leading-relaxed">
