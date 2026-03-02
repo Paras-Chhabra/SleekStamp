@@ -3,9 +3,11 @@ import { useShopifyProducts } from "@/hooks/useShopify";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { Star, Check, ArrowRight, X, Recycle, Leaf, Zap, Package, RefreshCw, ChevronLeft, ChevronRight } from "lucide-react";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 
 const HERO_GIF = "https://cdn.shopify.com/s/files/1/0676/7401/3807/files/Sleekstamp.gif?v=1772023606";
+const PRODUCT_VIDEO = "https://cdn.shopify.com/videos/c/o/v/a9b155bbf1314cc4a2e5b5d1b579f12a.mp4";
+const VIDEO_POSTER = "https://cdn.shopify.com/s/files/1/0676/7401/3807/files/Sleekstamp.gif?v=1772023606";
 const BEFORE_IMG = "https://cdn.shopify.com/s/files/1/0676/7401/3807/files/beforee.webp?v=1772126305";
 const AFTER_IMG = "https://cdn.shopify.com/s/files/1/0676/7401/3807/files/afterr.webp?v=1772126309";
 
@@ -93,6 +95,9 @@ export default function StampBuilder() {
                     </div>
                 </div>
             </section>
+
+            {/* ═══ PRODUCT VIDEO ═══ */}
+            <ProductVideo />
 
             {/* ═══ PRODUCT INFO ═══ */}
             <section className="py-16 bg-white border-b border-border">
@@ -290,6 +295,57 @@ export default function StampBuilder() {
 
             <Footer />
         </div>
+    );
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   PRODUCT VIDEO — autoplay on scroll into view
+   ═══════════════════════════════════════════════════════════════════════ */
+
+function ProductVideo() {
+    const videoRef = useRef<HTMLVideoElement>(null);
+    const containerRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        const video = videoRef.current;
+        const container = containerRef.current;
+        if (!video || !container) return;
+
+        const observer = new IntersectionObserver(
+            ([entry]) => {
+                if (entry.isIntersecting) {
+                    video.play().catch(() => { /* browser blocked autoplay */ });
+                } else {
+                    video.pause();
+                }
+            },
+            { threshold: 0.5 }
+        );
+
+        observer.observe(container);
+        return () => observer.disconnect();
+    }, []);
+
+    return (
+        <section className="py-12 bg-white">
+            <div
+                ref={containerRef}
+                className="container mx-auto px-4 max-w-3xl"
+            >
+                <div className="aspect-square rounded-2xl overflow-hidden shadow-lg border border-border bg-black">
+                    <video
+                        ref={videoRef}
+                        src={PRODUCT_VIDEO}
+                        poster={VIDEO_POSTER}
+                        muted
+                        controls
+                        playsInline
+                        preload="metadata"
+                        className="w-full h-full object-cover"
+                    />
+                </div>
+            </div>
+        </section>
     );
 }
 
