@@ -265,14 +265,23 @@ export default function StampBuilder() {
                 </div>
             </section>
 
-            {/* ═══ PROMO IMAGE ═══ */}
+            {/* ═══ TRUSTED BY ═══ */}
             <section className="py-12 bg-white">
-                <div className="container mx-auto px-4 flex justify-center">
-                    <img
-                        src="https://cdn.shopify.com/s/files/1/0676/7401/3807/files/image_1.webp?v=1772443302"
-                        alt="Custom stamp preview"
-                        className="w-full max-w-4xl h-auto rounded-3xl shadow-xl"
-                    />
+                <div className="container mx-auto px-4 max-w-5xl">
+                    <div className="bg-[#e4e4e6] rounded-3xl p-10 md:p-14 shadow-inner border border-black/5">
+                        <h3 className="text-center font-display font-bold text-navy tracking-[0.2em] text-sm mb-12 opacity-80 uppercase">
+                            Trusted By
+                        </h3>
+                        <div className="flex flex-wrap justify-center items-center gap-x-12 gap-y-10">
+                            <span className="font-body font-bold text-3xl text-navy">CraftNest</span>
+                            <span className="font-serif font-bold text-4xl text-navy tracking-tight leading-none text-center">Bloom<br /><span className="text-sm font-sans tracking-widest uppercase opacity-70">Goods</span></span>
+                            <span className="font-serif text-3xl text-navy">Urban Maker</span>
+                            <span className="font-serif text-3xl text-navy">Parcel &amp; Print</span>
+                            <span className="font-serif font-medium text-3xl text-navy">Studio Supply Co.</span>
+                            <span className="font-serif text-3xl text-navy">Little Batch Co.</span>
+                            <span className="font-display font-bold text-4xl text-navy">Box &amp; Grain</span>
+                        </div>
+                    </div>
                 </div>
             </section>
 

@@ -155,9 +155,8 @@ export default function Index() {
         <div className="relative container mx-auto px-4 py-20 flex justify-center">
           <div className="max-w-3xl w-full bg-[#f6f5f3] backdrop-blur-md p-10 md:p-14 rounded-[2rem] shadow-2xl text-center animate-fade-in border border-black/5">
             {/* Top Badge */}
-            <div className="inline-flex items-center justify-center gap-2 border border-[#Cca35a]/40 text-[#Cca35a] rounded-full px-5 py-1.5 mb-8 bg-transparent">
-              <Check className="w-4 h-4" />
-              <span className="text-sm font-body font-semibold tracking-wide">
+            <div className="inline-flex items-center justify-center border-2 border-[#Cca35a] text-[#Cca35a] rounded-full px-6 py-1.5 mb-8 bg-transparent">
+              <span className="text-sm font-body font-bold tracking-wide">
                 Premium Custom Stamps
               </span>
             </div>
