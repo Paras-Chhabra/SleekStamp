@@ -63,7 +63,20 @@ export default function StampBuilder() {
 
     return (
         <div className="min-h-screen flex flex-col bg-background">
-            {/* Navbar removed */}
+            {/* MINIMAL LOGO HEADER */}
+            <header className="bg-white py-4 border-b border-border/50">
+                <div className="container mx-auto px-4 flex justify-center">
+                    <Link to="/" className="flex items-center gap-2 group cursor-pointer">
+                        <div className="w-8 h-8 bg-navy rounded flex items-center justify-center">
+                            <span className="text-gold font-display font-bold text-sm">S</span>
+                        </div>
+                        <div>
+                            <span className="font-display font-bold text-xl text-navy tracking-tight">Sleek</span>
+                            <span className="font-display font-bold text-xl text-gold tracking-tight">Stamp</span>
+                        </div>
+                    </Link>
+                </div>
+            </header>
 
             {/* ═══ HERO ═══ */}
             <section className="bg-white">
