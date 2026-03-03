@@ -67,7 +67,7 @@ export default function StampBuilder() {
 
             {/* ═══ HERO ═══ */}
             <section className="bg-white">
-                <div className="container mx-auto px-4 pt-20 md:pt-32 pb-12 text-center">
+                <div className="container mx-auto px-4 pt-6 md:pt-10 pb-12 text-center">
                     <span className="inline-flex items-center gap-1.5 bg-red-50 text-red-600 px-4 py-1.5 rounded-full text-sm font-body font-semibold mb-6">
                         🚀 Used by 2,000+ small businesses
                     </span>
@@ -81,7 +81,7 @@ export default function StampBuilder() {
                     </p>
 
                     {/* Video */}
-                    <div className="max-w-2xl mx-auto mb-10">
+                    <div className="w-full max-w-[500px] mx-auto mb-10">
                         <ProductVideo />
                     </div>
 
