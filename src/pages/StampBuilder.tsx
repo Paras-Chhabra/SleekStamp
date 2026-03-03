@@ -301,7 +301,7 @@ export default function StampBuilder() {
             </section>
 
             {/* ═══ READY TO BRAND ═══ */}
-            <section className="py-16 bg-white">
+            <section className="py-16 bg-[#faf5f0]">
                 <div className="container mx-auto px-4 text-center">
                     <h2 className="font-display text-2xl md:text-3xl font-bold text-foreground mb-3">Ready to Brand Your Packaging?</h2>
                     <p className="font-body text-muted-foreground mb-8">Configure your custom stamp in under 2 minutes.</p>
@@ -320,7 +320,7 @@ export default function StampBuilder() {
             <Footer />
 
             {/* ═══ STICKY ORDER NOW BUTTON ═══ */}
-            <div className="fixed bottom-0 left-0 right-0 z-50 p-3 bg-white/90 backdrop-blur border-t border-border shadow-[0_-4px_16px_rgba(0,0,0,0.08)]">
+            <div className="fixed bottom-0 left-0 right-0 z-50 p-3 bg-white border-t border-border shadow-[0_-4px_16px_rgba(0,0,0,0.08)]">
                 <Link
                     to="/customize"
                     className="flex items-center justify-center gap-2 w-full bg-[#dc2626] text-white hover:bg-[#b91c1c] py-4 rounded-full font-body font-bold text-base transition-all duration-200 shadow-lg"
