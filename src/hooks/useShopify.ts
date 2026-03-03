@@ -19,7 +19,7 @@ const GET_PRODUCTS_QUERY = `
               currencyCode
             }
           }
-          images(first: 1) {
+          images(first: 10) {
             edges {
               node {
                 url
@@ -53,6 +53,7 @@ const GET_PRODUCTS_QUERY = `
 function mapShopifyProduct(node: any): Product {
   const price = parseFloat(node.priceRange.minVariantPrice.amount);
   const image = node.images.edges[0]?.node?.url || '';
+  const images = node.images.edges.map((e: any) => e.node.url).filter(Boolean);
 
   // Extract sizes if they exist
   const sizes = node.variants.edges.map((edge: any) => {
@@ -113,6 +114,7 @@ function mapShopifyProduct(node: any): Product {
     description,
     shortDescription: description.substring(0, 100) + '...',
     image,
+    images,
     defaultVariantId,
     rating,
     reviewCount,

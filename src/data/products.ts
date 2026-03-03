@@ -8,6 +8,7 @@ export interface Product {
   description: string;
   shortDescription: string;
   image: string;
+  images?: string[];
   badge?: string;
   rating: number;
   reviewCount: number;
