@@ -67,7 +67,7 @@ export default function StampBuilder() {
 
             {/* ═══ HERO ═══ */}
             <section className="bg-white">
-                <div className="container mx-auto px-4 pt-16 md:pt-24 pb-12 text-center">
+                <div className="container mx-auto px-4 pt-6 md:pt-10 pb-12 text-center">
                     <span className="inline-flex items-center gap-1.5 bg-red-50 text-red-600 px-4 py-1.5 rounded-full text-sm font-body font-semibold mb-6">
                         🚀 Used by 2,000+ small businesses
                     </span>
@@ -87,7 +87,7 @@ export default function StampBuilder() {
 
                     <Link
                         to="/customize"
-                        className="inline-flex items-center gap-2 bg-[#9b1c2e] text-white hover:bg-[#7d1625] px-8 py-4 rounded-full font-body font-bold text-base transition-all duration-200 shadow-lg"
+                        className="inline-flex items-center gap-2 bg-[#dc2626] text-white hover:bg-[#b91c1c] px-8 py-4 rounded-full font-body font-bold text-base transition-all duration-200 shadow-lg"
                     >
                         Order Your Custom Stamp <ArrowRight className="w-5 h-5" />
                     </Link>
@@ -140,7 +140,7 @@ export default function StampBuilder() {
 
                             <Link
                                 to="/customize"
-                                className="inline-flex items-center gap-2 bg-[#9b1c2e] text-white hover:bg-[#7d1625] px-8 py-4 rounded-full font-body font-bold text-base transition-all duration-200 shadow-lg"
+                                className="inline-flex items-center gap-2 bg-[#dc2626] text-white hover:bg-[#b91c1c] px-8 py-4 rounded-full font-body font-bold text-base transition-all duration-200 shadow-lg"
                             >
                                 Start Customizing <ArrowRight className="w-5 h-5" />
                             </Link>
@@ -150,7 +150,7 @@ export default function StampBuilder() {
             </section>
 
             {/* ═══ HOW IT WORKS ═══ */}
-            <section className="py-16 bg-[#f5f0e8] text-foreground border-y border-border">
+            <section className="py-16 bg-white text-foreground border-y border-border">
                 <div className="container mx-auto px-4">
                     <div className="text-center mb-12">
                         <h2 className="font-display text-3xl font-bold mb-3">How It Works</h2>
@@ -181,7 +181,7 @@ export default function StampBuilder() {
             </section>
 
             {/* ═══ BEFORE / AFTER ═══ */}
-            <section className="py-16 bg-background">
+            <section className="py-16 bg-white">
                 <div className="container mx-auto px-4">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
                         <div className="relative rounded-2xl overflow-hidden border border-border shadow-sm">
@@ -205,7 +205,7 @@ export default function StampBuilder() {
                         </p>
                         <Link
                             to="/customize"
-                            className="inline-flex items-center gap-2 bg-black text-white hover:bg-[#222222] px-8 py-4 rounded-2xl font-body font-bold text-base transition-all duration-200 shadow-lg"
+                            className="inline-flex items-center gap-2 bg-[#dc2626] text-white hover:bg-[#b91c1c] px-8 py-4 rounded-full font-body font-bold text-base transition-all duration-200 shadow-lg"
                         >
                             Start Customizing <ArrowRight className="w-5 h-5" />
                         </Link>
@@ -214,7 +214,7 @@ export default function StampBuilder() {
             </section>
 
             {/* ═══ COMPARISON TABLE ═══ */}
-            <section className="py-16 bg-slate-50 border-t border-border">
+            <section className="py-16 bg-white border-t border-border">
                 <div className="container mx-auto px-4">
                     <div className="text-center mb-10">
                         <p className="text-xs text-gold font-body font-semibold uppercase tracking-widest mb-2">Why Choose a Stamp?</p>
@@ -267,7 +267,7 @@ export default function StampBuilder() {
                             <div className="bg-navy rounded-b-2xl py-3 md:py-4 px-3 md:px-4 text-center">
                                 <Link
                                     to="/customize"
-                                    className="inline-flex items-center gap-1.5 bg-black text-white hover:bg-[#222222] px-4 md:px-5 py-2 md:py-2.5 rounded-xl font-body font-bold text-xs transition-all duration-200 shadow-md"
+                                    className="inline-flex items-center gap-1.5 bg-[#dc2626] text-white hover:bg-[#b91c1c] px-4 md:px-5 py-2 md:py-2.5 rounded-full font-body font-bold text-xs transition-all duration-200 shadow-md"
                                 >
                                     Get Started <ArrowRight className="w-3.5 h-3.5" />
                                 </Link>
@@ -301,13 +301,13 @@ export default function StampBuilder() {
             </section>
 
             {/* ═══ READY TO BRAND ═══ */}
-            <section className="py-16 bg-[#faf5f0]">
+            <section className="py-16 bg-white">
                 <div className="container mx-auto px-4 text-center">
                     <h2 className="font-display text-2xl md:text-3xl font-bold text-foreground mb-3">Ready to Brand Your Packaging?</h2>
                     <p className="font-body text-muted-foreground mb-8">Configure your custom stamp in under 2 minutes.</p>
                     <Link
                         to="/customize"
-                        className="inline-flex items-center gap-2 bg-[#9b1c2e] text-white hover:bg-[#7d1625] px-8 py-4 rounded-full font-body font-bold text-base transition-all duration-200 shadow-lg"
+                        className="inline-flex items-center gap-2 bg-[#dc2626] text-white hover:bg-[#b91c1c] px-8 py-4 rounded-full font-body font-bold text-base transition-all duration-200 shadow-lg"
                     >
                         Order Now — From $49 <ArrowRight className="w-5 h-5" />
                     </Link>
@@ -320,7 +320,7 @@ export default function StampBuilder() {
             <Footer />
 
             {/* ═══ STICKY ORDER NOW BUTTON ═══ */}
-            <div className="fixed bottom-0 left-0 right-0 z-50 p-3 bg-white/90 backdrop-blur border-t border-border shadow-[0_-4px_16px_rgba(0,0,0,0.08)] lg:hidden">
+            <div className="fixed bottom-0 left-0 right-0 z-50 p-3 bg-white/90 backdrop-blur border-t border-border shadow-[0_-4px_16px_rgba(0,0,0,0.08)]">
                 <Link
                     to="/customize"
                     className="flex items-center justify-center gap-2 w-full bg-[#dc2626] text-white hover:bg-[#b91c1c] py-4 rounded-full font-body font-bold text-base transition-all duration-200 shadow-lg"
@@ -389,7 +389,7 @@ function ReviewsSection() {
     };
 
     return (
-        <section className="py-16 bg-background border-t border-border">
+        <section className="py-16 bg-white border-t border-border">
             <div className="container mx-auto px-4">
                 <div className="text-center mb-10">
                     <p className="text-xs text-gold font-body font-semibold uppercase tracking-widest mb-2">Real Customers, Real Results</p>
