@@ -12,18 +12,16 @@ const BEFORE_IMG = "https://cdn.shopify.com/s/files/1/0676/7401/3807/files/befor
 const AFTER_IMG = "https://cdn.shopify.com/s/files/1/0676/7401/3807/files/afterr.webp?v=1772126309";
 
 const REVIEW_IMAGES = [
-    "https://cdn.shopify.com/s/files/1/0676/7401/3807/files/Screenshot_2026-02-27_005857.webp?v=1772134436",
-    "https://cdn.shopify.com/s/files/1/0676/7401/3807/files/Screenshot_2026-02-27_005901.webp?v=1772134586",
-    "https://cdn.shopify.com/s/files/1/0676/7401/3807/files/Screenshot_2026-02-27_005857_1.webp?v=1772134430",
-    "https://cdn.shopify.com/s/files/1/0676/7401/3807/files/Screenshot_2026-02-27_005911.webp?v=1772134423",
-    "https://cdn.shopify.com/s/files/1/0676/7401/3807/files/Screenshot_2026-02-27_005915.webp?v=1772134418",
-    "https://cdn.shopify.com/s/files/1/0676/7401/3807/files/Screenshot_2026-02-27_003815.webp?v=1772133740",
-    "https://cdn.shopify.com/s/files/1/0676/7401/3807/files/Screenshot_2026-02-27_003947.webp?v=1772133706",
-    "https://cdn.shopify.com/s/files/1/0676/7401/3807/files/Screenshot_2026-02-27_003843.webp?v=1772133713",
-    "https://cdn.shopify.com/s/files/1/0676/7401/3807/files/Screenshot_2026-02-27_003839.webp?v=1772133719",
-    "https://cdn.shopify.com/s/files/1/0676/7401/3807/files/Screenshot_2026-02-27_003723.webp?v=1772133730",
-    "https://cdn.shopify.com/s/files/1/0676/7401/3807/files/Screenshot_2026-02-27_003731.webp?v=1772133735",
-    "https://cdn.shopify.com/s/files/1/0676/7401/3807/files/Screenshot_2026-02-27_003815.webp?v=1772133740",
+    "https://cdn.shopify.com/s/files/1/0676/7401/3807/files/1.webp?v=1772533083",
+    "https://cdn.shopify.com/s/files/1/0676/7401/3807/files/2.webp?v=1772533093",
+    "https://cdn.shopify.com/s/files/1/0676/7401/3807/files/3.webp?v=1772533100",
+    "https://cdn.shopify.com/s/files/1/0676/7401/3807/files/4.webp?v=1772533108",
+    "https://cdn.shopify.com/s/files/1/0676/7401/3807/files/5.webp?v=1772533114",
+    "https://cdn.shopify.com/s/files/1/0676/7401/3807/files/6.webp?v=1772533119",
+    "https://cdn.shopify.com/s/files/1/0676/7401/3807/files/7.webp?v=1772533125",
+    "https://cdn.shopify.com/s/files/1/0676/7401/3807/files/8.webp?v=1772533132",
+    "https://cdn.shopify.com/s/files/1/0676/7401/3807/files/9.webp?v=1772533137",
+    "https://cdn.shopify.com/s/files/1/0676/7401/3807/files/11.webp?v=1772533150",
 ];
 
 const COMPARISON_ROWS = [
