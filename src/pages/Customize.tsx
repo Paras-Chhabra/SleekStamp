@@ -134,7 +134,10 @@ function StepSize({ variants, selected, onSelect }: { variants: Variant[]; selec
                             </div>
 
                             {/* Price */}
-                            <span className="font-body font-bold text-lg text-foreground shrink-0">${v.price.toFixed(2)}</span>
+                            <div className="flex items-center gap-2 shrink-0">
+                                <span className="font-body font-bold text-sm text-foreground">${v.price.toFixed(2)}</span>
+                                <span className="font-body text-sm text-muted-foreground line-through">${(v.price * 2).toFixed(2)}</span>
+                            </div>
 
                             {!v.available && <div className="text-xs text-red-500 mt-1">Out of stock</div>}
                         </button>
@@ -340,8 +343,8 @@ function StepPad({
                                 </div>
                             </div>
                             <div className="flex items-center gap-2">
-                                <span className="text-xs text-muted-foreground line-through font-body">${(opt.price * 2).toFixed(2)}</span>
-                                <span className="font-body font-bold text-gold">+${opt.price.toFixed(2)}</span>
+                                <span className="font-body font-bold text-sm text-foreground">+${opt.price.toFixed(2)}</span>
+                                <span className="font-body text-sm text-muted-foreground line-through">${(opt.price * 2).toFixed(2)}</span>
                                 {active && <Check className="w-4 h-4 text-gold" />}
                             </div>
                         </button>
