@@ -40,7 +40,7 @@ export default function StampBuilder() {
     if (isLoading) {
         return (
             <div className="min-h-screen flex flex-col bg-background">
-                <Navbar />
+                {/* Navbar removed */}
                 <div className="flex-1 flex items-center justify-center">
                     <div className="w-10 h-10 border-4 border-gold/30 border-t-gold rounded-full animate-spin" />
                 </div>
@@ -52,7 +52,7 @@ export default function StampBuilder() {
     if (!product) {
         return (
             <div className="min-h-screen flex flex-col bg-background">
-                <Navbar />
+                {/* Navbar removed */}
                 <div className="flex-1 flex items-center justify-center">
                     <p className="font-body text-muted-foreground">Product not found. Please try again later.</p>
                 </div>
@@ -63,7 +63,7 @@ export default function StampBuilder() {
 
     return (
         <div className="min-h-screen flex flex-col bg-background">
-            <Navbar />
+            {/* Navbar removed */}
 
             {/* ═══ HERO ═══ */}
             <section className="bg-white">
