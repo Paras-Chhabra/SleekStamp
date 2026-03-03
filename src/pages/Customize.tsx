@@ -127,7 +127,7 @@ function StepSize({ variants, selected, onSelect }: { variants: Variant[]; selec
                                 <div className="flex items-center gap-2">
                                     <span className="font-display font-semibold text-base">{meta?.shortSize ?? v.title}</span>
                                     {isPopular(v.title) && (
-                                        <span className="px-2 py-0.5 rounded bg-red-500 text-white text-[10px] font-body font-bold uppercase">Popular</span>
+                                        <span className="px-2 py-0.5 rounded bg-red-500 text-white text-[10px] font-body font-bold uppercase">Best Seller</span>
                                     )}
                                 </div>
                                 {meta && <p className="text-xs text-muted-foreground font-body font-normal">{meta.desc}</p>}
