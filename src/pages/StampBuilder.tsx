@@ -8,7 +8,7 @@ import { useState, useRef, useEffect } from "react";
 const HERO_GIF = "https://cdn.shopify.com/s/files/1/0676/7401/3807/files/Sleekstamp.gif?v=1772023606";
 const PRODUCT_VIDEO = "https://cdn.shopify.com/videos/c/o/v/a9b155bbf1314cc4a2e5b5d1b579f12a.mp4";
 const VIDEO_POSTER = "https://cdn.shopify.com/s/files/1/0676/7401/3807/files/Sleekstamp.gif?v=1772023606";
-const BEFORE_IMG = "https://cdn.shopify.com/s/files/1/0676/7401/3807/files/beforee.webp?v=1772126305";
+const BEFORE_IMG = "https://cdn.shopify.com/s/files/1/0676/7401/3807/files/beforeeeee.webp?v=1772516374";
 const AFTER_IMG = "https://cdn.shopify.com/s/files/1/0676/7401/3807/files/afterr.webp?v=1772126309";
 
 const REVIEW_IMAGES = [
