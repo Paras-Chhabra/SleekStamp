@@ -34,13 +34,14 @@ interface BuilderSelections {
     priorityVariantId: string | null;
     priorityPrice: number;
     designFee: number;
+    tipAmount: number;
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
    CONSTANTS
    ═══════════════════════════════════════════════════════════════════════ */
 
-const STEP_LABELS = ["Size", "Logo", "Pad", "Ink", "Speed", "Review"];
+const STEP_LABELS = ["Size", "Logo", "Pad", "Ink", "Speed", "Tip", "Review"];
 
 const INK_COLORS: { name: string; hex: string }[] = [
     { name: "Black", hex: "#1a1a1a" },
@@ -50,7 +51,7 @@ const INK_COLORS: { name: string; hex: string }[] = [
     { name: "Purple", hex: "#7c3aed" },
 ];
 
-const STEP_TITLES = ["Select Size", "Your Logo", "Stamp Pad", "Ink Color", "Processing", "Review"];
+const STEP_TITLES = ["Select Size", "Your Logo", "Stamp Pad", "Ink Color", "Processing", "Add a Tip", "Review"];
 
 function ProgressBar({ step, onStepClick }: { step: number; onStepClick: (s: number) => void }) {
     return (
@@ -120,8 +121,6 @@ function StepSize({ variants, selected, onSelect }: { variants: Variant[]; selec
                 ${active ? "border-gold bg-gradient-to-r from-gold/5 to-gold/2 shadow-md shadow-gold/10" : "border-border bg-white hover:border-gold/40 hover:shadow-sm"}
                 ${!v.available ? "opacity-40 cursor-not-allowed" : ""}`}
                         >
-                            {/* Size number */}
-                            <span className="font-display font-bold text-2xl text-gold shrink-0 w-10">{sizeNum}"</span>
 
                             {/* Details */}
                             <div className="flex-1 min-w-0">
@@ -488,15 +487,124 @@ function StepSpeed({
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
-   STEP 6 — REVIEW
+   STEP 6 — TIP
+   ═══════════════════════════════════════════════════════════════════════ */
+
+function StepTip({
+    totalPrice,
+    tipAmount,
+    onTipChange,
+}: {
+    totalPrice: number;
+    tipAmount: number;
+    onTipChange: (amount: number) => void;
+}) {
+    const [customTip, setCustomTip] = useState(tipAmount > 0 && ![0.05, 0.10, 0.15].some(p => Math.abs(tipAmount - Math.round(totalPrice * p * 100) / 100) < 0.01) ? tipAmount.toFixed(2) : "");
+    const presets = [
+        { label: "5%", pct: 0.05 },
+        { label: "10%", pct: 0.10 },
+        { label: "15%", pct: 0.15 },
+    ];
+
+    const isPreset = (pct: number) => Math.abs(tipAmount - Math.round(totalPrice * pct * 100) / 100) < 0.01;
+    const isNone = tipAmount === 0;
+
+    return (
+        <div className="animate-fade-in">
+            <h2 className="font-display text-xl font-bold mb-1">Add a Tip</h2>
+
+            <div className="bg-white rounded-2xl border border-border p-5 shadow-sm">
+                <div className="flex items-center gap-2 mb-5">
+                    <div className="w-5 h-5 rounded bg-blue-600 flex items-center justify-center">
+                        <Check className="w-3 h-3 text-white" />
+                    </div>
+                    <span className="font-body text-sm text-foreground">Show your support for the team at SleekStamp</span>
+                </div>
+
+                {/* Preset buttons */}
+                <div className="grid grid-cols-4 gap-2 mb-5">
+                    {presets.map(({ label, pct }) => {
+                        const amount = Math.round(totalPrice * pct * 100) / 100;
+                        const active = isPreset(pct);
+                        return (
+                            <button
+                                key={label}
+                                onClick={() => { onTipChange(amount); setCustomTip(""); }}
+                                className={`py-3 rounded-xl border-2 text-center transition-all duration-200 ${active
+                                        ? "border-blue-600 bg-blue-50 text-blue-700"
+                                        : "border-border bg-white text-foreground hover:border-gray-300"
+                                    }`}
+                            >
+                                <div className="font-body font-bold text-base">{label}</div>
+                                <div className="font-body text-sm text-muted-foreground">${amount.toFixed(2)}</div>
+                            </button>
+                        );
+                    })}
+                    <button
+                        onClick={() => { onTipChange(0); setCustomTip(""); }}
+                        className={`py-3 rounded-xl border-2 text-center transition-all duration-200 ${isNone
+                                ? "border-blue-600 bg-blue-50 text-blue-700"
+                                : "border-border bg-white text-foreground hover:border-gray-300"
+                            }`}
+                    >
+                        <div className="font-body font-bold text-base">None</div>
+                    </button>
+                </div>
+
+                {/* Custom tip */}
+                <div className="flex gap-2 mb-4">
+                    <div className="flex-1 flex items-center border-2 border-border rounded-xl overflow-hidden">
+                        <span className="pl-4 text-muted-foreground font-body">$</span>
+                        <input
+                            type="number"
+                            min="0"
+                            step="0.01"
+                            placeholder="Custom tip"
+                            value={customTip}
+                            onChange={(e) => {
+                                setCustomTip(e.target.value);
+                                const val = parseFloat(e.target.value);
+                                if (!isNaN(val) && val >= 0) onTipChange(Math.round(val * 100) / 100);
+                                else if (e.target.value === "") onTipChange(0);
+                            }}
+                            className="flex-1 py-3 px-2 bg-transparent text-sm font-body outline-none"
+                        />
+                        <button
+                            onClick={() => {
+                                const val = Math.max(0, (parseFloat(customTip) || 0) - 1);
+                                setCustomTip(val > 0 ? val.toFixed(2) : "");
+                                onTipChange(val);
+                            }}
+                            className="px-3 text-lg text-muted-foreground hover:text-foreground"
+                        >−</button>
+                        <button
+                            onClick={() => {
+                                const val = (parseFloat(customTip) || 0) + 1;
+                                setCustomTip(val.toFixed(2));
+                                onTipChange(Math.round(val * 100) / 100);
+                            }}
+                            className="px-3 text-lg text-muted-foreground hover:text-foreground"
+                        >+</button>
+                    </div>
+                </div>
+
+                <p className="font-body text-sm text-muted-foreground">Thank you, we appreciate it.</p>
+            </div>
+        </div>
+    );
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   STEP 7 — REVIEW
    ═══════════════════════════════════════════════════════════════════════ */
 
 const REVIEW_ICONS = [
-    <Box className="w-4 h-4" />,
-    <FileImage className="w-4 h-4" />,
-    <Droplets className="w-4 h-4" />,
-    <Palette className="w-4 h-4" />,
-    <Clock className="w-4 h-4" />,
+    <Box className="w-3.5 h-3.5" />,
+    <FileImage className="w-3.5 h-3.5" />,
+    <Droplets className="w-3.5 h-3.5" />,
+    <Palette className="w-3.5 h-3.5" />,
+    <Clock className="w-3.5 h-3.5" />,
+    <Sparkles className="w-3.5 h-3.5" />,
 ];
 
 function StepReview({
@@ -518,6 +626,7 @@ function StepReview({
         { label: "Stamp Pad", value: selections.stampPad ? selections.stampPad.name : "None", price: selections.stampPad?.price ?? 0, step: 2 },
         { label: "Ink Color", value: selections.inkColor, price: 0, step: 3 },
         { label: "Processing", value: selections.priorityProcessing ? "Priority (24h)" : "Standard (1–3 days)", price: selections.priorityProcessing ? selections.priorityPrice : 0, step: 4 },
+        { label: "Tip", value: selections.tipAmount > 0 ? `$${selections.tipAmount.toFixed(2)}` : "None", price: selections.tipAmount, step: 5 },
     ];
 
     return (
@@ -616,6 +725,7 @@ export default function Customize() {
         priorityVariantId: priorityProduct?.defaultVariantId ?? null,
         priorityPrice,
         designFee: 0,
+        tipAmount: 0,
     });
     const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -632,7 +742,8 @@ export default function Customize() {
         (selections.variant?.price ?? 0) +
         (selections.stampPad?.price ?? 0) +
         (selections.priorityProcessing ? priorityPrice : 0) +
-        selections.designFee;
+        selections.designFee +
+        selections.tipAmount;
 
     const canContinue = () => {
         switch (step) {
@@ -641,6 +752,7 @@ export default function Customize() {
             case 2: return true;
             case 3: return !!selections.inkColor;
             case 4: return true;
+            case 5: return true;
             default: return true;
         }
     };
@@ -777,6 +889,13 @@ export default function Customize() {
                             />
                         )}
                         {step === 5 && (
+                            <StepTip
+                                totalPrice={totalPrice - selections.tipAmount}
+                                tipAmount={selections.tipAmount}
+                                onTipChange={(amount) => setSelections((s) => ({ ...s, tipAmount: amount }))}
+                            />
+                        )}
+                        {step === 6 && (
                             <StepReview
                                 selections={selections}
                                 totalPrice={totalPrice}
@@ -800,10 +919,10 @@ export default function Customize() {
                             Back
                         </button>
                     )}
-                    {step < 5 ? (
+                    {step < 6 ? (
                         <button
                             onClick={() => {
-                                setStep((s) => Math.min(5, s + 1));
+                                setStep((s) => Math.min(6, s + 1));
                                 window.scrollTo({ top: 0, behavior: "smooth" });
                             }}
                             disabled={!canContinue()}

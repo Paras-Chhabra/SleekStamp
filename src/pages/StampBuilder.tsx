@@ -337,7 +337,6 @@ function ProductVideo() {
                         ref={videoRef}
                         src={PRODUCT_VIDEO}
                         poster={VIDEO_POSTER}
-                        muted
                         controls
                         playsInline
                         preload="metadata"

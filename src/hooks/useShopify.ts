@@ -19,6 +19,11 @@ const GET_PRODUCTS_QUERY = `
               currencyCode
             }
           }
+          compareAtPriceRange {
+            maxVariantPrice {
+              amount
+            }
+          }
           images(first: 10) {
             edges {
               node {
@@ -52,6 +57,8 @@ const GET_PRODUCTS_QUERY = `
 // Helper to map Shopify product to our local Product interface
 function mapShopifyProduct(node: any): Product {
   const price = parseFloat(node.priceRange.minVariantPrice.amount);
+  const compareAt = parseFloat(node.compareAtPriceRange?.maxVariantPrice?.amount || '0');
+  const originalPrice = compareAt > price ? compareAt : price * 2;
   const image = node.images.edges[0]?.node?.url || '';
   const images = node.images.edges.map((e: any) => e.node.url).filter(Boolean);
 
@@ -115,6 +122,7 @@ function mapShopifyProduct(node: any): Product {
     shortDescription: description.substring(0, 100) + '...',
     image,
     images,
+    originalPrice,
     defaultVariantId,
     rating,
     reviewCount,
