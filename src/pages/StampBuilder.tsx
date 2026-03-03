@@ -67,21 +67,21 @@ export default function StampBuilder() {
 
             {/* ═══ HERO ═══ */}
             <section className="bg-white">
-                <div className="container mx-auto px-4 pt-6 md:pt-10 pb-12 text-center">
-                    <span className="inline-flex items-center gap-1.5 bg-red-50 text-red-600 px-4 py-1.5 rounded-full text-sm font-body font-semibold mb-6">
+                <div className="container mx-auto px-4 pt-4 pb-8 text-center">
+                    <span className="inline-flex items-center gap-1.5 bg-red-50 text-red-600 px-3 py-1 rounded-full text-[13px] font-body font-semibold mb-4">
                         🚀 Used by 2,000+ small businesses
                     </span>
-                    <h1 className="font-display text-4xl md:text-5xl lg:text-6xl font-bold text-foreground leading-tight mb-5">
+                    <h1 className="font-display text-3xl md:text-5xl lg:text-5xl font-bold text-foreground leading-tight mb-4">
                         Brand Every Package.<br />
                         <span className="text-red-600">Without the Printing Cost.</span>
                     </h1>
-                    <p className="font-body text-base md:text-lg text-muted-foreground max-w-xl mx-auto mb-10">
+                    <p className="font-body text-sm md:text-base text-muted-foreground max-w-xl mx-auto mb-6">
                         One custom stamp. Unlimited imprints on boxes, napkins,<br className="hidden sm:block" />
                         tissue paper, bags — anything. Pay once, stamp forever.
                     </p>
 
                     {/* Video */}
-                    <div className="w-full max-w-[500px] mx-auto mb-10">
+                    <div className="w-full max-w-[480px] mx-auto mb-6">
                         <ProductVideo />
                     </div>
 
