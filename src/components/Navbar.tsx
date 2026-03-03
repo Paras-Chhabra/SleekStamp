@@ -18,14 +18,9 @@ export default function Navbar() {
 
   return (
     <>
-      {/* Top announcement bar */}
-      <div className="bg-navy text-primary-foreground text-center py-2 text-xs font-body tracking-wide">
-        <span>🚀 Free Shipping on Orders Over $150 · Fast 1–3 Day Processing</span>
-      </div>
-
       <header className="bg-card border-b border-border shadow-sm">
         <div className="container mx-auto px-4">
-          <div className="flex items-center justify-between h-16 relative">
+          <div className="flex items-center justify-between h-14 relative">
             {/* Logo — far left */}
             <Link to="/" className="flex items-center gap-2 group z-10">
               <div className="w-9 h-9 bg-navy rounded flex items-center justify-center">
