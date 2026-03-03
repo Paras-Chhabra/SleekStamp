@@ -96,7 +96,7 @@ export default function StampBuilder() {
             </section>
 
             {/* ═══ PRODUCT INFO ═══ */}
-            <section className="py-16 bg-[#faf5f0] border-b border-border">
+            <section className="py-16 bg-white border-b border-border">
                 <div className="container mx-auto px-4">
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
                         {/* Image */}
