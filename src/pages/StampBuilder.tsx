@@ -96,7 +96,7 @@ export default function StampBuilder() {
             </section>
 
             {/* ═══ PRODUCT INFO ═══ */}
-            <section className="py-16 bg-white border-b border-border">
+            <section className="py-16 bg-[#faf5f0] border-b border-border">
                 <div className="container mx-auto px-4">
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
                         {/* Image */}
@@ -150,7 +150,7 @@ export default function StampBuilder() {
             </section>
 
             {/* ═══ HOW IT WORKS ═══ */}
-            <section className="py-16 bg-white text-foreground border-y border-border">
+            <section className="py-16 bg-[#faf5f0] text-foreground border-y border-border">
                 <div className="container mx-auto px-4">
                     <div className="text-center mb-12">
                         <h2 className="font-display text-3xl font-bold mb-3">How It Works</h2>
@@ -320,12 +320,12 @@ export default function StampBuilder() {
             <Footer />
 
             {/* ═══ STICKY ORDER NOW BUTTON ═══ */}
-            <div className="fixed bottom-0 left-0 right-0 z-50 px-6 pb-4 pt-2 pointer-events-none">
+            <div className="fixed bottom-0 left-0 right-0 z-50 py-3 bg-[#faf5f0] border-t border-border">
                 <Link
                     to="/customize"
-                    className="pointer-events-auto flex items-center justify-center gap-2 w-full max-w-xl mx-auto bg-[#dc2626] text-white hover:bg-[#b91c1c] py-4 rounded-2xl font-body font-bold text-base transition-all duration-200 shadow-[0_4px_20px_rgba(220,38,38,0.4)]"
+                    className="flex items-center justify-center gap-2 w-64 mx-auto bg-[#dc2626] text-white hover:bg-[#b91c1c] py-3.5 rounded-full font-body font-bold text-sm transition-all duration-200 shadow-lg"
                 >
-                    Order Now <ArrowRight className="w-5 h-5" />
+                    Order Now <ArrowRight className="w-4 h-4" />
                 </Link>
             </div>
         </div>
