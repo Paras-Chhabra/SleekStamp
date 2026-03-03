@@ -320,10 +320,10 @@ export default function StampBuilder() {
             <Footer />
 
             {/* ═══ STICKY ORDER NOW BUTTON ═══ */}
-            <div className="fixed bottom-0 left-0 right-0 z-50 p-3 bg-white border-t border-border shadow-[0_-4px_16px_rgba(0,0,0,0.08)]">
+            <div className="fixed bottom-0 left-0 right-0 z-50 px-6 pb-4 pt-2 pointer-events-none">
                 <Link
                     to="/customize"
-                    className="flex items-center justify-center gap-2 w-full bg-[#dc2626] text-white hover:bg-[#b91c1c] py-4 rounded-full font-body font-bold text-base transition-all duration-200 shadow-lg"
+                    className="pointer-events-auto flex items-center justify-center gap-2 w-full max-w-xl mx-auto bg-[#dc2626] text-white hover:bg-[#b91c1c] py-4 rounded-2xl font-body font-bold text-base transition-all duration-200 shadow-[0_4px_20px_rgba(220,38,38,0.4)]"
                 >
                     Order Now <ArrowRight className="w-5 h-5" />
                 </Link>
