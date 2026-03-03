@@ -66,36 +66,34 @@ export default function StampBuilder() {
             <Navbar />
 
             {/* ═══ HERO ═══ */}
-            <section className="relative overflow-hidden bg-cream">
-                <div className="container mx-auto px-4 py-16 md:py-24">
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-                        <div className="text-center lg:text-left">
-                            <h1 className="font-display text-4xl md:text-5xl font-bold text-navy leading-tight mb-5">
-                                Brand Every Package.<br />
-                                <span className="text-gold">Without the Printing Cost.</span>
-                            </h1>
-                            <p className="font-body text-lg text-muted-foreground mb-8 max-w-lg mx-auto lg:mx-0">
-                                Create one custom stamp and brand thousands of packages — without recurring printing expenses.
-                            </p>
-                            <Link
-                                to="/customize"
-                                className="inline-flex items-center gap-2 bg-black text-white hover:bg-[#222222] px-8 py-4 rounded-2xl font-body font-bold text-base transition-all duration-200 shadow-lg"
-                            >
-                                Build Your Custom Stamp <ArrowRight className="w-5 h-5" />
-                            </Link>
-                        </div>
+            <section className="bg-white">
+                <div className="container mx-auto px-4 pt-16 md:pt-24 pb-12 text-center">
+                    <span className="inline-flex items-center gap-1.5 bg-red-50 text-red-600 px-4 py-1.5 rounded-full text-sm font-body font-semibold mb-6">
+                        🚀 Used by 2,000+ small businesses
+                    </span>
+                    <h1 className="font-display text-4xl md:text-5xl lg:text-6xl font-bold text-foreground leading-tight mb-5">
+                        Brand Every Package.<br />
+                        <span className="text-red-600">Without the Printing Cost.</span>
+                    </h1>
+                    <p className="font-body text-base md:text-lg text-muted-foreground max-w-xl mx-auto mb-10">
+                        One custom stamp. Unlimited imprints on boxes, napkins,<br className="hidden sm:block" />
+                        tissue paper, bags — anything. Pay once, stamp forever.
+                    </p>
 
-                        <div className="flex justify-center">
-                            <div className="w-full max-w-md rounded-2xl overflow-hidden shadow-2xl border border-white/10">
-                                <img src={HERO_GIF} alt="SleekStamp demo" className="w-full h-auto" />
-                            </div>
-                        </div>
+                    {/* Video */}
+                    <div className="max-w-2xl mx-auto mb-10">
+                        <ProductVideo />
                     </div>
+
+                    <Link
+                        to="/customize"
+                        className="inline-flex items-center gap-2 bg-[#9b1c2e] text-white hover:bg-[#7d1625] px-8 py-4 rounded-full font-body font-bold text-base transition-all duration-200 shadow-lg"
+                    >
+                        Order Your Custom Stamp <ArrowRight className="w-5 h-5" />
+                    </Link>
+                    <p className="text-sm text-muted-foreground font-body mt-3">Takes less than 2 minutes</p>
                 </div>
             </section>
-
-            {/* ═══ PRODUCT VIDEO ═══ */}
-            <ProductVideo />
 
             {/* ═══ PRODUCT INFO ═══ */}
             <section className="py-16 bg-white border-b border-border">
@@ -108,19 +106,12 @@ export default function StampBuilder() {
 
                         {/* Info */}
                         <div>
-                            <p className="text-xs text-muted-foreground font-body uppercase tracking-wider mb-2">Custom Stamps</p>
                             <h2 className="font-display text-3xl font-bold text-foreground mb-3">{product.name}</h2>
 
                             <div className="flex items-baseline gap-3 mb-4">
-                                <span className="font-display text-3xl font-bold text-gold">
-                                    $59.99
-                                </span>
-                                <span className="text-lg text-muted-foreground line-through font-body">
-                                    $119.99
-                                </span>
-                                <span className="px-2 py-0.5 rounded-full bg-red-100 text-red-600 text-xs font-body font-bold">
-                                    SAVE 50%
-                                </span>
+                                <span className="font-display text-3xl font-bold text-foreground">$59.99</span>
+                                <span className="text-lg text-muted-foreground line-through font-body">$119.99</span>
+                                <span className="px-2 py-0.5 rounded-full bg-red-100 text-red-600 text-xs font-body font-bold">SAVE 50%</span>
                             </div>
 
                             <div className="flex items-center gap-2 mb-6">
@@ -134,36 +125,57 @@ export default function StampBuilder() {
                                 </span>
                             </div>
 
-                            <p className="font-body text-foreground leading-relaxed mb-6">{product.description}</p>
+                            <p className="font-body text-foreground leading-relaxed mb-6">
+                                Upload your logo or any design — our advanced engraving gives sharp, detailed impressions every time. Available in 4×4", 6×6", and 8×8".
+                            </p>
 
-                            {product.features && product.features.length > 0 && (
-                                <ul className="space-y-2 mb-8">
-                                    {product.features.map((f, i) => (
-                                        <li key={i} className="flex items-start gap-2 font-body text-sm">
-                                            <Check className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
-                                            {f}
-                                        </li>
-                                    ))}
-                                </ul>
-                            )}
-
-                            {product.sizes && (
-                                <div className="flex flex-wrap gap-2">
-                                    {product.sizes.map((s) => (
-                                        <span key={s.label} className="px-3 py-1.5 rounded-full bg-green-50 text-green-700 text-xs font-body font-medium border border-green-200">
-                                            ✓ {s.label} available
-                                        </span>
-                                    ))}
-                                </div>
-                            )}
+                            <ul className="space-y-2 mb-8">
+                                {["Upload any logo, art, or design", "Advanced laser engraving for sharp detail", "3 sizes: 4×4, 6×6, 8×8 inch", "Free preview before we dispatch"].map((f, i) => (
+                                    <li key={i} className="flex items-start gap-2 font-body text-sm">
+                                        <Check className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
+                                        {f}
+                                    </li>
+                                ))}
+                            </ul>
 
                             <Link
                                 to="/customize"
-                                className="mt-8 inline-flex items-center gap-2 bg-black text-white hover:bg-[#222222] px-8 py-4 rounded-2xl font-body font-bold text-base transition-all duration-200 shadow-lg"
+                                className="inline-flex items-center gap-2 bg-[#9b1c2e] text-white hover:bg-[#7d1625] px-8 py-4 rounded-full font-body font-bold text-base transition-all duration-200 shadow-lg"
                             >
                                 Start Customizing <ArrowRight className="w-5 h-5" />
                             </Link>
                         </div>
+                    </div>
+                </div>
+            </section>
+
+            {/* ═══ HOW IT WORKS ═══ */}
+            <section className="py-16 bg-[#f5f0e8] text-foreground border-y border-border">
+                <div className="container mx-auto px-4">
+                    <div className="text-center mb-12">
+                        <h2 className="font-display text-3xl font-bold mb-3">How It Works</h2>
+                        <p className="text-muted-foreground font-body max-w-md mx-auto">
+                            Ordering a custom stamp has never been easier.
+                        </p>
+                    </div>
+                    <div className="grid grid-cols-1 md:grid-cols-4 gap-8 relative">
+                        {[
+                            { step: "1", title: "Choose your stamp size", desc: 'Pick 4", 6", or 8" inch stamp size that fits your need.' },
+                            { step: "2", title: "Upload Your Design", desc: "Upload your logo, text, or signature. We handle the artwork setup for free." },
+                            { step: "3", title: "Approve Your Proof", desc: "We send you a digital proof to review before we dispatch your stamp." },
+                            { step: "4", title: "Delivered Fast", desc: "Your stamp is produced and shipped within 1–3 business days." },
+                        ].map(({ step, title, desc }, i) => (
+                            <div key={step} className="text-center relative">
+                                {i < 3 && (
+                                    <div className="hidden md:block absolute top-6 left-[calc(50%+36px)] right-[calc(-50%+36px)] h-px bg-border" />
+                                )}
+                                <div className="w-12 h-12 bg-foreground rounded-full flex items-center justify-center mx-auto mb-4 font-display font-bold text-lg text-white">
+                                    {step}
+                                </div>
+                                <h3 className="font-display font-semibold text-base mb-2">{title}</h3>
+                                <p className="text-sm text-muted-foreground font-body leading-relaxed">{desc}</p>
+                            </div>
+                        ))}
                     </div>
                 </div>
             </section>
@@ -288,10 +300,34 @@ export default function StampBuilder() {
                 </div>
             </section>
 
+            {/* ═══ READY TO BRAND ═══ */}
+            <section className="py-16 bg-[#faf5f0]">
+                <div className="container mx-auto px-4 text-center">
+                    <h2 className="font-display text-2xl md:text-3xl font-bold text-foreground mb-3">Ready to Brand Your Packaging?</h2>
+                    <p className="font-body text-muted-foreground mb-8">Configure your custom stamp in under 2 minutes.</p>
+                    <Link
+                        to="/customize"
+                        className="inline-flex items-center gap-2 bg-[#9b1c2e] text-white hover:bg-[#7d1625] px-8 py-4 rounded-full font-body font-bold text-base transition-all duration-200 shadow-lg"
+                    >
+                        Order Now — From $49 <ArrowRight className="w-5 h-5" />
+                    </Link>
+                </div>
+            </section>
+
             {/* ═══ CUSTOMER REVIEWS ═══ */}
             <ReviewsSection />
 
             <Footer />
+
+            {/* ═══ STICKY ORDER NOW BUTTON ═══ */}
+            <div className="fixed bottom-0 left-0 right-0 z-50 p-3 bg-white/90 backdrop-blur border-t border-border shadow-[0_-4px_16px_rgba(0,0,0,0.08)] lg:hidden">
+                <Link
+                    to="/customize"
+                    className="flex items-center justify-center gap-2 w-full bg-[#dc2626] text-white hover:bg-[#b91c1c] py-4 rounded-full font-body font-bold text-base transition-all duration-200 shadow-lg"
+                >
+                    Order Now <ArrowRight className="w-5 h-5" />
+                </Link>
+            </div>
         </div>
     );
 }
@@ -325,24 +361,17 @@ function ProductVideo() {
     }, []);
 
     return (
-        <section className="py-12 bg-white">
-            <div
-                ref={containerRef}
-                className="container mx-auto px-4 max-w-3xl"
-            >
-                <div className="aspect-square rounded-2xl overflow-hidden shadow-lg border border-border bg-black">
-                    <video
-                        ref={videoRef}
-                        src={PRODUCT_VIDEO}
-                        poster={VIDEO_POSTER}
-                        controls
-                        playsInline
-                        preload="metadata"
-                        className="w-full h-full object-cover"
-                    />
-                </div>
-            </div>
-        </section>
+        <div ref={containerRef} className="aspect-square rounded-2xl overflow-hidden shadow-lg border border-border bg-black">
+            <video
+                ref={videoRef}
+                src={PRODUCT_VIDEO}
+                poster={VIDEO_POSTER}
+                controls
+                playsInline
+                preload="metadata"
+                className="w-full h-full object-cover"
+            />
+        </div>
     );
 }
 
