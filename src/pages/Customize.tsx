@@ -340,6 +340,7 @@ function StepPad({
                                 </div>
                             </div>
                             <div className="flex items-center gap-2">
+                                <span className="text-xs text-muted-foreground line-through font-body">${(opt.price * 2).toFixed(2)}</span>
                                 <span className="font-body font-bold text-gold">+${opt.price.toFixed(2)}</span>
                                 {active && <Check className="w-4 h-4 text-gold" />}
                             </div>
@@ -531,8 +532,8 @@ function StepTip({
                                 key={label}
                                 onClick={() => { onTipChange(amount); setCustomTip(""); }}
                                 className={`py-3 rounded-xl border-2 text-center transition-all duration-200 ${active
-                                        ? "border-blue-600 bg-blue-50 text-blue-700"
-                                        : "border-border bg-white text-foreground hover:border-gray-300"
+                                    ? "border-blue-600 bg-blue-50 text-blue-700"
+                                    : "border-border bg-white text-foreground hover:border-gray-300"
                                     }`}
                             >
                                 <div className="font-body font-bold text-base">{label}</div>
@@ -543,8 +544,8 @@ function StepTip({
                     <button
                         onClick={() => { onTipChange(0); setCustomTip(""); }}
                         className={`py-3 rounded-xl border-2 text-center transition-all duration-200 ${isNone
-                                ? "border-blue-600 bg-blue-50 text-blue-700"
-                                : "border-border bg-white text-foreground hover:border-gray-300"
+                            ? "border-blue-600 bg-blue-50 text-blue-700"
+                            : "border-border bg-white text-foreground hover:border-gray-300"
                             }`}
                     >
                         <div className="font-body font-bold text-base">None</div>
@@ -622,7 +623,7 @@ function StepReview({
 }) {
     const rows = [
         { label: "Stamp Size", value: selections.variant?.title ?? "—", price: selections.variant?.price ?? 0, step: 0 },
-        { label: "Your Design", value: selections.logoFile?.name ?? "No file uploaded", price: 0, step: 1 },
+        { label: "Your Design", value: selections.designFee > 0 ? "We design for you" : (selections.logoFile?.name ?? "No file uploaded"), price: selections.designFee, step: 1 },
         { label: "Stamp Pad", value: selections.stampPad ? selections.stampPad.name : "None", price: selections.stampPad?.price ?? 0, step: 2 },
         { label: "Ink Color", value: selections.inkColor, price: 0, step: 3 },
         { label: "Processing", value: selections.priorityProcessing ? "Priority (24h)" : "Standard (1–3 days)", price: selections.priorityProcessing ? selections.priorityPrice : 0, step: 4 },
