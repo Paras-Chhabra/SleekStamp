@@ -338,7 +338,12 @@ function StepPad({
                                     <Droplets className={`w-3.5 h-3.5 ${active ? "text-gold" : "text-gray-400"}`} />
                                 </div>
                                 <div>
-                                    <span className="font-body font-medium text-sm block">{opt.name}</span>
+                                    <div className="flex items-center gap-1.5">
+                                        <span className="font-body font-medium text-sm block">{opt.name}</span>
+                                        {opt.name.includes("XL") && (
+                                            <span className="px-1.5 py-0.5 rounded bg-red-500 text-white text-[9px] font-body font-bold uppercase">Best Seller</span>
+                                        )}
+                                    </div>
                                     <span className="text-[10px] text-muted-foreground font-body">Perfectly sized for your stamp</span>
                                 </div>
                             </div>
