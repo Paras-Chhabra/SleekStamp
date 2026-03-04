@@ -34,6 +34,19 @@ const COMPARISON_ROWS = [
 export default function StampBuilder() {
     const { data, isLoading } = useShopifyProducts();
     const products = data?.display ?? [];
+    const [showSticky, setShowSticky] = useState(false);
+    const productInfoRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        const el = productInfoRef.current;
+        if (!el) return;
+        const observer = new IntersectionObserver(
+            ([entry]) => setShowSticky(entry.isIntersecting || entry.boundingClientRect.top < 0),
+            { threshold: 0 }
+        );
+        observer.observe(el);
+        return () => observer.disconnect();
+    }, [isLoading]);
 
     const product = products.find((p) => p.slug === "big-custom-stamps-by-sleekstamp") ?? products.find((p) => p.category === "custom-stamps");
 
@@ -96,7 +109,7 @@ export default function StampBuilder() {
             </section>
 
             {/* ═══ PRODUCT INFO ═══ */}
-            <section className="py-16 bg-white border-b border-border">
+            <section ref={productInfoRef} className="py-10 bg-white border-b border-border">
                 <div className="container mx-auto px-4">
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
                         {/* Image */}
@@ -150,7 +163,7 @@ export default function StampBuilder() {
             </section>
 
             {/* ═══ HOW IT WORKS ═══ */}
-            <section className="py-8 md:py-16 bg-[#faf5f0] text-foreground border-y border-border min-h-[100svh] md:min-h-0 flex flex-col justify-center">
+            <section className="py-8 md:py-10 bg-[#faf5f0] text-foreground border-y border-border min-h-[100svh] md:min-h-0 flex flex-col justify-center">
                 <div className="container mx-auto px-4">
                     <div className="text-center mb-6 md:mb-12">
                         <h2 className="font-display text-2xl md:text-3xl font-bold mb-2">How It Works</h2>
@@ -181,7 +194,7 @@ export default function StampBuilder() {
             </section>
 
             {/* ═══ BEFORE / AFTER ═══ */}
-            <section className="py-16 bg-white">
+            <section className="py-10 bg-white">
                 <div className="container mx-auto px-4">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
                         <div className="relative rounded-2xl overflow-hidden border border-border shadow-sm">
@@ -214,7 +227,7 @@ export default function StampBuilder() {
             </section>
 
             {/* ═══ COMPARISON TABLE ═══ */}
-            <section className="py-16 bg-[#faf5f0] border-t border-border">
+            <section className="py-10 bg-[#faf5f0] border-t border-border">
                 <div className="container mx-auto px-4">
                     <div className="text-center mb-10">
                         <p className="text-xs text-gold font-body font-semibold uppercase tracking-widest mb-2">Why Choose a Stamp?</p>
@@ -280,28 +293,8 @@ export default function StampBuilder() {
                 </div>
             </section>
 
-            {/* ═══ TRUSTED BY ═══ */}
-            <section className="py-12 bg-white">
-                <div className="container mx-auto px-4 max-w-5xl">
-                    <div className="p-10 md:p-14">
-                        <h3 className="text-center font-display font-bold text-navy tracking-[0.2em] text-sm mb-12 opacity-80 uppercase">
-                            Trusted By
-                        </h3>
-                        <div className="flex flex-wrap justify-center items-center gap-x-12 gap-y-10">
-                            <span className="font-body font-bold text-3xl text-navy">CraftNest</span>
-                            <span className="font-serif font-bold text-4xl text-navy tracking-tight leading-none text-center">Bloom<br /><span className="text-sm font-sans tracking-widest uppercase opacity-70">Goods</span></span>
-                            <span className="font-serif text-3xl text-navy">Urban Maker</span>
-                            <span className="font-serif text-3xl text-navy">Parcel &amp; Print</span>
-                            <span className="font-serif font-medium text-3xl text-navy">Studio Supply Co.</span>
-                            <span className="font-serif text-3xl text-navy">Little Batch Co.</span>
-                            <span className="font-display font-bold text-4xl text-navy">Box &amp; Grain</span>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
             {/* ═══ READY TO BRAND ═══ */}
-            <section className="py-16 bg-[#faf5f0]">
+            <section className="py-10 bg-white">
                 <div className="container mx-auto px-4 text-center">
                     <h2 className="font-display text-2xl md:text-3xl font-bold text-foreground mb-3">Ready to Brand Your Packaging?</h2>
                     <p className="font-body text-muted-foreground mb-8">Configure your custom stamp in under 2 minutes.</p>
@@ -309,8 +302,28 @@ export default function StampBuilder() {
                         to="/customize"
                         className="inline-flex items-center gap-2 bg-[#dc2626] text-white hover:bg-[#b91c1c] px-8 py-4 rounded-full font-body font-bold text-base transition-all duration-200 shadow-lg"
                     >
-                        Order Now — From $49 <ArrowRight className="w-5 h-5" />
+                        Order Now — From $59.99 <ArrowRight className="w-5 h-5" />
                     </Link>
+                </div>
+            </section>
+
+            {/* ═══ TRUSTED BY ═══ */}
+            <section className="py-6 bg-white">
+                <div className="container mx-auto px-4 max-w-5xl">
+                    <div className="px-6 py-4 md:px-10 md:py-6">
+                        <h3 className="text-center font-display font-bold text-navy tracking-[0.2em] text-sm mb-6 opacity-80 uppercase">
+                            Trusted By
+                        </h3>
+                        <div className="flex flex-wrap justify-center items-center gap-x-10 gap-y-6">
+                            <span className="font-body font-bold text-2xl text-navy">CraftNest</span>
+                            <span className="font-serif font-bold text-3xl text-navy tracking-tight leading-none text-center">Bloom<br /><span className="text-xs font-sans tracking-widest uppercase opacity-70">Goods</span></span>
+                            <span className="font-serif text-2xl text-navy">Urban Maker</span>
+                            <span className="font-serif text-2xl text-navy">Parcel &amp; Print</span>
+                            <span className="font-serif font-medium text-2xl text-navy">Studio Supply Co.</span>
+                            <span className="font-serif text-2xl text-navy">Little Batch Co.</span>
+                            <span className="font-display font-bold text-3xl text-navy">Box &amp; Grain</span>
+                        </div>
+                    </div>
                 </div>
             </section>
 
@@ -320,7 +333,7 @@ export default function StampBuilder() {
             <Footer />
 
             {/* ═══ STICKY ORDER NOW BUTTON ═══ */}
-            <div className="fixed bottom-0 left-0 right-0 z-50 py-3 bg-[#faf5f0] border-t border-border">
+            <div className={`fixed bottom-0 left-0 right-0 z-50 py-3 bg-[#faf5f0] border-t border-border transition-transform duration-300 ${showSticky ? 'translate-y-0' : 'translate-y-full'}`}>
                 <Link
                     to="/customize"
                     className="flex items-center justify-center gap-2 w-64 mx-auto bg-[#dc2626] text-white hover:bg-[#b91c1c] py-3.5 rounded-full font-body font-bold text-sm transition-all duration-200 shadow-lg"
