@@ -41,7 +41,9 @@ export default function StampBuilder() {
         const el = productInfoRef.current;
         if (!el) return;
         const observer = new IntersectionObserver(
-            ([entry]) => setShowSticky(entry.isIntersecting),
+            ([entry]) => {
+                if (entry.isIntersecting) setShowSticky(true);
+            },
             { threshold: 0.5 }
         );
         observer.observe(el);
@@ -55,7 +57,7 @@ export default function StampBuilder() {
             <div className="min-h-screen flex flex-col bg-background">
                 {/* Navbar removed */}
                 <div className="flex-1 flex items-center justify-center">
-                    <div className="w-10 h-10 border-4 border-gold/30 border-t-gold rounded-full animate-spin" />
+                    <div className="w-10 h-10 border-4 border-red-600/30 border-t-gold rounded-full animate-spin" />
                 </div>
                 <Footer />
             </div>
@@ -230,7 +232,7 @@ export default function StampBuilder() {
             <section className="py-10 bg-[#faf5f0] border-t border-border">
                 <div className="container mx-auto px-4">
                     <div className="text-center mb-10">
-                        <p className="text-xs text-gold font-body font-semibold uppercase tracking-widest mb-2">Why Choose a Stamp?</p>
+                        <p className="text-xs text-red-600 font-body font-semibold uppercase tracking-widest mb-2">Why Choose a Stamp?</p>
                         <h2 className="font-display text-3xl md:text-4xl font-bold mb-3">Custom Stamp vs. Printed Packaging</h2>
                         <p className="text-muted-foreground font-body max-w-xl mx-auto">See why thousands of small businesses choose stamps over costly printed packaging.</p>
                     </div>
@@ -241,7 +243,7 @@ export default function StampBuilder() {
                             <div />
                             <div className="bg-navy rounded-t-2xl py-3 md:py-4 px-3 md:px-4 text-center">
                                 <div className="flex items-center justify-center gap-1.5 md:gap-2">
-                                    <Package className="w-4 h-4 md:w-5 md:h-5 text-gold" />
+                                    <Package className="w-4 h-4 md:w-5 md:h-5 text-red-600" />
                                     <span className="font-display font-bold text-white text-xs md:text-sm">Custom Stamp</span>
                                 </div>
                                 <span className="text-[9px] md:text-[10px] text-green-400 font-body font-semibold uppercase tracking-wider">Recommended</span>
@@ -405,7 +407,7 @@ function ReviewsSection() {
         <section className="py-16 bg-white border-t border-border">
             <div className="container mx-auto px-4">
                 <div className="text-center mb-10">
-                    <p className="text-xs text-gold font-body font-semibold uppercase tracking-widest mb-2">Real Customers, Real Results</p>
+                    <p className="text-xs text-red-600 font-body font-semibold uppercase tracking-widest mb-2">Real Customers, Real Results</p>
                     <h2 className="font-display text-3xl md:text-4xl font-bold mb-3">What Our Customers Say</h2>
                     <p className="text-muted-foreground font-body max-w-lg mx-auto">Join thousands of happy small business owners who trust SleekStamp.</p>
                 </div>

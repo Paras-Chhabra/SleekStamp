@@ -59,7 +59,7 @@ function ProgressBar({ step, onStepClick }: { step: number; onStepClick: (s: num
             {/* Progress line */}
             <div className="relative h-1 bg-gray-200 w-full mb-3">
                 <div
-                    className="absolute top-0 left-0 h-full bg-gold transition-all duration-500 ease-out"
+                    className="absolute top-0 left-0 h-full bg-red-600 transition-all duration-500 ease-out"
                     style={{ width: `${((step) / (STEP_LABELS.length - 1)) * 100}%` }}
                 />
             </div>
@@ -73,7 +73,7 @@ function ProgressBar({ step, onStepClick }: { step: number; onStepClick: (s: num
                             key={label}
                             onClick={() => i < step && onStepClick(i)}
                             className={`text-xs font-body font-medium transition-all ${i < step ? "cursor-pointer" : "cursor-default"}
-                                ${active ? "text-gold font-bold" : done ? "text-gold" : "text-gray-400"}`}
+                                ${active ? "text-red-600 font-bold" : done ? "text-red-600" : "text-gray-400"}`}
                         >
                             {label}
                         </button>
@@ -118,7 +118,7 @@ function StepSize({ variants, selected, onSelect }: { variants: Variant[]; selec
                             onClick={() => onSelect(v)}
                             disabled={!v.available}
                             className={`relative w-full flex items-center gap-4 p-4 md:p-5 rounded-2xl border-2 transition-all duration-300 text-left
-                ${active ? "border-gold bg-gradient-to-r from-gold/5 to-gold/2 shadow-md shadow-gold/10" : "border-border bg-white hover:border-gold/40 hover:shadow-sm"}
+                ${active ? "border-red-600 bg-gradient-to-r from-gold/5 to-gold/2 shadow-md shadow-red-600/10" : "border-border bg-white hover:border-red-600/40 hover:shadow-sm"}
                 ${!v.available ? "opacity-40 cursor-not-allowed" : ""}`}
                         >
 
@@ -190,11 +190,11 @@ function StepLogo({
                 <button
                     onClick={() => onDesignOptionChange("upload")}
                     className={`w-full flex items-center gap-3 p-4 rounded-xl border-2 transition-all duration-300 text-left
-                        ${designOption === "upload" ? "border-gold bg-gold/5" : "border-border bg-white hover:border-gold/40"}`}
+                        ${designOption === "upload" ? "border-red-600 bg-red-600/5" : "border-border bg-white hover:border-red-600/40"}`}
                 >
                     <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center shrink-0
-                        ${designOption === "upload" ? "border-gold" : "border-gray-300"}`}>
-                        {designOption === "upload" && <div className="w-2.5 h-2.5 rounded-full bg-gold" />}
+                        ${designOption === "upload" ? "border-red-600" : "border-gray-300"}`}>
+                        {designOption === "upload" && <div className="w-2.5 h-2.5 rounded-full bg-red-600" />}
                     </div>
                     <span className="font-body font-semibold text-sm flex-1">I'll upload my logo</span>
                     <span className="font-body text-sm text-muted-foreground">Free</span>
@@ -203,11 +203,11 @@ function StepLogo({
                 <button
                     onClick={() => onDesignOptionChange("design")}
                     className={`w-full flex items-center gap-3 p-4 rounded-xl border-2 transition-all duration-300 text-left
-                        ${designOption === "design" ? "border-gold bg-gold/5" : "border-border bg-white hover:border-gold/40"}`}
+                        ${designOption === "design" ? "border-red-600 bg-red-600/5" : "border-border bg-white hover:border-red-600/40"}`}
                 >
                     <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center shrink-0
-                        ${designOption === "design" ? "border-gold" : "border-gray-300"}`}>
-                        {designOption === "design" && <div className="w-2.5 h-2.5 rounded-full bg-gold" />}
+                        ${designOption === "design" ? "border-red-600" : "border-gray-300"}`}>
+                        {designOption === "design" && <div className="w-2.5 h-2.5 rounded-full bg-red-600" />}
                     </div>
                     <span className="font-body font-semibold text-sm flex-1">We design for you</span>
                     <span className="font-body text-sm text-muted-foreground">+ $30</span>
@@ -246,9 +246,9 @@ function StepLogo({
                             onDrop={handleDrop}
                             onClick={() => inputRef.current?.click()}
                             className={`cursor-pointer border-2 border-dashed rounded-2xl p-10 text-center transition-all duration-300
-                                ${dragOver ? "border-gold bg-gold/5" : "border-gray-300 bg-white hover:border-gold/50"}`}
+                                ${dragOver ? "border-red-600 bg-red-600/5" : "border-gray-300 bg-white hover:border-red-600/50"}`}
                         >
-                            <Upload className="w-6 h-6 text-gold mx-auto mb-3" />
+                            <Upload className="w-6 h-6 text-red-600 mx-auto mb-3" />
                             <p className="font-body font-semibold text-foreground text-sm mb-1">Tap to upload your logo</p>
                             <p className="text-xs text-muted-foreground font-body">PNG, JPG, PDF, AI, EPS</p>
                         </div>
@@ -294,8 +294,8 @@ function StepPad({
     return (
         <div className="animate-fade-in">
             <div className="flex items-center gap-2 mb-1">
-                <div className="w-6 h-6 rounded-full bg-gold/10 flex items-center justify-center">
-                    <Droplets className="w-3 h-3 text-gold" />
+                <div className="w-6 h-6 rounded-full bg-red-600/10 flex items-center justify-center">
+                    <Droplets className="w-3 h-3 text-red-600" />
                 </div>
                 <h2 className="font-display text-xl font-bold">Add a Stamp Pad?</h2>
             </div>
@@ -331,11 +331,11 @@ function StepPad({
                             key={opt.variantId}
                             onClick={() => onToggle(opt)}
                             className={`w-full flex items-center justify-between p-3.5 rounded-xl border-2 transition-all duration-300
-                ${active ? "border-gold bg-gradient-to-r from-gold/8 to-gold/3 shadow-md shadow-gold/10" : "border-border bg-white hover:border-gold/40 hover:shadow-sm"}`}
+                ${active ? "border-red-600 bg-gradient-to-r from-gold/8 to-gold/3 shadow-md shadow-red-600/10" : "border-border bg-white hover:border-red-600/40 hover:shadow-sm"}`}
                         >
                             <div className="text-left flex items-center gap-2">
-                                <div className={`w-7 h-7 rounded-lg flex items-center justify-center ${active ? "bg-gold/20" : "bg-gray-100"}`}>
-                                    <Droplets className={`w-3.5 h-3.5 ${active ? "text-gold" : "text-gray-400"}`} />
+                                <div className={`w-7 h-7 rounded-lg flex items-center justify-center ${active ? "bg-red-600/20" : "bg-gray-100"}`}>
+                                    <Droplets className={`w-3.5 h-3.5 ${active ? "text-red-600" : "text-gray-400"}`} />
                                 </div>
                                 <div>
                                     <div className="flex items-center gap-1.5">
@@ -350,7 +350,7 @@ function StepPad({
                             <div className="flex items-center gap-2">
                                 <span className="font-body font-bold text-sm text-foreground">+${opt.price.toFixed(2)}</span>
                                 <span className="font-body text-sm text-muted-foreground line-through">${(opt.price * 2).toFixed(2)}</span>
-                                {active && <Check className="w-4 h-4 text-gold" />}
+                                {active && <Check className="w-4 h-4 text-red-600" />}
                             </div>
                         </button>
                     );
@@ -360,11 +360,11 @@ function StepPad({
                 <button
                     onClick={() => onToggle(null)}
                     className={`w-full flex items-center justify-between p-3.5 rounded-xl border-2 transition-all duration-300
-            ${!selected ? "border-gold bg-gradient-to-r from-gold/8 to-gold/3 shadow-md shadow-gold/10" : "border-border bg-white hover:border-gold/40"}`}
+            ${!selected ? "border-red-600 bg-gradient-to-r from-gold/8 to-gold/3 shadow-md shadow-red-600/10" : "border-border bg-white hover:border-red-600/40"}`}
                 >
                     <div className="flex items-center gap-2">
-                        <div className={`w-7 h-7 rounded-lg flex items-center justify-center ${!selected ? "bg-gold/20" : "bg-gray-100"}`}>
-                            <Check className={`w-3.5 h-3.5 ${!selected ? "text-gold" : "text-gray-400"}`} />
+                        <div className={`w-7 h-7 rounded-lg flex items-center justify-center ${!selected ? "bg-red-600/20" : "bg-gray-100"}`}>
+                            <Check className={`w-3.5 h-3.5 ${!selected ? "text-red-600" : "text-gray-400"}`} />
                         </div>
                         <span className="font-body font-medium">Already have a stamp pad</span>
                     </div>
@@ -383,8 +383,8 @@ function StepInk({ selected, onSelect }: { selected: string; onSelect: (c: strin
     return (
         <div className="animate-fade-in">
             <div className="flex items-center gap-2 mb-1">
-                <div className="w-6 h-6 rounded-full bg-gold/10 flex items-center justify-center">
-                    <Palette className="w-3 h-3 text-gold" />
+                <div className="w-6 h-6 rounded-full bg-red-600/10 flex items-center justify-center">
+                    <Palette className="w-3 h-3 text-red-600" />
                 </div>
                 <h2 className="font-display text-xl font-bold">Choose Ink Color</h2>
             </div>
@@ -398,12 +398,12 @@ function StepInk({ selected, onSelect }: { selected: string; onSelect: (c: strin
                             key={name}
                             onClick={() => onSelect(name)}
                             className={`flex flex-col items-center gap-2 p-3.5 rounded-xl border-2 transition-all duration-300
-                ${active ? "border-gold bg-gradient-to-b from-gold/8 to-gold/3 shadow-md shadow-gold/10 scale-[1.02]" : "border-border bg-white hover:border-gold/40 hover:shadow-sm"}`}
+                ${active ? "border-red-600 bg-gradient-to-b from-gold/8 to-gold/3 shadow-md shadow-red-600/10 scale-[1.02]" : "border-border bg-white hover:border-red-600/40 hover:shadow-sm"}`}
                         >
                             <div className="relative">
                                 <div className="w-8 h-8 rounded-full shadow-md border-2 border-white" style={{ backgroundColor: hex, boxShadow: `0 4px 12px ${hex}40` }} />
                                 {active && (
-                                    <div className="absolute -bottom-1 -right-1 w-5 h-5 rounded-full bg-gold text-white flex items-center justify-center">
+                                    <div className="absolute -bottom-1 -right-1 w-5 h-5 rounded-full bg-red-600 text-white flex items-center justify-center">
                                         <Check className="w-3 h-3" />
                                     </div>
                                 )}
@@ -444,8 +444,8 @@ function StepSpeed({
     return (
         <div className="animate-fade-in">
             <div className="flex items-center gap-2 mb-1">
-                <div className="w-6 h-6 rounded-full bg-gold/10 flex items-center justify-center">
-                    <Clock className="w-3 h-3 text-gold" />
+                <div className="w-6 h-6 rounded-full bg-red-600/10 flex items-center justify-center">
+                    <Clock className="w-3 h-3 text-red-600" />
                 </div>
                 <h2 className="font-display text-xl font-bold">Priority Processing</h2>
             </div>
@@ -455,11 +455,11 @@ function StepSpeed({
                 <button
                     onClick={() => selected && onToggle()}
                     className={`w-full flex items-center justify-between p-4 rounded-xl border-2 transition-all duration-300
-            ${!selected ? "border-gold bg-gradient-to-r from-gold/8 to-gold/3 shadow-md shadow-gold/10" : "border-border bg-white hover:border-gold/40 hover:shadow-sm"}`}
+            ${!selected ? "border-red-600 bg-gradient-to-r from-gold/8 to-gold/3 shadow-md shadow-red-600/10" : "border-border bg-white hover:border-red-600/40 hover:shadow-sm"}`}
                 >
                     <div className="text-left flex items-center gap-2">
-                        <div className={`w-8 h-8 rounded-lg flex items-center justify-center ${!selected ? "bg-gold/15" : "bg-gray-100"}`}>
-                            <Clock className={`w-4 h-4 ${!selected ? "text-gold" : "text-gray-400"}`} />
+                        <div className={`w-8 h-8 rounded-lg flex items-center justify-center ${!selected ? "bg-red-600/15" : "bg-gray-100"}`}>
+                            <Clock className={`w-4 h-4 ${!selected ? "text-red-600" : "text-gray-400"}`} />
                         </div>
                         <div>
                             <span className="font-body font-medium block">Standard Processing</span>
@@ -472,7 +472,7 @@ function StepSpeed({
                 <button
                     onClick={() => !selected && onToggle()}
                     className={`w-full flex items-center justify-between p-4 rounded-xl border-2 transition-all duration-300 relative overflow-hidden
-            ${selected ? "border-gold bg-gradient-to-r from-gold/8 to-amber-50/50 shadow-md shadow-gold/10" : "border-border bg-white hover:border-gold/40 hover:shadow-sm"}`}
+            ${selected ? "border-red-600 bg-gradient-to-r from-gold/8 to-amber-50/50 shadow-md shadow-red-600/10" : "border-border bg-white hover:border-red-600/40 hover:shadow-sm"}`}
                 >
                     {selected && (
                         <div className="absolute top-2 right-2">
@@ -488,7 +488,7 @@ function StepSpeed({
                             <span className="text-xs text-muted-foreground font-body">Ships within 24 hours</span>
                         </div>
                     </div>
-                    <span className="font-body font-bold text-gold">+${price.toFixed(2)}</span>
+                    <span className="font-body font-bold text-red-600">+${price.toFixed(2)}</span>
                 </button>
             </div>
         </div>
@@ -665,7 +665,7 @@ function StepReview({
                         </div>
                         <div className="flex items-center gap-3">
                             {price > 0 && <span className="font-body font-bold text-sm">${price.toFixed(2)}</span>}
-                            <button onClick={() => onEdit(step)} className="text-xs text-gold font-body font-semibold hover:underline underline-offset-2">
+                            <button onClick={() => onEdit(step)} className="text-xs text-red-600 font-body font-semibold hover:underline underline-offset-2">
                                 Edit
                             </button>
                         </div>
@@ -814,7 +814,7 @@ export default function Customize() {
             <div className="min-h-screen flex flex-col bg-background">
                 <Navbar />
                 <div className="flex-1 flex items-center justify-center">
-                    <div className="w-10 h-10 border-4 border-gold/30 border-t-gold rounded-full animate-spin" />
+                    <div className="w-10 h-10 border-4 border-red-600/30 border-t-gold rounded-full animate-spin" />
                 </div>
             </div>
         );
@@ -833,7 +833,7 @@ export default function Customize() {
                         <ArrowLeft className="w-5 h-5" />
                     </button>
                     <h2 className="font-display font-bold text-base">{STEP_TITLES[step]}</h2>
-                    <span className="font-display font-bold text-base text-gold">${totalPrice.toFixed(2)}</span>
+                    <span className="font-display font-bold text-base text-foreground">${totalPrice.toFixed(2)}</span>
                 </div>
             </div>
 

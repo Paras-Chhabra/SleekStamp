@@ -75,7 +75,7 @@ export default function Index() {
         <div className="relative container mx-auto px-4 py-20 flex justify-center">
           <div className="max-w-3xl w-full bg-[#f6f5f3] backdrop-blur-md p-10 md:p-14 rounded-[2rem] shadow-2xl text-center animate-fade-in border border-black/5">
             {/* Top Badge */}
-            <div className="inline-flex items-center justify-center border-2 border-[#Cca35a] text-[#Cca35a] rounded-full px-6 py-1.5 mb-8 bg-transparent">
+            <div className="inline-flex items-center justify-center border-2 border-[#dc2626] text-[#dc2626] rounded-full px-6 py-1.5 mb-8 bg-transparent">
               <span className="text-sm font-body font-bold tracking-wide">
                 Premium Custom Stamps
               </span>
@@ -85,7 +85,7 @@ export default function Index() {
             <h1 className="font-display text-5xl md:text-6xl font-extrabold text-[#1c1c1c] leading-tight mb-5 tracking-tight">
               Custom Stamps
               <br />
-              <span className="text-[#Cca35a] italic font-serif tracking-normal">Crafted for You</span>
+              <span className="text-[#dc2626] italic font-serif tracking-normal">Crafted for You</span>
             </h1>
 
             {/* Description */}
@@ -99,7 +99,7 @@ export default function Index() {
             <div className="flex flex-wrap items-center justify-center gap-4 mb-10">
               <Link
                 to="/products"
-                className="inline-flex items-center gap-2 bg-[#1a1a1a] text-white px-8 py-4 rounded-xl font-body font-bold text-base hover:bg-[#2b2b2b] transition-smooth shadow-lg"
+                className="inline-flex items-center gap-2 bg-[#dc2626] text-white px-8 py-4 rounded-full font-body font-bold text-base hover:bg-[#b91c1c] transition-smooth shadow-lg"
               >
                 Shop All Stamps
                 <ArrowRight className="w-5 h-5" />
@@ -109,13 +109,13 @@ export default function Index() {
             {/* Bottom Checks */}
             <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-3">
               <div className="text-[#333333] text-sm font-body font-medium flex items-center gap-2">
-                <Check className="w-4 h-4 text-[#Cca35a]" /> Free artwork setup
+                <Check className="w-4 h-4 text-[#dc2626]" /> Free artwork setup
               </div>
               <div className="text-[#333333] text-sm font-body font-medium flex items-center gap-2">
-                <Check className="w-4 h-4 text-[#Cca35a]" /> Free proof before printing
+                <Check className="w-4 h-4 text-[#dc2626]" /> Free proof before printing
               </div>
               <div className="text-[#333333] text-sm font-body font-medium flex items-center gap-2">
-                <Check className="w-4 h-4 text-[#Cca35a]" /> 100% satisfaction guarantee
+                <Check className="w-4 h-4 text-[#dc2626]" /> 100% satisfaction guarantee
               </div>
             </div>
           </div>
@@ -158,7 +158,7 @@ export default function Index() {
                 to={`/products?category=${cat.id}`}
                 className="group bg-card rounded-xl p-5 border border-border hover:border-gold/50 hover:shadow-hover transition-smooth text-center"
               >
-                <div className="w-10 h-10 bg-navy rounded-lg mx-auto mb-3 flex items-center justify-center group-hover:bg-gold transition-smooth">
+                <div className="w-10 h-10 bg-navy rounded-lg mx-auto mb-3 flex items-center justify-center group-hover:bg-red-600 transition-smooth">
                   <span className="text-white font-display font-bold text-sm transition-smooth">
                     {cat.name.charAt(0)}
                   </span>
