@@ -237,9 +237,9 @@ export default function StampBuilder() {
                         <p className="text-muted-foreground font-body max-w-xl mx-auto">See why thousands of small businesses choose stamps over costly printed packaging.</p>
                     </div>
 
-                    <div className="max-w-3xl mx-auto overflow-x-auto">
+                    <div className="max-w-3xl mx-auto">
                         {/* Table Header */}
-                        <div className="grid grid-cols-3 gap-2 md:gap-3 mb-3 min-w-[480px]">
+                        <div className="grid grid-cols-3 gap-2 md:gap-3 mb-3">
                             <div />
                             <div className="bg-navy rounded-t-2xl py-3 md:py-4 px-3 md:px-4 text-center">
                                 <div className="flex items-center justify-center gap-1.5 md:gap-2">
@@ -260,7 +260,7 @@ export default function StampBuilder() {
                         {COMPARISON_ROWS.map(({ feature, stamp, printed, stampIcon, printedIcon }, i) => (
                             <div
                                 key={feature}
-                                className={`grid grid-cols-3 gap-2 md:gap-3 min-w-[480px] ${i < COMPARISON_ROWS.length - 1 ? "mb-2" : ""}`}
+                                className={`grid grid-cols-3 gap-2 md:gap-3 ${i < COMPARISON_ROWS.length - 1 ? "mb-2" : ""}`}
                             >
                                 <div className="flex items-center px-3 md:px-4 py-3 md:py-4 bg-cream/40 rounded-xl">
                                     <span className="font-body font-semibold text-xs md:text-sm text-foreground">{feature}</span>
@@ -277,7 +277,7 @@ export default function StampBuilder() {
                         ))}
 
                         {/* Bottom CTA row */}
-                        <div className="grid grid-cols-3 gap-2 md:gap-3 mt-3 min-w-[480px]">
+                        <div className="grid grid-cols-3 gap-2 md:gap-3 mt-3">
                             <div />
                             <div className="bg-navy rounded-b-2xl py-3 md:py-4 px-3 md:px-4 text-center">
                                 <Link
@@ -338,7 +338,7 @@ export default function StampBuilder() {
             <div className={`fixed bottom-0 left-0 right-0 z-50 py-3 bg-[#faf5f0] border-t border-border transition-transform duration-300 ${showSticky ? 'translate-y-0' : 'translate-y-full'}`}>
                 <Link
                     to="/customize"
-                    className="flex items-center justify-center gap-2 w-64 mx-auto bg-[#dc2626] text-white hover:bg-[#b91c1c] py-3.5 rounded-full font-body font-bold text-sm transition-all duration-200 shadow-lg"
+                    className="flex items-center justify-center gap-2 w-full max-w-xs mx-auto bg-[#dc2626] text-white hover:bg-[#b91c1c] py-3.5 rounded-full font-body font-bold text-sm transition-all duration-200 shadow-lg"
                 >
                     Order Now <ArrowRight className="w-4 h-4" />
                 </Link>

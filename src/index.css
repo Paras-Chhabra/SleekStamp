@@ -3,6 +3,12 @@
 @tailwind utilities;
 
 @layer base {
+
+  html,
+  body {
+    overflow-x: hidden;
+  }
+
   html {
     font-size: 17px;
   }
