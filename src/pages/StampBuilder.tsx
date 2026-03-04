@@ -41,8 +41,8 @@ export default function StampBuilder() {
         const el = productInfoRef.current;
         if (!el) return;
         const observer = new IntersectionObserver(
-            ([entry]) => setShowSticky(entry.isIntersecting || entry.boundingClientRect.top < 0),
-            { threshold: 0 }
+            ([entry]) => setShowSticky(entry.isIntersecting),
+            { threshold: 0.5 }
         );
         observer.observe(el);
         return () => observer.disconnect();
@@ -171,7 +171,7 @@ export default function StampBuilder() {
                             Ordering a custom stamp has never been easier.
                         </p>
                     </div>
-                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8 relative">
+                    <div className="grid grid-cols-1 md:grid-cols-4 gap-4 md:gap-8 relative">
                         {[
                             { step: "1", title: "Choose your stamp size", desc: 'Pick 4", 6", or 8" inch stamp size that fits your need.' },
                             { step: "2", title: "Upload Your Design", desc: "Upload your logo, text, or signature. We handle the artwork setup for free." },
@@ -308,7 +308,7 @@ export default function StampBuilder() {
             </section>
 
             {/* ═══ TRUSTED BY ═══ */}
-            <section className="py-6 bg-white">
+            <section className="py-6 bg-[#faf5f0]">
                 <div className="container mx-auto px-4 max-w-5xl">
                     <div className="px-6 py-4 md:px-10 md:py-6">
                         <h3 className="text-center font-display font-bold text-navy tracking-[0.2em] text-sm mb-6 opacity-80 uppercase">
