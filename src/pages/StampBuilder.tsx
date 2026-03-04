@@ -66,32 +66,32 @@ export default function StampBuilder() {
             {/* Navbar removed */}
 
             {/* ═══ HERO ═══ */}
-            <section className="bg-white">
-                <div className="container mx-auto px-4 pt-4 pb-8 text-center">
-                    <span className="inline-flex items-center gap-1.5 bg-red-50 text-red-600 px-3 py-1 rounded-full text-[13px] font-body font-semibold mb-4">
+            <section className="bg-white h-[100svh] flex flex-col justify-center">
+                <div className="container mx-auto px-4 py-4 text-center">
+                    <span className="inline-flex items-center gap-1.5 bg-red-50 text-red-600 px-3 py-1 rounded-full text-[13px] font-body font-semibold mb-3">
                         🚀 Used by 2,000+ small businesses
                     </span>
-                    <h1 className="font-display text-3xl md:text-5xl lg:text-5xl font-bold text-foreground leading-tight mb-4">
+                    <h1 className="font-display text-3xl md:text-5xl lg:text-5xl font-bold text-foreground leading-tight mb-3">
                         Brand Every Package.<br />
                         <span className="text-red-600">Without the Printing Cost.</span>
                     </h1>
-                    <p className="font-body text-sm md:text-base text-muted-foreground max-w-xl mx-auto mb-6">
+                    <p className="font-body text-sm md:text-base text-muted-foreground max-w-xl mx-auto mb-4">
                         One custom stamp. Unlimited imprints on boxes, napkins,<br className="hidden sm:block" />
                         tissue paper, bags — anything. Pay once, stamp forever.
                     </p>
 
                     {/* Video */}
-                    <div className="w-full max-w-[480px] mx-auto mb-6">
+                    <div className="w-full max-w-[280px] md:max-w-[480px] mx-auto mb-4">
                         <ProductVideo />
                     </div>
 
                     <Link
                         to="/customize"
-                        className="inline-flex items-center gap-2 bg-[#dc2626] text-white hover:bg-[#b91c1c] px-8 py-4 rounded-full font-body font-bold text-base transition-all duration-200 shadow-lg"
+                        className="inline-flex items-center gap-2 bg-[#dc2626] text-white hover:bg-[#b91c1c] px-6 py-3 md:px-8 md:py-4 rounded-full font-body font-bold text-sm md:text-base transition-all duration-200 shadow-lg"
                     >
                         Order Your Custom Stamp <ArrowRight className="w-5 h-5" />
                     </Link>
-                    <p className="text-sm text-muted-foreground font-body mt-3">Takes less than 2 minutes</p>
+                    <p className="text-xs md:text-sm text-muted-foreground font-body mt-2">Takes less than 2 minutes</p>
                 </div>
             </section>
 
@@ -150,15 +150,15 @@ export default function StampBuilder() {
             </section>
 
             {/* ═══ HOW IT WORKS ═══ */}
-            <section className="py-16 bg-[#faf5f0] text-foreground border-y border-border">
+            <section className="py-8 md:py-16 bg-[#faf5f0] text-foreground border-y border-border min-h-[100svh] md:min-h-0 flex flex-col justify-center">
                 <div className="container mx-auto px-4">
-                    <div className="text-center mb-12">
-                        <h2 className="font-display text-3xl font-bold mb-3">How It Works</h2>
-                        <p className="text-muted-foreground font-body max-w-md mx-auto">
+                    <div className="text-center mb-6 md:mb-12">
+                        <h2 className="font-display text-2xl md:text-3xl font-bold mb-2">How It Works</h2>
+                        <p className="text-sm md:text-base text-muted-foreground font-body max-w-md mx-auto">
                             Ordering a custom stamp has never been easier.
                         </p>
                     </div>
-                    <div className="grid grid-cols-1 md:grid-cols-4 gap-8 relative">
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8 relative">
                         {[
                             { step: "1", title: "Choose your stamp size", desc: 'Pick 4", 6", or 8" inch stamp size that fits your need.' },
                             { step: "2", title: "Upload Your Design", desc: "Upload your logo, text, or signature. We handle the artwork setup for free." },
@@ -169,11 +169,11 @@ export default function StampBuilder() {
                                 {i < 3 && (
                                     <div className="hidden md:block absolute top-6 left-[calc(50%+36px)] right-[calc(-50%+36px)] h-px bg-border" />
                                 )}
-                                <div className="w-12 h-12 bg-foreground rounded-full flex items-center justify-center mx-auto mb-4 font-display font-bold text-lg text-white">
+                                <div className="w-10 h-10 md:w-12 md:h-12 bg-foreground rounded-full flex items-center justify-center mx-auto mb-2 md:mb-4 font-display font-bold text-sm md:text-lg text-white">
                                     {step}
                                 </div>
-                                <h3 className="font-display font-semibold text-base mb-2">{title}</h3>
-                                <p className="text-sm text-muted-foreground font-body leading-relaxed">{desc}</p>
+                                <h3 className="font-display font-semibold text-sm md:text-base mb-1 md:mb-2">{title}</h3>
+                                <p className="text-xs md:text-sm text-muted-foreground font-body leading-relaxed">{desc}</p>
                             </div>
                         ))}
                     </div>
