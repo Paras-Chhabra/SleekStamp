@@ -81,7 +81,7 @@ export default function StampBuilder() {
             {/* Navbar removed */}
 
             {/* ═══ HERO ═══ */}
-            <section className="bg-white h-[100svh] flex flex-col justify-center">
+            <section className="bg-white py-10 md:py-16">
                 <div className="container mx-auto px-4 py-4 text-center">
                     <span className="inline-flex items-center gap-1.5 bg-red-50 text-red-600 px-3 py-1 rounded-full text-[13px] font-body font-semibold mb-3">
                         🚀 Used by 2,000+ small businesses

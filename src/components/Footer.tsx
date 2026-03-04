@@ -9,11 +9,11 @@ export default function Footer() {
           {/* Brand */}
           <div>
             <div className="flex items-center gap-2 mb-4">
-              <div className="w-8 h-8 bg-red-600 rounded flex items-center justify-center">
-                <span className="text-accent-foreground font-display font-bold text-sm">S</span>
+              <div className="w-8 h-8 bg-navy rounded flex items-center justify-center">
+                <span className="text-gold font-display font-bold text-sm">S</span>
               </div>
               <span className="font-display font-bold text-xl text-white">
-                Sleek<span className="text-white/80">Stamp</span>
+                Sleek<span className="text-gold">Stamp</span>
               </span>
             </div>
             <p className="text-sm text-white/60 font-body leading-relaxed mb-5">
