@@ -23,12 +23,12 @@ export default function Navbar() {
           <div className="flex items-center justify-between h-14 relative">
             {/* Logo — far left */}
             <Link to="/" className="flex items-center gap-2 group z-10">
-              <div className="w-9 h-9 bg-red-600 rounded flex items-center justify-center">
-                <span className="text-white font-display font-bold text-base">S</span>
+              <div className="w-9 h-9 bg-navy rounded flex items-center justify-center">
+                <span className="text-gold font-display font-bold text-base">S</span>
               </div>
               <div>
                 <span className="font-display font-bold text-2xl text-navy tracking-tight">Sleek</span>
-                <span className="font-display font-bold text-2xl text-red-600 tracking-tight">Stamp</span>
+                <span className="font-display font-bold text-2xl text-gold tracking-tight">Stamp</span>
               </div>
             </Link>
 
