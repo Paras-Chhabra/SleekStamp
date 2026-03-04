@@ -66,7 +66,7 @@ export default function StampBuilder() {
             {/* Navbar removed */}
 
             {/* ═══ HERO ═══ */}
-            <section className="bg-white h-[calc(100svh-60px)] flex flex-col justify-center">
+            <section className="bg-white h-[100svh] flex flex-col justify-center">
                 <div className="container mx-auto px-4 py-4 text-center">
                     <span className="inline-flex items-center gap-1.5 bg-red-50 text-red-600 px-3 py-1 rounded-full text-[13px] font-body font-semibold mb-3">
                         🚀 Used by 2,000+ small businesses
@@ -150,7 +150,7 @@ export default function StampBuilder() {
             </section>
 
             {/* ═══ HOW IT WORKS ═══ */}
-            <section className="py-8 md:py-16 bg-[#faf5f0] text-foreground border-y border-border min-h-[calc(100svh-60px)] md:min-h-0 flex flex-col justify-center">
+            <section className="py-8 md:py-16 bg-[#faf5f0] text-foreground border-y border-border min-h-[100svh] md:min-h-0 flex flex-col justify-center">
                 <div className="container mx-auto px-4">
                     <div className="text-center mb-6 md:mb-12">
                         <h2 className="font-display text-2xl md:text-3xl font-bold mb-2">How It Works</h2>
