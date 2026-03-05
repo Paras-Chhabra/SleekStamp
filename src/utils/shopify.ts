@@ -55,6 +55,9 @@ export async function createShopifyCheckout(cartItems: any[]) {
         if (item.inkColor) customAttributes.push({ key: "Ink Color", value: item.inkColor });
         if (item.stampPad) customAttributes.push({ key: "Stamp Pad", value: item.stampPad });
         if (item.priorityProcessing) customAttributes.push({ key: "Priority Processing", value: "Yes" });
+        if (item.designService) customAttributes.push({ key: "Design Service", value: "We design for you" });
+        if (item.designBrief) customAttributes.push({ key: "Design Brief", value: item.designBrief });
+        if (item.referenceImageUrl) customAttributes.push({ key: "Reference Image", value: item.referenceImageUrl });
 
         return {
             merchandiseId: item.variantId,

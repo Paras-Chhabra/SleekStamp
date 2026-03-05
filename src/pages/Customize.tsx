@@ -3,7 +3,7 @@ import { useShopifyProducts } from "@/hooks/useShopify";
 import { createShopifyCheckout } from "@/utils/shopify";
 import { uploadToCloudinary } from "@/utils/cloudinary";
 import Navbar from "@/components/Navbar";
-import { Upload, Check, ArrowRight, ArrowLeft, Zap, Droplets, Shield, Sparkles, Clock, Palette, Box, FileImage, Info, Star } from "lucide-react";
+import { Upload, Check, ArrowRight, ArrowLeft, Zap, Droplets, Shield, Sparkles, Clock, Palette, Box, FileImage, Info, Star, Pencil, ImagePlus } from "lucide-react";
 
 /* ═══════════════════════════════════════════════════════════════════════════
    TYPES
@@ -34,6 +34,11 @@ interface BuilderSelections {
     priorityVariantId: string | null;
     priorityPrice: number;
     designFee: number;
+    designBrief: string;
+    referenceImageFile: File | null;
+    referenceImagePreview: string | null;
+    referenceImageUrl: string | null;
+    referenceImageUploading: boolean;
     tipAmount: number;
 }
 
@@ -159,6 +164,12 @@ function StepLogo({
     onRemove,
     designOption,
     onDesignOptionChange,
+    designBrief,
+    onDesignBriefChange,
+    referenceImagePreview,
+    onReferenceImageUpload,
+    onReferenceImageRemove,
+    referenceImageUploading,
 }: {
     logoFile: File | null;
     logoPreview: string | null;
@@ -166,8 +177,15 @@ function StepLogo({
     onRemove: () => void;
     designOption: "upload" | "design";
     onDesignOptionChange: (opt: "upload" | "design") => void;
+    designBrief: string;
+    onDesignBriefChange: (text: string) => void;
+    referenceImagePreview: string | null;
+    onReferenceImageUpload: (file: File) => void;
+    onReferenceImageRemove: () => void;
+    referenceImageUploading: boolean;
 }) {
     const inputRef = useRef<HTMLInputElement>(null);
+    const refImageInputRef = useRef<HTMLInputElement>(null);
     const [dragOver, setDragOver] = useState(false);
 
     const handleDrop = useCallback(
@@ -245,6 +263,8 @@ function StepLogo({
                             onDragLeave={() => setDragOver(false)}
                             onDrop={handleDrop}
                             onClick={() => inputRef.current?.click()}
+                            className={`cursor-pointer border-2 border-dashed rounded-xl p-8 text-center transition-all duration-300
+                                ${dragOver ? "border-red-600 bg-red-600/5" : "border-gray-300 bg-white hover:border-red-600/50"}`}
                         >
                             <Upload className="w-5 h-5 text-red-600 mx-auto mb-2" />
                             <p className="font-body font-semibold text-foreground text-sm mb-0.5">Tap to upload your logo</p>
@@ -265,8 +285,70 @@ function StepLogo({
                 </>
             )}
 
+            {/* Design brief area (only when "We design for you" is selected) */}
+            {designOption === "design" && (
+                <div className="space-y-3">
+                    {/* Text area for design brief */}
+                    <div>
+                        <label className="flex items-center gap-1.5 font-body font-semibold text-sm text-foreground mb-1.5">
+                            <Pencil className="w-3.5 h-3.5 text-red-600" />
+                            Describe your design
+                        </label>
+                        <textarea
+                            value={designBrief}
+                            onChange={(e) => onDesignBriefChange(e.target.value)}
+                            placeholder="E.g. Our company logo with 'SleekStamp' text underneath, use bold font, keep it clean and minimal..."
+                            className="w-full border-2 border-border rounded-xl p-3 text-sm font-body text-foreground placeholder:text-muted-foreground/60 focus:border-red-600 focus:outline-none transition-colors resize-none bg-white"
+                            rows={3}
+                        />
+                    </div>
+
+                    {/* Optional reference image */}
+                    <div>
+                        <label className="flex items-center gap-1.5 font-body font-semibold text-sm text-foreground mb-1.5">
+                            <ImagePlus className="w-3.5 h-3.5 text-red-600" />
+                            Reference image <span className="font-normal text-muted-foreground text-xs">(optional)</span>
+                        </label>
+                        {referenceImagePreview ? (
+                            <div className="border border-border rounded-xl p-3 bg-white flex items-center gap-3">
+                                <img src={referenceImagePreview} alt="Reference" className="w-14 h-14 object-cover rounded-lg border border-border" />
+                                <div className="flex-1 min-w-0">
+                                    <p className="text-xs font-body text-muted-foreground truncate">
+                                        {referenceImageUploading ? "Uploading..." : "Reference uploaded ✓"}
+                                    </p>
+                                </div>
+                                <button
+                                    onClick={onReferenceImageRemove}
+                                    className="px-3 py-1.5 rounded-lg border border-red-200 text-red-600 bg-red-50/80 text-xs font-body font-medium hover:bg-red-100 transition-smooth"
+                                >
+                                    Remove
+                                </button>
+                            </div>
+                        ) : (
+                            <button
+                                onClick={() => refImageInputRef.current?.click()}
+                                className="w-full border-2 border-dashed border-gray-300 rounded-xl p-4 text-center hover:border-red-600/50 transition-all duration-300 bg-white"
+                            >
+                                <ImagePlus className="w-4 h-4 text-gray-400 mx-auto mb-1" />
+                                <p className="text-xs text-muted-foreground font-body">Tap to upload a reference image</p>
+                            </button>
+                        )}
+                        <input
+                            ref={refImageInputRef}
+                            type="file"
+                            accept="image/*"
+                            className="hidden"
+                            onChange={(e) => {
+                                const file = e.target.files?.[0];
+                                if (file) onReferenceImageUpload(file);
+                            }}
+                        />
+                    </div>
+                </div>
+            )}
+
             {/* Info note */}
-            <div className="mt-4 flex items-start gap-2 p-3 rounded-lg bg-blue-50/60 border border-blue-100">
+            <div className="mt-3 flex items-start gap-2 p-3 rounded-lg bg-blue-50/60 border border-blue-100">
                 <Info className="w-3.5 h-3.5 text-blue-500 mt-0.5 flex-shrink-0" />
                 <p className="text-[11px] font-body text-blue-700 leading-relaxed">
                     We send you a digital proof to review before we dispatch your stamp.
@@ -711,6 +793,7 @@ export default function Customize() {
 
     const stampPadProducts = allProducts.filter((p) => p.category === "stamp-pad");
     const priorityProduct = allProducts.find((p) => p.name.toLowerCase().includes("priority processing"));
+    const designServiceProduct = allProducts.find((p) => p.name.toLowerCase().includes("custom design service"));
 
     const stampPadOptions: StampPadOption[] = stampPadProducts
         .sort((a, b) => a.price - b.price)
@@ -731,6 +814,11 @@ export default function Customize() {
         priorityVariantId: priorityProduct?.defaultVariantId ?? null,
         priorityPrice,
         designFee: 0,
+        designBrief: "",
+        referenceImageFile: null,
+        referenceImagePreview: null,
+        referenceImageUrl: null,
+        referenceImageUploading: false,
         tipAmount: 0,
     });
     const [isSubmitting, setIsSubmitting] = useState(false);
@@ -774,6 +862,18 @@ export default function Customize() {
             // Build line items with custom attributes
             const lineItems: any[] = [];
 
+            // Build custom attributes for the stamp
+            const stampAttributes: { key: string; value: string }[] = [];
+            if (logoUrl) stampAttributes.push({ key: "Logo URL", value: logoUrl });
+            if (selections.inkColor) stampAttributes.push({ key: "Ink Color", value: selections.inkColor });
+            if (selections.stampPad) stampAttributes.push({ key: "Stamp Pad", value: selections.stampPad.name });
+            if (selections.priorityProcessing) stampAttributes.push({ key: "Priority Processing", value: "Yes" });
+            if (selections.designFee > 0) {
+                stampAttributes.push({ key: "Design Service", value: "We design for you" });
+                if (selections.designBrief) stampAttributes.push({ key: "Design Brief", value: selections.designBrief });
+                if (selections.referenceImageUrl) stampAttributes.push({ key: "Reference Image", value: selections.referenceImageUrl });
+            }
+
             lineItems.push({
                 variantId: selections.variant.id,
                 quantity: 1,
@@ -781,6 +881,9 @@ export default function Customize() {
                 inkColor: selections.inkColor,
                 stampPad: selections.stampPad?.name ?? null,
                 priorityProcessing: selections.priorityProcessing,
+                designBrief: selections.designBrief || null,
+                referenceImageUrl: selections.referenceImageUrl || null,
+                designService: selections.designFee > 0,
             });
 
             if (selections.stampPad) {
@@ -794,6 +897,16 @@ export default function Customize() {
                 lineItems.push({
                     variantId: priorityProduct.defaultVariantId,
                     quantity: 1,
+                });
+            }
+
+            // Add design service product ($30) if customer chose "We design for you"
+            if (selections.designFee > 0 && designServiceProduct?.defaultVariantId) {
+                lineItems.push({
+                    variantId: designServiceProduct.defaultVariantId,
+                    quantity: 1,
+                    designBrief: selections.designBrief || null,
+                    referenceImageUrl: selections.referenceImageUrl || null,
                 });
             }
 
@@ -858,12 +971,18 @@ export default function Customize() {
                                 logoPreview={selections.logoPreview}
                                 designOption={selections.designFee > 0 ? "design" : "upload"}
                                 onDesignOptionChange={(opt) => {
-                                    setSelections((s) => ({ ...s, designFee: opt === "design" ? 30 : 0 }));
+                                    setSelections((s) => ({
+                                        ...s,
+                                        designFee: opt === "design" ? 30 : 0,
+                                        // Clear logo fields when switching to design service
+                                        ...(opt === "design" ? { logoFile: null, logoPreview: null, logoUrl: null, logoUploading: false } : {}),
+                                        // Clear design brief fields when switching to upload
+                                        ...(opt === "upload" ? { designBrief: "", referenceImageFile: null, referenceImagePreview: null, referenceImageUrl: null, referenceImageUploading: false } : {}),
+                                    }));
                                 }}
                                 onUpload={(file) => {
                                     const preview = URL.createObjectURL(file);
                                     setSelections((s) => ({ ...s, logoFile: file, logoPreview: preview, logoUrl: null, logoUploading: true }));
-                                    // Pre-upload to Cloudinary in background
                                     uploadToCloudinary(file)
                                         .then((url) => setSelections((s) => ({ ...s, logoUrl: url, logoUploading: false })))
                                         .catch((err) => {
@@ -872,6 +991,21 @@ export default function Customize() {
                                         });
                                 }}
                                 onRemove={() => setSelections((s) => ({ ...s, logoFile: null, logoPreview: null, logoUrl: null, logoUploading: false }))}
+                                designBrief={selections.designBrief}
+                                onDesignBriefChange={(text) => setSelections((s) => ({ ...s, designBrief: text }))}
+                                referenceImagePreview={selections.referenceImagePreview}
+                                referenceImageUploading={selections.referenceImageUploading}
+                                onReferenceImageUpload={(file) => {
+                                    const preview = URL.createObjectURL(file);
+                                    setSelections((s) => ({ ...s, referenceImageFile: file, referenceImagePreview: preview, referenceImageUrl: null, referenceImageUploading: true }));
+                                    uploadToCloudinary(file)
+                                        .then((url) => setSelections((s) => ({ ...s, referenceImageUrl: url, referenceImageUploading: false })))
+                                        .catch((err) => {
+                                            console.error("Reference image upload failed:", err);
+                                            setSelections((s) => ({ ...s, referenceImageUploading: false }));
+                                        });
+                                }}
+                                onReferenceImageRemove={() => setSelections((s) => ({ ...s, referenceImageFile: null, referenceImagePreview: null, referenceImageUrl: null, referenceImageUploading: false }))}
                             />
                         )}
                         {step === 2 && (
