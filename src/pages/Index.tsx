@@ -62,7 +62,7 @@ export default function Index() {
       <Navbar />
 
       {/* Hero Section */}
-      <section className="relative min-h-[600px] flex items-center justify-center overflow-hidden">
+      <section className="relative min-h-[100svh] md:min-h-[600px] flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0">
           <img
             src={heroBanner}
@@ -217,7 +217,7 @@ export default function Index() {
       </section>
 
       {/* How It Works */}
-      <section className="py-16 bg-[#f5f0e8] text-foreground border-y border-border">
+      <section className="py-16 md:py-24 bg-[#f5f0e8] text-foreground border-y border-border min-h-[100svh] md:min-h-0 flex flex-col justify-center">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="font-display text-3xl font-bold mb-3">How It Works</h2>
