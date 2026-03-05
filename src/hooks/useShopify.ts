@@ -145,7 +145,10 @@ export function useShopifyProducts() {
 
       const productsData = response.body.data?.products?.edges || [];
       const allProducts = productsData.map((edge: any) => mapShopifyProduct(edge.node));
-      const displayProducts = allProducts.filter((p: Product) => !p.name.toLowerCase().includes('priority processing'));
+      const displayProducts = allProducts.filter((p: Product) => {
+        const name = p.name.toLowerCase();
+        return !name.includes('priority processing') && !name.includes('custom design service');
+      });
       return { display: displayProducts, all: allProducts };
     },
     select: undefined,
