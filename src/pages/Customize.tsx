@@ -35,6 +35,7 @@ interface BuilderSelections {
     priorityPrice: number;
     designFee: number;
     designBrief: string;
+    uploadNotes: string;
     referenceImageFile: File | null;
     referenceImagePreview: string | null;
     referenceImageUrl: string | null;
@@ -166,6 +167,8 @@ function StepLogo({
     onDesignOptionChange,
     designBrief,
     onDesignBriefChange,
+    uploadNotes,
+    onUploadNotesChange,
     referenceImagePreview,
     onReferenceImageUpload,
     onReferenceImageRemove,
@@ -179,6 +182,8 @@ function StepLogo({
     onDesignOptionChange: (opt: "upload" | "design") => void;
     designBrief: string;
     onDesignBriefChange: (text: string) => void;
+    uploadNotes: string;
+    onUploadNotesChange: (text: string) => void;
     referenceImagePreview: string | null;
     onReferenceImageUpload: (file: File) => void;
     onReferenceImageRemove: () => void;
@@ -282,6 +287,21 @@ function StepLogo({
                             if (file) onUpload(file);
                         }}
                     />
+
+                    {/* Optional notes for upload */}
+                    <div className="mt-3">
+                        <label className="flex items-center gap-1.5 font-body font-semibold text-sm text-foreground mb-1.5">
+                            <Pencil className="w-3.5 h-3.5 text-red-600" />
+                            Additional notes <span className="font-normal text-muted-foreground text-xs">(optional)</span>
+                        </label>
+                        <textarea
+                            value={uploadNotes}
+                            onChange={(e) => onUploadNotesChange(e.target.value)}
+                            placeholder="E.g. Please remove the background from my logo..."
+                            className="w-full border-2 border-border rounded-xl p-2.5 text-sm font-body text-foreground placeholder:text-muted-foreground/60 focus:border-red-600 focus:outline-none transition-colors resize-none bg-white"
+                            rows={2}
+                        />
+                    </div>
                 </>
             )}
 
@@ -379,7 +399,7 @@ function StepPad({
                 </div>
                 <h2 className="font-display text-lg font-bold">Add a Stamp Pad?</h2>
             </div>
-            <p className="text-muted-foreground font-body text-xs mb-3 ml-7">Get a matching ink pad for crisp impressions.</p>
+            <p className="text-muted-foreground font-body text-xs mb-2 ml-7">Get a matching ink pad for crisp impressions.</p>
 
             {/* Why add a stamp pad? */}
             <div className="mb-3 p-2.5 rounded-xl bg-gradient-to-br from-amber-50/80 to-orange-50/50 border border-amber-100 hidden sm:block">
@@ -409,12 +429,12 @@ function StepPad({
                         <button
                             key={opt.variantId}
                             onClick={() => onToggle(opt)}
-                            className={`w-full flex items-center justify-between p-2.5 rounded-xl border-2 transition-all duration-300
+                            className={`w-full flex items-center justify-between p-2 rounded-xl border-2 transition-all duration-300
                 ${active ? "border-red-600 bg-gradient-to-r from-gold/8 to-gold/3 shadow-sm" : "border-border bg-white hover:border-red-600/40"}`}
                         >
                             <div className="text-left flex items-center gap-2">
-                                <div className={`w-7 h-7 rounded-lg flex items-center justify-center ${active ? "bg-red-600/20" : "bg-gray-100"}`}>
-                                    <Droplets className={`w-3.5 h-3.5 ${active ? "text-red-600" : "text-gray-400"}`} />
+                                <div className={`w-6 h-6 rounded-lg flex items-center justify-center shrink-0 ${active ? "bg-red-600/20" : "bg-gray-100"}`}>
+                                    <Droplets className={`w-3 h-3 ${active ? "text-red-600" : "text-gray-400"}`} />
                                 </div>
                                 <div>
                                     <div className="flex items-center gap-1.5">
@@ -438,11 +458,11 @@ function StepPad({
                 {/* "Already have a stamp pad" — LAST */}
                 <button
                     onClick={() => onToggle(null)}
-                    className={`w-full flex items-center justify-between p-2.5 rounded-xl border-2 transition-all duration-300
+                    className={`w-full flex items-center justify-between p-2 rounded-xl border-2 transition-all duration-300
             ${!selected ? "border-red-600 bg-gradient-to-r from-gold/8 to-gold/3 shadow-sm shadow-red-600/10" : "border-border bg-white hover:border-red-600/40"}`}
                 >
                     <div className="flex items-center gap-2">
-                        <div className={`w-6 h-6 rounded-lg flex items-center justify-center ${!selected ? "bg-red-600/20" : "bg-gray-100"}`}>
+                        <div className={`w-5 h-5 rounded-lg flex items-center justify-center shrink-0 ${!selected ? "bg-red-600/20" : "bg-gray-100"}`}>
                             <Check className={`w-3 h-3 ${!selected ? "text-red-600" : "text-gray-400"}`} />
                         </div>
                         <span className="font-body font-medium text-sm">Already have a stamp pad</span>
@@ -815,6 +835,7 @@ export default function Customize() {
         priorityPrice,
         designFee: 0,
         designBrief: "",
+        uploadNotes: "",
         referenceImageFile: null,
         referenceImagePreview: null,
         referenceImageUrl: null,
@@ -882,6 +903,7 @@ export default function Customize() {
                 stampPad: selections.stampPad?.name ?? null,
                 priorityProcessing: selections.priorityProcessing,
                 designBrief: selections.designBrief || null,
+                uploadNotes: selections.uploadNotes || null,
                 referenceImageUrl: selections.referenceImageUrl || null,
                 designService: selections.designFee > 0,
             });
@@ -975,7 +997,7 @@ export default function Customize() {
                                         ...s,
                                         designFee: opt === "design" ? 30 : 0,
                                         // Clear logo fields when switching to design service
-                                        ...(opt === "design" ? { logoFile: null, logoPreview: null, logoUrl: null, logoUploading: false } : {}),
+                                        ...(opt === "design" ? { logoFile: null, logoPreview: null, logoUrl: null, logoUploading: false, uploadNotes: "" } : {}),
                                         // Clear design brief fields when switching to upload
                                         ...(opt === "upload" ? { designBrief: "", referenceImageFile: null, referenceImagePreview: null, referenceImageUrl: null, referenceImageUploading: false } : {}),
                                     }));
@@ -993,6 +1015,8 @@ export default function Customize() {
                                 onRemove={() => setSelections((s) => ({ ...s, logoFile: null, logoPreview: null, logoUrl: null, logoUploading: false }))}
                                 designBrief={selections.designBrief}
                                 onDesignBriefChange={(text) => setSelections((s) => ({ ...s, designBrief: text }))}
+                                uploadNotes={selections.uploadNotes}
+                                onUploadNotesChange={(text) => setSelections((s) => ({ ...s, uploadNotes: text }))}
                                 referenceImagePreview={selections.referenceImagePreview}
                                 referenceImageUploading={selections.referenceImageUploading}
                                 onReferenceImageUpload={(file) => {
