@@ -72,50 +72,50 @@ export default function Index() {
           <div className="absolute inset-0 bg-black/20 backdrop-blur-[1px]" />
         </div>
 
-        <div className="relative container mx-auto px-4 py-20 flex justify-center">
-          <div className="max-w-3xl w-full bg-[#f6f5f3] backdrop-blur-md p-10 md:p-14 rounded-[2rem] shadow-2xl text-center animate-fade-in border border-black/5">
+        <div className="relative container mx-auto px-4 py-8 md:py-20 flex justify-center">
+          <div className="max-w-3xl w-full bg-[#f6f5f3] backdrop-blur-md p-6 md:p-14 rounded-[2rem] shadow-2xl text-center animate-fade-in border border-black/5">
             {/* Top Badge */}
-            <div className="inline-flex items-center justify-center border-2 border-[#Cca35a] text-[#Cca35a] rounded-full px-6 py-1.5 mb-8 bg-transparent">
-              <span className="text-sm font-body font-bold tracking-wide">
+            <div className="inline-flex items-center justify-center border-2 border-[#Cca35a] text-[#Cca35a] rounded-full px-4 py-1 mb-5 md:px-6 md:py-1.5 md:mb-8 bg-transparent">
+              <span className="text-xs md:text-sm font-body font-bold tracking-wide">
                 Premium Custom Stamps
               </span>
             </div>
 
             {/* Headline */}
-            <h1 className="font-display text-5xl md:text-6xl font-extrabold text-[#1c1c1c] leading-tight mb-5 tracking-tight">
+            <h1 className="font-display text-4xl md:text-6xl font-extrabold text-[#1c1c1c] leading-tight mb-3 md:mb-5 tracking-tight">
               Custom Stamps
               <br />
               <span className="text-[#Cca35a] italic font-serif tracking-normal">Crafted for You</span>
             </h1>
 
             {/* Description */}
-            <p className="text-lg text-[#333333] font-body mb-10 max-w-2xl mx-auto leading-relaxed">
+            <p className="text-sm md:text-lg text-[#333333] font-body mb-6 md:mb-10 max-w-2xl mx-auto leading-relaxed">
               One custom stamp. Unlimited imprints on boxes, napkins, tissue paper,
               <br className="hidden md:block" />
               — anything. Pay once, stamp forever. Trusted by 45,000+ businesses.
             </p>
 
             {/* CTA Button */}
-            <div className="flex flex-wrap items-center justify-center gap-4 mb-10">
+            <div className="flex flex-wrap items-center justify-center gap-4 mb-6 md:mb-10">
               <Link
                 to="/products"
-                className="inline-flex items-center gap-2 bg-[#1a1a1a] text-white px-8 py-4 rounded-xl font-body font-bold text-base hover:bg-[#2b2b2b] transition-smooth shadow-lg"
+                className="inline-flex items-center gap-2 bg-[#1a1a1a] text-white px-6 py-3 md:px-8 md:py-4 rounded-xl font-body font-bold text-sm md:text-base hover:bg-[#2b2b2b] transition-smooth shadow-lg"
               >
                 Shop All Stamps
-                <ArrowRight className="w-5 h-5" />
+                <ArrowRight className="w-4 h-4 md:w-5 md:h-5" />
               </Link>
             </div>
 
             {/* Bottom Checks */}
-            <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-3">
-              <div className="text-[#333333] text-sm font-body font-medium flex items-center gap-2">
-                <Check className="w-4 h-4 text-[#Cca35a]" /> Free artwork setup
+            <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2 md:gap-x-6 md:gap-y-3">
+              <div className="text-[#333333] text-xs md:text-sm font-body font-medium flex items-center gap-1.5 md:gap-2">
+                <Check className="w-3.5 h-3.5 md:w-4 md:h-4 text-[#Cca35a]" /> Free artwork setup
               </div>
-              <div className="text-[#333333] text-sm font-body font-medium flex items-center gap-2">
-                <Check className="w-4 h-4 text-[#Cca35a]" /> Free proof before printing
+              <div className="text-[#333333] text-xs md:text-sm font-body font-medium flex items-center gap-1.5 md:gap-2">
+                <Check className="w-3.5 h-3.5 md:w-4 md:h-4 text-[#Cca35a]" /> Free proof before printing
               </div>
-              <div className="text-[#333333] text-sm font-body font-medium flex items-center gap-2">
-                <Check className="w-4 h-4 text-[#Cca35a]" /> 100% satisfaction guarantee
+              <div className="text-[#333333] text-xs md:text-sm font-body font-medium flex items-center gap-1.5 md:gap-2">
+                <Check className="w-3.5 h-3.5 md:w-4 md:h-4 text-[#Cca35a]" /> 100% satisfaction guarantee
               </div>
             </div>
           </div>
@@ -217,16 +217,16 @@ export default function Index() {
       </section>
 
       {/* How It Works */}
-      <section className="py-16 md:py-24 bg-[#f5f0e8] text-foreground border-y border-border min-h-[100svh] md:min-h-0 flex flex-col justify-center">
+      <section className="py-8 md:py-24 bg-[#f5f0e8] text-foreground border-y border-border min-h-[100svh] md:min-h-0 flex flex-col justify-center">
         <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
-            <h2 className="font-display text-3xl font-bold mb-3">How It Works</h2>
-            <p className="text-muted-foreground font-body max-w-md mx-auto">
+          <div className="text-center mb-8 md:mb-12">
+            <h2 className="font-display text-2xl md:text-3xl font-bold mb-2 md:mb-3">How It Works</h2>
+            <p className="text-sm md:text-base text-muted-foreground font-body max-w-md mx-auto">
               Ordering a custom stamp has never been easier.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8 relative">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-6 md:gap-8 relative">
             {[
               { step: "1", title: "Choose your stamp size", desc: "Pick 4\", 6\", or 8\" inch stamp size that fits your need." },
               { step: "2", title: "Upload Your Design", desc: "Upload your logo, text, or signature. We handle the artwork setup for free." },
@@ -237,11 +237,11 @@ export default function Index() {
                 {i < 3 && (
                   <div className="hidden md:block absolute top-6 left-[calc(50%+36px)] right-[calc(-50%+36px)] h-px bg-border" />
                 )}
-                <div className="w-12 h-12 bg-foreground rounded-full flex items-center justify-center mx-auto mb-4 font-display font-bold text-lg text-white">
+                <div className="w-10 h-10 md:w-12 md:h-12 bg-foreground rounded-full flex items-center justify-center mx-auto mb-3 md:mb-4 font-display font-bold text-base md:text-lg text-white">
                   {step}
                 </div>
-                <h3 className="font-display font-semibold text-base mb-2">{title}</h3>
-                <p className="text-sm text-muted-foreground font-body leading-relaxed">{desc}</p>
+                <h3 className="font-display font-semibold text-sm md:text-base mb-1 md:mb-2">{title}</h3>
+                <p className="text-xs md:text-sm text-muted-foreground font-body leading-relaxed">{desc}</p>
               </div>
             ))}
           </div>
