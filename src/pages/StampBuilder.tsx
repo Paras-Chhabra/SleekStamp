@@ -52,10 +52,7 @@ export default function StampBuilder() {
 
     const product = products.find((p) => p.slug === "big-custom-stamps-by-sleekstamp") ?? products.find((p) => p.category === "custom-stamps");
 
-    if (isLoading) {
-        // We will keep a structural placeholder to avoid a massive layout shift
-        // but now the Hero is rendered IMMEDIATELY down below. So removing this early return!
-    }
+
 
     return (
         <div className="min-h-screen flex flex-col bg-background">
@@ -92,10 +89,53 @@ export default function StampBuilder() {
             </section>
 
             {isLoading ? (
-                <div className="py-32 flex flex-col items-center justify-center">
-                    <div className="w-10 h-10 border-4 border-red-600/30 border-t-gold rounded-full animate-spin mb-4" />
-                    <p className="text-muted-foreground font-body text-sm animate-pulse">Loading product details...</p>
-                </div>
+                /* ═══ SKELETON LAYOUT — matches real page structure to prevent layout shift ═══ */
+                <>
+                    <section className="py-10 bg-white border-b border-border">
+                        <div className="container mx-auto px-4">
+                            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+                                <div className="aspect-square bg-secondary animate-pulse rounded-2xl" />
+                                <div>
+                                    <div className="h-8 w-3/4 bg-secondary animate-pulse rounded-lg mb-3" />
+                                    <div className="flex items-baseline gap-3 mb-4">
+                                        <div className="h-8 w-24 bg-secondary animate-pulse rounded-lg" />
+                                        <div className="h-5 w-16 bg-secondary animate-pulse rounded-lg" />
+                                    </div>
+                                    <div className="flex gap-1 mb-6">
+                                        {Array.from({ length: 5 }).map((_, i) => <div key={i} className="w-4 h-4 bg-secondary animate-pulse rounded" />)}
+                                    </div>
+                                    <div className="space-y-2 mb-6">
+                                        <div className="h-4 w-full bg-secondary animate-pulse rounded" />
+                                        <div className="h-4 w-5/6 bg-secondary animate-pulse rounded" />
+                                        <div className="h-4 w-4/6 bg-secondary animate-pulse rounded" />
+                                    </div>
+                                    <div className="space-y-2 mb-8">
+                                        {Array.from({ length: 4 }).map((_, i) => <div key={i} className="h-4 w-3/4 bg-secondary animate-pulse rounded" />)}
+                                    </div>
+                                    <div className="h-14 w-56 bg-secondary animate-pulse rounded-full" />
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section className="py-8 md:py-10 bg-[#faf5f0] border-y border-border">
+                        <div className="container mx-auto px-4">
+                            <div className="text-center mb-6 md:mb-12">
+                                <div className="h-7 w-48 bg-secondary/60 animate-pulse rounded-lg mx-auto mb-2" />
+                                <div className="h-4 w-64 bg-secondary/40 animate-pulse rounded mx-auto" />
+                            </div>
+                            <div className="grid grid-cols-1 md:grid-cols-4 gap-4 md:gap-8">
+                                {Array.from({ length: 4 }).map((_, i) => (
+                                    <div key={i} className="text-center">
+                                        <div className="w-10 h-10 md:w-12 md:h-12 bg-secondary animate-pulse rounded-full mx-auto mb-2 md:mb-4" />
+                                        <div className="h-4 w-3/4 bg-secondary animate-pulse rounded mx-auto mb-1" />
+                                        <div className="h-3 w-5/6 bg-secondary/40 animate-pulse rounded mx-auto" />
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    </section>
+                </>
             ) : !product ? (
                 <div className="py-32 flex justify-center items-center">
                     <p className="font-body text-muted-foreground">Product not found. Please try again later.</p>
@@ -230,7 +270,6 @@ export default function StampBuilder() {
                             </div>
 
                             <div className="max-w-3xl mx-auto">
-                                {/* Table Header */}
                                 <div className="grid grid-cols-3 gap-2 md:gap-3 mb-3">
                                     <div />
                                     <div className="bg-navy rounded-t-2xl py-3 md:py-4 px-3 md:px-4 text-center">
@@ -248,7 +287,6 @@ export default function StampBuilder() {
                                     </div>
                                 </div>
 
-                                {/* Table Rows */}
                                 {COMPARISON_ROWS.map(({ feature, stamp, printed, stampIcon, printedIcon }, i) => (
                                     <div
                                         key={feature}
@@ -268,7 +306,6 @@ export default function StampBuilder() {
                                     </div>
                                 ))}
 
-                                {/* Bottom CTA row */}
                                 <div className="grid grid-cols-3 gap-2 md:gap-3 mt-3">
                                     <div />
                                     <div className="bg-navy rounded-b-2xl py-3 md:py-4 px-3 md:px-4 text-center">
@@ -323,20 +360,21 @@ export default function StampBuilder() {
 
                     {/* ═══ CUSTOMER REVIEWS ═══ */}
                     <ReviewsSection />
-
-                    <Footer />
-
-                    {/* ═══ STICKY ORDER NOW BUTTON ═══ */}
-                    <div className={`fixed bottom-0 left-0 right-0 z-50 py-3 bg-[#faf5f0] border-t border-border transition-transform duration-300 ${showSticky ? 'translate-y-0' : 'translate-y-full'}`}>
-                        <Link
-                            to="/customize"
-                            className="flex items-center justify-center gap-2 w-full max-w-xs mx-auto bg-[#dc2626] text-white hover:bg-[#b91c1c] py-3.5 rounded-full font-body font-bold text-sm transition-all duration-200 shadow-lg"
-                        >
-                            Order Now <ArrowRight className="w-4 h-4" />
-                        </Link>
-                    </div>
                 </>
             )}
+
+            {/* ═══ FOOTER — always rendered to prevent flicker ═══ */}
+            <Footer />
+
+            {/* ═══ STICKY ORDER NOW BUTTON ═══ */}
+            <div className={`fixed bottom-0 left-0 right-0 z-50 py-3 bg-[#faf5f0] border-t border-border transition-transform duration-300 ${showSticky ? 'translate-y-0' : 'translate-y-full'}`}>
+                <Link
+                    to="/customize"
+                    className="flex items-center justify-center gap-2 w-full max-w-xs mx-auto bg-[#dc2626] text-white hover:bg-[#b91c1c] py-3.5 rounded-full font-body font-bold text-sm transition-all duration-200 shadow-lg"
+                >
+                    Order Now <ArrowRight className="w-4 h-4" />
+                </Link>
+            </div>
         </div>
     );
 }
