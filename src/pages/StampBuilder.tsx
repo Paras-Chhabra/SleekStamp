@@ -56,7 +56,7 @@ export default function StampBuilder() {
 
     return (
         <div className="min-h-screen flex flex-col bg-background">
-            <Navbar />
+            {/* Navbar purposely removed for this builder page */}
 
             {/* ═══ HERO ═══ */}
             <section className="bg-white h-[100svh] flex flex-col justify-center">
