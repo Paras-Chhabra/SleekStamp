@@ -442,16 +442,16 @@ export default function ProductDetail() {
         <Navbar />
         <div className="container mx-auto px-4 py-12 flex-1">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
-            <div className="aspect-square bg-secondary animate-pulse rounded-2xl" />
+            <div className="aspect-square bg-[#e8e8e8] animate-pulse rounded-2xl" />
             <div>
-              <div className="h-8 w-3/4 bg-secondary animate-pulse rounded-lg mb-4" />
-              <div className="h-6 w-32 bg-secondary animate-pulse rounded-lg mb-6" />
+              <div className="h-8 w-3/4 bg-[#e8e8e8] animate-pulse rounded-lg mb-4" />
+              <div className="h-6 w-32 bg-[#e8e8e8] animate-pulse rounded-lg mb-6" />
               <div className="space-y-2 mb-6">
-                <div className="h-4 w-full bg-secondary animate-pulse rounded" />
-                <div className="h-4 w-5/6 bg-secondary animate-pulse rounded" />
-                <div className="h-4 w-4/6 bg-secondary animate-pulse rounded" />
+                <div className="h-4 w-full bg-[#e8e8e8] animate-pulse rounded" />
+                <div className="h-4 w-5/6 bg-[#ebebeb] animate-pulse rounded" />
+                <div className="h-4 w-4/6 bg-[#f0f0f0] animate-pulse rounded" />
               </div>
-              <div className="h-12 w-48 bg-secondary animate-pulse rounded-full" />
+              <div className="h-12 w-48 bg-[#e8e8e8] animate-pulse rounded-full" />
             </div>
           </div>
         </div>

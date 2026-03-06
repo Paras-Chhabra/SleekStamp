@@ -196,7 +196,7 @@ export default function Index() {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {isLoading ? (
               Array.from({ length: 4 }).map((_, i) => (
-                <div key={i} className="aspect-[3/4] bg-secondary animate-pulse rounded-xl border border-border"></div>
+                <div key={i} className="aspect-[3/4] bg-[#e8e8e8] animate-pulse rounded-xl border border-border"></div>
               ))
             ) : (
               featuredProducts.map((product) => (

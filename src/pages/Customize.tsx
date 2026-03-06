@@ -947,9 +947,9 @@ export default function Customize() {
                 {/* Same top bar structure */}
                 <div className="border-b border-border bg-white shadow-sm">
                     <div className="container mx-auto px-4 flex items-center justify-between h-11">
-                        <div className="w-6 h-6 bg-secondary animate-pulse rounded-full" />
-                        <div className="h-4 w-32 bg-secondary animate-pulse rounded" />
-                        <div className="h-4 w-16 bg-secondary animate-pulse rounded" />
+                        <div className="w-6 h-6 bg-[#e8e8e8] animate-pulse rounded-full" />
+                        <div className="h-4 w-32 bg-[#e8e8e8] animate-pulse rounded" />
+                        <div className="h-4 w-16 bg-[#e8e8e8] animate-pulse rounded" />
                     </div>
                 </div>
                 {/* Skeleton content */}

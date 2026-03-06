@@ -94,25 +94,25 @@ export default function StampBuilder() {
                     <section className="py-10 bg-white border-b border-border">
                         <div className="container mx-auto px-4">
                             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
-                                <div className="aspect-square bg-secondary animate-pulse rounded-2xl" />
+                                <div className="aspect-square bg-[#e8e8e8] animate-pulse rounded-2xl" />
                                 <div>
-                                    <div className="h-8 w-3/4 bg-secondary animate-pulse rounded-lg mb-3" />
+                                    <div className="h-8 w-3/4 bg-[#e8e8e8] animate-pulse rounded-lg mb-3" />
                                     <div className="flex items-baseline gap-3 mb-4">
-                                        <div className="h-8 w-24 bg-secondary animate-pulse rounded-lg" />
-                                        <div className="h-5 w-16 bg-secondary animate-pulse rounded-lg" />
+                                        <div className="h-8 w-24 bg-[#e8e8e8] animate-pulse rounded-lg" />
+                                        <div className="h-5 w-16 bg-[#e8e8e8] animate-pulse rounded-lg" />
                                     </div>
                                     <div className="flex gap-1 mb-6">
-                                        {Array.from({ length: 5 }).map((_, i) => <div key={i} className="w-4 h-4 bg-secondary animate-pulse rounded" />)}
+                                        {Array.from({ length: 5 }).map((_, i) => <div key={i} className="w-4 h-4 bg-[#e8e8e8] animate-pulse rounded" />)}
                                     </div>
                                     <div className="space-y-2 mb-6">
-                                        <div className="h-4 w-full bg-secondary animate-pulse rounded" />
-                                        <div className="h-4 w-5/6 bg-secondary animate-pulse rounded" />
-                                        <div className="h-4 w-4/6 bg-secondary animate-pulse rounded" />
+                                        <div className="h-4 w-full bg-[#e8e8e8] animate-pulse rounded" />
+                                        <div className="h-4 w-5/6 bg-[#ebebeb] animate-pulse rounded" />
+                                        <div className="h-4 w-4/6 bg-[#f0f0f0] animate-pulse rounded" />
                                     </div>
                                     <div className="space-y-2 mb-8">
-                                        {Array.from({ length: 4 }).map((_, i) => <div key={i} className="h-4 w-3/4 bg-secondary animate-pulse rounded" />)}
+                                        {Array.from({ length: 4 }).map((_, i) => <div key={i} className="h-4 w-3/4 bg-[#e8e8e8] animate-pulse rounded" />)}
                                     </div>
-                                    <div className="h-14 w-56 bg-secondary animate-pulse rounded-full" />
+                                    <div className="h-14 w-56 bg-[#e8e8e8] animate-pulse rounded-full" />
                                 </div>
                             </div>
                         </div>
@@ -121,15 +121,15 @@ export default function StampBuilder() {
                     <section className="py-8 md:py-10 bg-[#faf5f0] border-y border-border">
                         <div className="container mx-auto px-4">
                             <div className="text-center mb-6 md:mb-12">
-                                <div className="h-7 w-48 bg-secondary/60 animate-pulse rounded-lg mx-auto mb-2" />
-                                <div className="h-4 w-64 bg-secondary/40 animate-pulse rounded mx-auto" />
+                                <div className="h-7 w-48 bg-[#ebebeb] animate-pulse rounded-lg mx-auto mb-2" />
+                                <div className="h-4 w-64 bg-[#f0f0f0] animate-pulse rounded mx-auto" />
                             </div>
                             <div className="grid grid-cols-1 md:grid-cols-4 gap-4 md:gap-8">
                                 {Array.from({ length: 4 }).map((_, i) => (
                                     <div key={i} className="text-center">
-                                        <div className="w-10 h-10 md:w-12 md:h-12 bg-secondary animate-pulse rounded-full mx-auto mb-2 md:mb-4" />
-                                        <div className="h-4 w-3/4 bg-secondary animate-pulse rounded mx-auto mb-1" />
-                                        <div className="h-3 w-5/6 bg-secondary/40 animate-pulse rounded mx-auto" />
+                                        <div className="w-10 h-10 md:w-12 md:h-12 bg-[#e8e8e8] animate-pulse rounded-full mx-auto mb-2 md:mb-4" />
+                                        <div className="h-4 w-3/4 bg-[#e8e8e8] animate-pulse rounded mx-auto mb-1" />
+                                        <div className="h-3 w-5/6 bg-[#f0f0f0] animate-pulse rounded mx-auto" />
                                     </div>
                                 ))}
                             </div>
