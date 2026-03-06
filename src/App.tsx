@@ -20,7 +20,15 @@ import RefundPolicy from "./pages/RefundPolicy";
 import Customize from "./pages/Customize";
 import NotFound from "./pages/NotFound";
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 1000 * 60 * 5, // 5 minutes — prevents refetch on mount
+      gcTime: 1000 * 60 * 10,   // 10 minutes — keeps data in cache
+      refetchOnWindowFocus: false,
+    },
+  },
+});
 
 const ScrollToTop = () => {
   const { pathname } = useLocation();

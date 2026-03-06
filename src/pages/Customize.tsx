@@ -943,10 +943,21 @@ export default function Customize() {
 
     if (isLoading) {
         return (
-            <div className="min-h-screen flex flex-col bg-background">
-                <Navbar />
+            <div className="min-h-screen flex flex-col bg-white">
+                {/* Same top bar structure */}
+                <div className="border-b border-border bg-white shadow-sm">
+                    <div className="container mx-auto px-4 flex items-center justify-between h-11">
+                        <div className="w-6 h-6 bg-secondary animate-pulse rounded-full" />
+                        <div className="h-4 w-32 bg-secondary animate-pulse rounded" />
+                        <div className="h-4 w-16 bg-secondary animate-pulse rounded" />
+                    </div>
+                </div>
+                {/* Skeleton content */}
                 <div className="flex-1 flex items-center justify-center">
-                    <div className="w-10 h-10 border-4 border-red-600/30 border-t-gold rounded-full animate-spin" />
+                    <div className="text-center space-y-4">
+                        <div className="w-10 h-10 border-4 border-red-600/30 border-t-[#Cca35a] rounded-full animate-spin mx-auto" />
+                        <p className="text-sm text-muted-foreground font-body animate-pulse">Loading customizer...</p>
+                    </div>
                 </div>
             </div>
         );

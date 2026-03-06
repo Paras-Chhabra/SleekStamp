@@ -434,12 +434,26 @@ export default function ProductDetail() {
   const priorityProduct = allProducts.find(p => p.name.toLowerCase().includes("priority processing"));
   const priorityPrice = priorityProduct?.price ?? 4.99;
 
+  // For non-custom-stamp products, always render the same shell
+  // Only the inner content changes between skeleton / error / real content
   if (isLoading) {
     return (
       <div className="min-h-screen flex flex-col bg-background">
         <Navbar />
-        <div className="flex-1 flex items-center justify-center">
-          <div className="w-8 h-8 border-4 border-border/30 border-t-foreground rounded-full animate-spin"></div>
+        <div className="container mx-auto px-4 py-12 flex-1">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+            <div className="aspect-square bg-secondary animate-pulse rounded-2xl" />
+            <div>
+              <div className="h-8 w-3/4 bg-secondary animate-pulse rounded-lg mb-4" />
+              <div className="h-6 w-32 bg-secondary animate-pulse rounded-lg mb-6" />
+              <div className="space-y-2 mb-6">
+                <div className="h-4 w-full bg-secondary animate-pulse rounded" />
+                <div className="h-4 w-5/6 bg-secondary animate-pulse rounded" />
+                <div className="h-4 w-4/6 bg-secondary animate-pulse rounded" />
+              </div>
+              <div className="h-12 w-48 bg-secondary animate-pulse rounded-full" />
+            </div>
+          </div>
         </div>
         <Footer />
       </div>
