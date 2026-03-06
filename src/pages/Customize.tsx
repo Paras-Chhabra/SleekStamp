@@ -29,7 +29,7 @@ interface BuilderSelections {
     logoUrl: string | null;
     logoUploading: boolean;
     stampPad: StampPadOption | null;
-    inkColor: string;
+    inkVariant: Variant | null;
     priorityProcessing: boolean;
     priorityVariantId: string | null;
     priorityPrice: number;
@@ -478,54 +478,70 @@ function StepPad({
    STEP 4 — INK COLOR
    ═══════════════════════════════════════════════════════════════════════ */
 
-function StepInk({ selected, onSelect }: { selected: string; onSelect: (c: string) => void }) {
+function StepInk({
+    productName,
+    variants,
+    selected,
+    onSelect
+}: {
+    productName: string;
+    variants: Variant[];
+    selected: Variant | null;
+    onSelect: (v: Variant | null) => void
+}) {
     return (
         <div className="animate-fade-in">
             <div className="flex items-center gap-2 mb-0.5">
                 <div className="w-5 h-5 rounded-full bg-red-600/10 flex items-center justify-center">
                     <Palette className="w-3 h-3 text-red-600" />
                 </div>
-                <h2 className="font-display text-lg font-bold">Choose Ink Color</h2>
+                <h2 className="font-display text-lg font-bold">{productName || "Stamp Pad Refill Ink - 3 Pcs"}</h2>
             </div>
-            <p className="text-muted-foreground font-body text-xs mb-3 ml-7">Select the ink color for your stamp impression.</p>
+            <p className="text-muted-foreground font-body text-xs mb-3 ml-7">Choose Ink color</p>
 
-            <div className="grid grid-cols-3 sm:grid-cols-5 gap-2">
-                {INK_COLORS.map(({ name, hex }) => {
-                    const active = selected === name;
+            <div className="space-y-2">
+                {variants.map((v) => {
+                    const active = selected?.id === v.id;
+                    const hex = INK_COLORS.find(c => v.title.toLowerCase().includes(c.name.toLowerCase()))?.hex || "#ccc";
+
                     return (
                         <button
-                            key={name}
-                            onClick={() => onSelect(name)}
-                            className={`flex flex-col items-center gap-2 p-3.5 rounded-xl border-2 transition-all duration-300
-                ${active ? "border-red-600 bg-gradient-to-b from-gold/8 to-gold/3 shadow-md shadow-red-600/10 scale-[1.02]" : "border-border bg-white hover:border-red-600/40 hover:shadow-sm"}`}
+                            key={v.id}
+                            onClick={() => onSelect(v)}
+                            className={`w-full flex items-center justify-between p-3 rounded-xl border-2 transition-all duration-300
+                                ${active ? "border-red-600 bg-gradient-to-r from-gold/8 to-gold/3 shadow-sm" : "border-border bg-white hover:border-red-600/40"}`}
                         >
-                            <div className="relative">
-                                <div className="w-8 h-8 rounded-full shadow-md border-2 border-white" style={{ backgroundColor: hex, boxShadow: `0 4px 12px ${hex}40` }} />
-                                {active && (
-                                    <div className="absolute -bottom-1 -right-1 w-5 h-5 rounded-full bg-red-600 text-white flex items-center justify-center">
-                                        <Check className="w-3 h-3" />
-                                    </div>
-                                )}
+                            <div className="text-left flex items-center gap-3">
+                                <div className="w-6 h-6 rounded-full shadow-md border-2 border-white" style={{ backgroundColor: hex }} />
+                                <span className="font-body font-medium text-sm">{v.title}</span>
                             </div>
-                            <span className="font-body font-medium text-sm">{name}</span>
-                            {(name === "Black" || name === "Blue") && (
-                                <span className="px-1.5 py-0.5 rounded bg-gray-900 text-white text-[9px] font-body font-bold uppercase leading-none">Best Seller</span>
-                            )}
+                            <div className="flex items-center gap-2">
+                                <span className="font-body font-bold text-sm text-foreground">+${v.price.toFixed(2)}</span>
+                                {active && <Check className="w-4 h-4 text-red-600" />}
+                            </div>
                         </button>
                     );
                 })}
-            </div>
 
-            {/* Preview hint */}
-            {selected && (
-                <div className="mt-4 flex items-center gap-2 p-3 rounded-lg bg-gray-50 border border-border">
-                    <div className="w-5 h-5 rounded-full shadow-sm" style={{ backgroundColor: INK_COLORS.find(c => c.name === selected)?.hex }} />
-                    <span className="text-sm font-body text-muted-foreground">Your stamp will use <strong className="text-foreground">{selected}</strong> ink</span>
-                </div>
-            )}
+                {/* No ink option */}
+                <button
+                    onClick={() => onSelect(null)}
+                    className={`w-full flex items-center justify-between p-3 rounded-xl border-2 transition-all duration-300
+                        ${!selected ? "border-red-600 bg-gradient-to-r from-gold/8 to-gold/3 shadow-sm shadow-red-600/10" : "border-border bg-white hover:border-red-600/40"}`}
+                >
+                    <div className="flex items-center gap-3">
+                        <div className={`w-6 h-6 rounded-full flex items-center justify-center shrink-0 ${!selected ? "bg-red-600/20" : "bg-gray-100"}`}>
+                            <Check className={`w-3.5 h-3.5 ${!selected ? "text-red-600" : "text-gray-400"}`} />
+                        </div>
+                        <span className="font-body font-medium text-sm">No refill ink</span>
+                    </div>
+                    <span className="font-body text-sm text-muted-foreground">$0.00</span>
+                </button>
+            </div>
         </div>
     );
 }
+
 
 /* ═══════════════════════════════════════════════════════════════════════════
    STEP 5 — PRIORITY PROCESSING
@@ -732,7 +748,7 @@ function StepReview({
         { label: "Stamp Size", value: selections.variant?.title ?? "—", price: selections.variant?.price ?? 0, step: 0 },
         { label: "Your Design", value: selections.designFee > 0 ? "We design for you" : (selections.logoFile?.name ?? "No file uploaded"), price: selections.designFee, step: 1 },
         { label: "Stamp Pad", value: selections.stampPad ? selections.stampPad.name : "None", price: selections.stampPad?.price ?? 0, step: 2 },
-        { label: "Ink Color", value: selections.inkColor, price: 0, step: 3 },
+        { label: "Refill Ink", value: selections.inkVariant?.title ?? "None", price: selections.inkVariant?.price ?? 0, step: 3 },
         { label: "Processing", value: selections.priorityProcessing ? "Priority (24h)" : "Standard (1–3 days)", price: selections.priorityProcessing ? selections.priorityPrice : 0, step: 4 },
         { label: "Tip", value: selections.tipAmount > 0 ? `$${selections.tipAmount.toFixed(2)}` : "None", price: selections.tipAmount, step: 5 },
     ];
@@ -814,6 +830,14 @@ export default function Customize() {
     const stampPadProducts = allProducts.filter((p) => p.category === "stamp-pad");
     const priorityProduct = allProducts.find((p) => p.name.toLowerCase().includes("priority processing"));
     const designServiceProduct = allProducts.find((p) => p.name.toLowerCase().includes("custom design service"));
+    const refillInkProduct = allProducts.find((p) => p.name.toLowerCase().includes("refill ink- 3"));
+
+    const inkVariants: Variant[] = (refillInkProduct?.sizes ?? []).map((s) => ({
+        id: s.variantId ?? "",
+        title: s.label,
+        price: s.price,
+        available: true,
+    }));
 
     const stampPadOptions: StampPadOption[] = stampPadProducts
         .sort((a, b) => a.price - b.price)
@@ -829,7 +853,7 @@ export default function Customize() {
         logoUrl: null,
         logoUploading: false,
         stampPad: null,
-        inkColor: "Black",
+        inkVariant: null,
         priorityProcessing: false,
         priorityVariantId: priorityProduct?.defaultVariantId ?? null,
         priorityPrice,
@@ -856,6 +880,7 @@ export default function Customize() {
     const totalPrice =
         (selections.variant?.price ?? 0) +
         (selections.stampPad?.price ?? 0) +
+        (selections.inkVariant?.price ?? 0) +
         (selections.priorityProcessing ? priorityPrice : 0) +
         selections.designFee +
         selections.tipAmount;
@@ -865,7 +890,7 @@ export default function Customize() {
             case 0: return !!selections.variant;
             case 1: return !!selections.logoFile || selections.designFee > 0;
             case 2: return true;
-            case 3: return !!selections.inkColor;
+            case 3: return true; // ink is optional
             case 4: return true;
             case 5: return true;
             default: return true;
@@ -886,7 +911,7 @@ export default function Customize() {
             // Build custom attributes for the stamp
             const stampAttributes: { key: string; value: string }[] = [];
             if (logoUrl) stampAttributes.push({ key: "Logo URL", value: logoUrl });
-            if (selections.inkColor) stampAttributes.push({ key: "Ink Color", value: selections.inkColor });
+            if (selections.inkVariant) stampAttributes.push({ key: "Ink Color", value: selections.inkVariant.title });
             if (selections.stampPad) stampAttributes.push({ key: "Stamp Pad", value: selections.stampPad.name });
             if (selections.priorityProcessing) stampAttributes.push({ key: "Priority Processing", value: "Yes" });
             if (selections.designFee > 0) {
@@ -899,7 +924,7 @@ export default function Customize() {
                 variantId: selections.variant.id,
                 quantity: 1,
                 logoUrl: logoUrl,
-                inkColor: selections.inkColor,
+                inkColor: selections.inkVariant?.title ?? null,
                 stampPad: selections.stampPad?.name ?? null,
                 priorityProcessing: selections.priorityProcessing,
                 designBrief: selections.designBrief || null,
@@ -911,6 +936,13 @@ export default function Customize() {
             if (selections.stampPad) {
                 lineItems.push({
                     variantId: selections.stampPad.variantId,
+                    quantity: 1,
+                });
+            }
+
+            if (selections.inkVariant) {
+                lineItems.push({
+                    variantId: selections.inkVariant.id,
                     quantity: 1,
                 });
             }
@@ -1052,8 +1084,10 @@ export default function Customize() {
                         )}
                         {step === 3 && (
                             <StepInk
-                                selected={selections.inkColor}
-                                onSelect={(c) => setSelections((s) => ({ ...s, inkColor: c }))}
+                                productName={refillInkProduct?.name || "Stamp Pad Refill Ink - 3 Pcs"}
+                                variants={inkVariants}
+                                selected={selections.inkVariant}
+                                onSelect={(v) => setSelections((s) => ({ ...s, inkVariant: v }))}
                             />
                         )}
                         {step === 4 && (
