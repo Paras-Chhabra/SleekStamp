@@ -140,7 +140,9 @@ function Customizer({
       {/* ── 1. Select Size ── */}
       {hasSizes && (
         <div>
-          <h3 className="font-display text-lg font-bold text-foreground mb-4">{++sectionNum}. Select Size</h3>
+          <h3 className="font-display text-lg font-bold text-foreground mb-4">
+            {++sectionNum}. {product.category === 'refill-ink' ? 'Select Color' : 'Select Size'}
+          </h3>
           <div className={`grid gap-3 ${product.sizes!.length <= 3 ? `grid-cols-${product.sizes!.length}` : "grid-cols-3"}`}>
             {product.sizes!.map((sz) => (
               <button
@@ -154,9 +156,9 @@ function Customizer({
               >
                 <div className="font-body font-semibold text-sm text-blue-600 mb-0.5">{sz.size}</div>
                 <div className="text-xs text-muted-foreground font-body mb-1">
-                  {sz.label.includes("4") ? "Standard" : sz.label.includes("6") ? "Large" : "Oversized"}
+                  {product.category === 'refill-ink' ? "3 Bottles" : (sz.label.includes("4") ? "Standard" : sz.label.includes("6") ? "Large" : "Oversized")}
                 </div>
-                <div className="font-body font-bold text-foreground">${sz.price.toFixed(0)}</div>
+                <div className="font-body font-bold text-foreground">${sz.price % 1 === 0 ? sz.price.toFixed(0) : sz.price.toFixed(2)}</div>
               </button>
             ))}
           </div>

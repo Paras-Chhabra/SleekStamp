@@ -513,7 +513,12 @@ function StepInk({
                         >
                             <div className="text-left flex items-center gap-3">
                                 <div className="w-6 h-6 rounded-full shadow-md border-2 border-white" style={{ backgroundColor: hex }} />
-                                <span className="font-body font-medium text-sm">{v.title}</span>
+                                <div>
+                                    <span className="font-body font-medium text-sm block">{v.title}</span>
+                                    {(v.title === "Black" || v.title === "Blue") && (
+                                        <span className="px-1.5 py-0.5 mt-0.5 rounded bg-gray-900 text-white text-[9px] font-body font-bold uppercase leading-none inline-block">Best Seller</span>
+                                    )}
+                                </div>
                             </div>
                             <div className="flex items-center gap-2">
                                 <span className="font-body font-bold text-sm text-foreground">+${v.price.toFixed(2)}</span>
@@ -523,20 +528,6 @@ function StepInk({
                     );
                 })}
 
-                {/* No ink option */}
-                <button
-                    onClick={() => onSelect(null)}
-                    className={`w-full flex items-center justify-between p-3 rounded-xl border-2 transition-all duration-300
-                        ${!selected ? "border-red-600 bg-gradient-to-r from-gold/8 to-gold/3 shadow-sm shadow-red-600/10" : "border-border bg-white hover:border-red-600/40"}`}
-                >
-                    <div className="flex items-center gap-3">
-                        <div className={`w-6 h-6 rounded-full flex items-center justify-center shrink-0 ${!selected ? "bg-red-600/20" : "bg-gray-100"}`}>
-                            <Check className={`w-3.5 h-3.5 ${!selected ? "text-red-600" : "text-gray-400"}`} />
-                        </div>
-                        <span className="font-body font-medium text-sm">No refill ink</span>
-                    </div>
-                    <span className="font-body text-sm text-muted-foreground">$0.00</span>
-                </button>
             </div>
         </div>
     );
