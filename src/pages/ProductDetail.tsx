@@ -419,6 +419,14 @@ export default function ProductDetail() {
 
   const product = products.find((p) => p.slug === slug);
 
+  // ── Render StampBuilder immediately for the custom stamps product ──
+  // This avoids showing a loading spinner before the hero section loads,
+  // since StampBuilder handles its own loading state gracefully.
+  const isCustomStampSlug = slug === "big-custom-stamps-by-sleekstamp";
+  if (isCustomStampSlug || (product && product.category === "custom-stamps")) {
+    return <StampBuilder />;
+  }
+
   // Find the cart item being edited (if any)
   const editingItem = editId ? items.find((i) => i.id === editId) : null;
 
@@ -453,11 +461,6 @@ export default function ProductDetail() {
         <Footer />
       </div>
     );
-  }
-
-  // ── If this is the Big Custom Stamps product, render the full builder experience ──
-  if (product.category === "custom-stamps") {
-    return <StampBuilder />;
   }
 
   const handleCustomizerComplete = (state: CustomizerState) => {
