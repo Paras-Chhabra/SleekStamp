@@ -830,7 +830,7 @@ export default function Customize() {
     const stampPadProducts = allProducts.filter((p) => p.category === "stamp-pad");
     const priorityProduct = allProducts.find((p) => p.name.toLowerCase().includes("priority processing"));
     const designServiceProduct = allProducts.find((p) => p.name.toLowerCase().includes("custom design service"));
-    const refillInkProduct = allProducts.find((p) => p.name.toLowerCase().includes("refill ink- 3"));
+    const refillInkProduct = allProducts.find((p) => p.name.toLowerCase().includes("refill ink") && p.name.toLowerCase().includes("3"));
 
     const inkVariants: Variant[] = (refillInkProduct?.sizes ?? []).map((s) => ({
         id: s.variantId ?? "",
