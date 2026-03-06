@@ -56,7 +56,7 @@ export default function StampBuilder() {
 
     return (
         <div className="min-h-screen flex flex-col bg-background">
-            {/* Navbar removed */}
+            <Navbar />
 
             {/* ═══ HERO ═══ */}
             <section className="bg-white h-[100svh] flex flex-col justify-center">
@@ -89,74 +89,67 @@ export default function StampBuilder() {
             </section>
 
             {isLoading ? (
-                /* ═══ SKELETON — structurally identical to the real layout ═══ */
+                /* ═══ SKELETON LAYOUT — matches real page structure to prevent layout shift ═══ */
                 <>
-                    {/* Product Info skeleton — mirrors line 146-197 */}
+                    {/* ═══ SKELETON PRODUCT INFO ═══ */}
                     <section className="py-10 bg-white border-b border-border">
                         <div className="container mx-auto px-4">
                             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
-                                {/* Image — same wrapper as real */}
-                                <div className="aspect-square bg-[#e8e8e8] animate-pulse rounded-2xl overflow-hidden border border-border shadow-sm" />
+                                {/* Skeleton Image */}
+                                <div className="aspect-square bg-[#e8e8e8] animate-pulse rounded-2xl border border-border" />
 
-                                {/* Info — same wrapper as real */}
+                                {/* Skeleton Info */}
                                 <div>
-                                    {/* Title — h2 text-3xl ~36px */}
-                                    <div className="h-9 w-3/4 bg-[#e8e8e8] animate-pulse rounded-lg mb-3" />
+                                    <div className="h-10 w-3/4 bg-[#e8e8e8] animate-pulse rounded-lg mb-3" />
 
-                                    {/* Price row — flex items-baseline gap-3 mb-4 */}
                                     <div className="flex items-baseline gap-3 mb-4">
-                                        <div className="h-9 w-28 bg-[#e8e8e8] animate-pulse rounded-lg" />
-                                        <div className="h-5 w-20 bg-[#ebebeb] animate-pulse rounded-lg" />
-                                        <div className="h-5 w-20 bg-[#f0f0f0] animate-pulse rounded-full" />
+                                        <div className="h-10 w-28 bg-[#e8e8e8] animate-pulse rounded-lg" />
+                                        <div className="h-6 w-20 bg-[#e8e8e8] animate-pulse rounded-lg" />
+                                        <div className="h-5 w-16 bg-[#e8e8e8] animate-pulse rounded-full" />
                                     </div>
 
-                                    {/* Stars + review count — flex items-center gap-2 mb-6 */}
                                     <div className="flex items-center gap-2 mb-6">
                                         <div className="flex gap-0.5">
-                                            {Array.from({ length: 5 }).map((_, i) => (
-                                                <div key={i} className="w-4 h-4 bg-[#e8e8e8] animate-pulse rounded-sm" />
-                                            ))}
+                                            {Array.from({ length: 5 }).map((_, i) => <div key={i} className="w-4 h-4 bg-[#e8e8e8] animate-pulse rounded" />)}
                                         </div>
-                                        <div className="h-4 w-32 bg-[#ebebeb] animate-pulse rounded" />
+                                        <div className="h-4 w-32 bg-[#e8e8e8] animate-pulse rounded" />
                                     </div>
 
-                                    {/* Description — two lines, leading-relaxed mb-6 */}
                                     <div className="space-y-2 mb-6">
                                         <div className="h-4 w-full bg-[#e8e8e8] animate-pulse rounded" />
-                                        <div className="h-4 w-full bg-[#ebebeb] animate-pulse rounded" />
-                                        <div className="h-4 w-3/5 bg-[#f0f0f0] animate-pulse rounded" />
+                                        <div className="h-4 w-5/6 bg-[#ebebeb] animate-pulse rounded" />
+                                        <div className="h-4 w-4/6 bg-[#f0f0f0] animate-pulse rounded" />
                                     </div>
 
-                                    {/* Features — ul space-y-2 mb-8, each li: flex items-start gap-2 */}
-                                    <ul className="space-y-2 mb-8">
+                                    <div className="space-y-3 mb-8">
                                         {Array.from({ length: 4 }).map((_, i) => (
-                                            <li key={i} className="flex items-start gap-2">
-                                                <div className="w-4 h-4 bg-[#e8e8e8] animate-pulse rounded mt-0.5 flex-shrink-0" />
-                                                <div className="h-4 w-3/4 bg-[#e8e8e8] animate-pulse rounded" />
-                                            </li>
+                                            <div key={i} className="flex items-center gap-2">
+                                                <div className="w-4 h-4 bg-[#e8e8e8] animate-pulse rounded-full flex-shrink-0" />
+                                                <div className="h-4 w-2/3 bg-[#e8e8e8] animate-pulse rounded" />
+                                            </div>
                                         ))}
-                                    </ul>
+                                    </div>
 
-                                    {/* CTA — px-8 py-4 rounded-full ≈ h-14 */}
-                                    <div className="h-14 w-56 bg-[#e8e8e8] animate-pulse rounded-full" />
+                                    <div className="h-14 w-64 bg-[#e8e8e8] animate-pulse rounded-full" />
                                 </div>
                             </div>
                         </div>
                     </section>
 
-                    {/* How It Works skeleton — mirrors line 200-228 */}
-                    <section className="py-8 md:py-10 bg-[#faf5f0] text-foreground border-y border-border min-h-[100svh] md:min-h-0 flex flex-col justify-center">
+                    {/* ═══ SKELETON HOW IT WORKS ═══ */}
+                    <section className="py-8 md:py-10 bg-[#faf5f0] border-y border-border">
                         <div className="container mx-auto px-4">
                             <div className="text-center mb-6 md:mb-12">
-                                <div className="h-7 md:h-9 w-48 bg-[#ebebeb] animate-pulse rounded-lg mx-auto mb-2" />
-                                <div className="h-4 md:h-5 w-64 bg-[#f0f0f0] animate-pulse rounded mx-auto" />
+                                <div className="h-8 w-48 bg-[#ebebeb] animate-pulse rounded-lg mx-auto mb-2" />
+                                <div className="h-5 w-64 bg-[#f0f0f0] animate-pulse rounded mx-auto" />
                             </div>
-                            <div className="grid grid-cols-1 md:grid-cols-4 gap-4 md:gap-8 relative">
+                            <div className="grid grid-cols-1 md:grid-cols-4 gap-4 md:gap-8">
                                 {Array.from({ length: 4 }).map((_, i) => (
                                     <div key={i} className="text-center relative">
                                         <div className="w-10 h-10 md:w-12 md:h-12 bg-[#e8e8e8] animate-pulse rounded-full mx-auto mb-2 md:mb-4" />
-                                        <div className="h-4 md:h-5 w-3/4 bg-[#e8e8e8] animate-pulse rounded mx-auto mb-1 md:mb-2" />
-                                        <div className="h-3 md:h-4 w-5/6 bg-[#f0f0f0] animate-pulse rounded mx-auto" />
+                                        <div className="h-5 w-3/4 bg-[#e8e8e8] animate-pulse rounded mx-auto mb-2" />
+                                        <div className="h-4 w-full bg-[#f0f0f0] animate-pulse rounded mx-auto mb-1" />
+                                        <div className="h-4 w-4/5 bg-[#f0f0f0] animate-pulse rounded mx-auto" />
                                     </div>
                                 ))}
                             </div>
