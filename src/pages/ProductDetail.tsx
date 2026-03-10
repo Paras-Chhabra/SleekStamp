@@ -395,12 +395,20 @@ function Customizer({
 
         <button
           onClick={() => {
+            if (!product.inStock) {
+              alert('This product is currently out of stock.');
+              return;
+            }
             onComplete(state);
           }}
-          disabled={needsLogo && !hasValidLogo}
+          disabled={(needsLogo && !hasValidLogo) || !product.inStock}
           className="w-full bg-black text-white py-4 rounded-xl font-body font-semibold text-base hover:bg-[#222222] transition-smooth disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center gap-2"
         >
-          <ShoppingCart className="w-4 h-4" /> Add to Cart — ${total.toFixed(2)}
+          {product.inStock ? (
+            <><ShoppingCart className="w-4 h-4" /> Add to Cart — ${total.toFixed(2)}</>
+          ) : (
+            <span>Out of Stock</span>
+          )}
         </button>
       </div>
     </div>
@@ -593,9 +601,11 @@ export default function ProductDetail() {
             )}
 
             <div className="flex items-center gap-3 py-4 border-y border-border mb-6">
-              <div className="w-2 h-2 rounded-full bg-green-500" />
-              <span className="text-sm font-body text-foreground font-medium">
-                In Stock — Ships in {product.turnaround}
+              <div className={`w-2 h-2 rounded-full ${product.inStock ? 'bg-green-500' : 'bg-red-500'}`} />
+              <span className={`text-sm font-body font-medium ${product.inStock ? 'text-foreground' : 'text-red-600'}`}>
+                {product.inStock
+                  ? `In Stock — Ships in ${product.turnaround}`
+                  : 'Out of Stock'}
               </span>
             </div>
 
