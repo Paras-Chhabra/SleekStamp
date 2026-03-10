@@ -18,6 +18,7 @@ import ShippingPolicy from "./pages/ShippingPolicy";
 import TermsOfService from "./pages/TermsOfService";
 import RefundPolicy from "./pages/RefundPolicy";
 import Customize from "./pages/Customize";
+import BundleCustomize from "./pages/BundleCustomize";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient({
@@ -62,6 +63,7 @@ const App = () => (
             <Route path="/terms-of-service" element={<TermsOfService />} />
             <Route path="/refund-policy" element={<RefundPolicy />} />
             <Route path="/customize" element={<Customize />} />
+            <Route path="/customize-bundle" element={<BundleCustomize />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>

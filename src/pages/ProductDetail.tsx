@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useParams, Link, useNavigate, useSearchParams } from "react-router-dom";
+import { useParams, Link, useNavigate, useSearchParams, Navigate } from "react-router-dom";
 import { Star, ChevronRight, Check, ArrowLeft, ShoppingCart, Zap, Upload, ArrowRight } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -435,6 +435,12 @@ export default function ProductDetail() {
   const isCustomStampSlug = slug?.includes("custom-stamp") || slug === "big-custom-stamps-by-sleekstamp";
   if (isCustomStampSlug || (product && product.category === "custom-stamps")) {
     return <StampBuilder />;
+  }
+
+  // ── Redirect to BundleCustomize for bundle kit products ──
+  const isBundleSlug = slug?.includes("bundle") || (product && product.name.toLowerCase().includes("bundle"));
+  if (isBundleSlug) {
+    return <Navigate to="/customize-bundle" replace />;
   }
 
   // Find the cart item being edited (if any)
