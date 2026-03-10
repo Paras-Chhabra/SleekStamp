@@ -842,18 +842,18 @@ export default function BundleCustomize() {
                 </div>
             </section>
 
-            {/* Fixed bottom bar */}
-            <div className="fixed bottom-0 left-0 right-0 z-30 bg-white border-t border-border px-3 py-2.5 shadow-[0_-8px_16px_rgba(0,0,0,0.06)]">
-                <div className="max-w-xl mx-auto flex items-center gap-2">
-                    {step > 0 && (
-                        <button
-                            onClick={() => setStep((s) => Math.max(0, s - 1))}
-                            className="px-4 py-2.5 rounded-xl font-body font-semibold text-xs text-foreground bg-gray-100 hover:bg-gray-200 transition-smooth"
-                        >
-                            Back
-                        </button>
-                    )}
-                    {step < 5 ? (
+            {/* Fixed bottom bar — hidden on review step which has its own checkout */}
+            {step < 5 && (
+                <div className="fixed bottom-0 left-0 right-0 z-30 bg-white border-t border-border px-3 py-2.5 shadow-[0_-8px_16px_rgba(0,0,0,0.06)]">
+                    <div className="max-w-xl mx-auto flex items-center gap-2">
+                        {step > 0 && (
+                            <button
+                                onClick={() => setStep((s) => Math.max(0, s - 1))}
+                                className="px-4 py-2.5 rounded-xl font-body font-semibold text-xs text-foreground bg-gray-100 hover:bg-gray-200 transition-smooth"
+                            >
+                                Back
+                            </button>
+                        )}
                         <button
                             onClick={() => {
                                 setStep((s) => Math.min(5, s + 1));
@@ -864,17 +864,9 @@ export default function BundleCustomize() {
                         >
                             Continue
                         </button>
-                    ) : (
-                        <button
-                            onClick={handleCheckout}
-                            disabled={isSubmitting || !selections.variant}
-                            className="flex-1 bg-black text-white hover:bg-[#222222] py-2.5 rounded-xl font-body font-bold text-sm transition-all duration-200 disabled:opacity-40 disabled:cursor-not-allowed text-center"
-                        >
-                            {isSubmitting ? "Processing..." : `Checkout — $${totalPrice.toFixed(2)}`}
-                        </button>
-                    )}
+                    </div>
                 </div>
-            </div>
+            )}
         </div>
     );
 }

@@ -429,18 +429,16 @@ export default function ProductDetail() {
 
   const product = products.find((p) => p.slug === slug);
 
-  // ── Render StampBuilder immediately for custom stamp products ──
-  // This avoids showing ProductDetail's loading skeleton (which has a Navbar)
-  // before data loads, eliminating Navbar flicker for the builder page.
-  const isCustomStampSlug = slug?.includes("custom-stamp") || slug === "big-custom-stamps-by-sleekstamp";
-  if (isCustomStampSlug || (product && product.category === "custom-stamps")) {
-    return <StampBuilder />;
-  }
-
-  // ── Redirect to BundleCustomize for bundle kit products ──
+  // ── Redirect to BundleCustomize for bundle kit products (check FIRST) ──
   const isBundleSlug = slug?.includes("bundle") || (product && product.name.toLowerCase().includes("bundle"));
   if (isBundleSlug) {
     return <Navigate to="/customize-bundle" replace />;
+  }
+
+  // ── Render StampBuilder immediately for custom stamp products ──
+  const isCustomStampSlug = slug?.includes("custom-stamp") || slug === "big-custom-stamps-by-sleekstamp";
+  if (isCustomStampSlug || (product && product.category === "custom-stamps")) {
+    return <StampBuilder />;
   }
 
   // Find the cart item being edited (if any)
