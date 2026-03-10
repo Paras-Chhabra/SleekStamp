@@ -110,6 +110,14 @@ function mapShopifyProduct(node: any): Product {
     ];
     rating = 4.9;
     reviewCount = 2341;
+  } else if (node.title.includes("Face") || node.title.includes("Self Inking")) {
+    description = "Create the ultimate custom stamp featuring your face, logo, or artwork. Our self-inking design delivers thousands of crisp impressions instantly, with no separate ink pad required. Just upload your photo or design, and we'll craft a premium, ready-to-use stamp perfect for packaging, branding, or fun personal touches.";
+    features = [
+      "Self-inking mechanism - no pad needed",
+      "Good for 10,000+ impressions before refill",
+      "Upload any face, logo, or custom art",
+      "Crisp, clear laser-engraved details"
+    ];
   }
 
   return {
