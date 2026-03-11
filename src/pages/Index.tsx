@@ -274,18 +274,28 @@ export default function Index() {
               {/* Right — image */}
               <div className="relative bg-cream/50 flex flex-col items-center justify-center p-8 md:p-12 min-h-[300px] md:min-h-[400px] overflow-hidden group/image">
                 <div className="relative w-full max-w-[280px] aspect-square flex items-center justify-center perspective-1000">
-                  {getCategoryImages(CATEGORY_SHOWCASE[activeCat].id).map((img, idx) => (
+                  {['stamp-pad', 'refill-ink', 'face-stamps'].includes(CATEGORY_SHOWCASE[activeCat].id) ? (
+                    // Single static image for specific categories
                     <img
-                      key={img + idx}
-                      src={img}
-                      alt={`${CATEGORY_SHOWCASE[activeCat].name} preview ${idx + 1}`}
-                      className={`absolute w-[75%] md:w-[85%] aspect-square object-contain rounded-xl shadow-lg transition-all duration-700 ease-out origin-bottom bg-white p-2
-                        ${idx === 0 ? 'z-30 transform group-hover/image:scale-110 group-hover/image:-translate-y-4 shadow-xl' : ''}
-                        ${idx === 1 ? 'z-20 transform -rotate-6 -translate-x-6 md:-translate-x-8 translate-y-3 md:translate-y-4 group-hover/image:-rotate-12 group-hover/image:-translate-x-12 md:group-hover/image:-translate-x-16 group-hover/image:translate-y-0 group-hover/image:scale-105 opacity-90' : ''}
-                        ${idx === 2 ? 'z-10 transform rotate-6 translate-x-6 md:translate-x-8 translate-y-3 md:translate-y-4 group-hover/image:rotate-12 group-hover/image:translate-x-12 md:group-hover/image:translate-x-16 group-hover/image:translate-y-0 group-hover/image:scale-105 opacity-80' : ''}
-                      `}
+                      src={getCategoryImages(CATEGORY_SHOWCASE[activeCat].id)[0]}
+                      alt={`${CATEGORY_SHOWCASE[activeCat].name} preview`}
+                      className="w-[85%] aspect-square object-contain rounded-xl shadow-lg bg-white p-2"
                     />
-                  ))}
+                  ) : (
+                    // Animated fan of up to 3 images for other categories
+                    getCategoryImages(CATEGORY_SHOWCASE[activeCat].id).map((img, idx) => (
+                      <img
+                        key={img + idx}
+                        src={img}
+                        alt={`${CATEGORY_SHOWCASE[activeCat].name} preview ${idx + 1}`}
+                        className={`absolute w-[75%] md:w-[85%] aspect-square object-contain rounded-xl shadow-lg transition-all duration-700 ease-out origin-bottom bg-white p-2
+                          ${idx === 0 ? 'z-30 transform group-hover/image:scale-110 group-hover/image:-translate-y-4 shadow-xl' : ''}
+                          ${idx === 1 ? 'z-20 transform -rotate-6 -translate-x-6 md:-translate-x-8 translate-y-3 md:translate-y-4 group-hover/image:-rotate-12 group-hover/image:-translate-x-12 md:group-hover/image:-translate-x-16 group-hover/image:translate-y-0 group-hover/image:scale-105 opacity-90' : ''}
+                          ${idx === 2 ? 'z-10 transform rotate-6 translate-x-6 md:translate-x-8 translate-y-3 md:translate-y-4 group-hover/image:rotate-12 group-hover/image:translate-x-12 md:group-hover/image:translate-x-16 group-hover/image:translate-y-0 group-hover/image:scale-105 opacity-80' : ''}
+                        `}
+                      />
+                    ))
+                  )}
                 </div>
               </div>
             </div>
