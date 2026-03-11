@@ -210,10 +210,10 @@ export default function Index() {
       </section>
 
       {/* Shop by Category */}
-      <section className="py-12 md:py-16 bg-cream min-h-[100svh] flex flex-col justify-center">
-        <div className="container mx-auto px-4 flex flex-col h-full max-w-6xl">
+      <section className="py-6 sm:py-12 md:py-16 bg-cream h-[100svh] min-h-[600px] md:h-auto md:min-h-[100svh] flex flex-col justify-center overflow-hidden">
+        <div className="container mx-auto px-4 flex flex-col h-full max-w-6xl justify-center">
           {/* Category header with navigation */}
-          <div className="flex items-center justify-between mb-6 md:mb-8">
+          <div className="flex items-center justify-between mb-4 md:mb-8 shrink-0">
             <div>
               <h2 className="font-display text-2xl md:text-3xl font-bold text-navy mb-1 flex items-center gap-2">
                 Shop by Category
@@ -239,7 +239,7 @@ export default function Index() {
           </div>
 
           {/* Category pills */}
-          <div className="flex gap-2 mb-8 overflow-x-auto pb-2 scrollbar-hide">
+          <div className="flex gap-2 mb-4 md:mb-8 overflow-x-auto pb-2 scrollbar-hide shrink-0">
             {CATEGORY_SHOWCASE.map((cat, i) => (
               <button
                 key={cat.id}
@@ -257,32 +257,32 @@ export default function Index() {
           {/* Category showcase card */}
           <div
             key={CATEGORY_SHOWCASE[activeCat].id}
-            className="bg-white rounded-2xl border border-border shadow-card overflow-hidden animate-fade-in"
+            className="bg-white rounded-2xl border border-border shadow-card overflow-hidden animate-fade-in flex-1 flex flex-col min-h-0"
           >
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-0">
-              {/* Left — description */}
-              <div className="p-8 md:p-12 flex flex-col justify-center">
-                <span className="inline-block px-3 py-1 rounded-full bg-navy/10 text-navy text-xs font-body font-bold uppercase tracking-wider mb-4 w-fit">
+            <div className="flex flex-col md:grid md:grid-cols-2 gap-0 h-full">
+              {/* Left — description (moves to bottom on mobile) */}
+              <div className="order-2 md:order-1 p-5 sm:p-8 md:p-12 flex flex-col justify-center flex-1">
+                <span className="inline-block px-3 py-1 rounded-full bg-navy/10 text-navy text-[10px] md:text-xs font-body font-bold uppercase tracking-wider mb-2 md:mb-4 w-fit">
                   {CATEGORY_SHOWCASE[activeCat].name}
                 </span>
-                <h3 className="font-display text-2xl md:text-3xl font-bold text-navy mb-4 leading-tight">
+                <h3 className="font-display text-xl sm:text-2xl md:text-3xl font-bold text-navy mb-2 md:mb-4 leading-tight shrink-0">
                   {CATEGORY_SHOWCASE[activeCat].name}
                 </h3>
-                <p className="text-muted-foreground font-body text-base leading-relaxed mb-6">
+                <p className="text-muted-foreground font-body text-sm sm:text-base leading-snug sm:leading-relaxed mb-4 md:mb-6 line-clamp-3 sm:line-clamp-none">
                   {CATEGORY_SHOWCASE[activeCat].description}
                 </p>
                 <Link
                   to={`/products?category=${CATEGORY_SHOWCASE[activeCat].id}`}
-                  className="inline-flex items-center gap-2 bg-navy text-white px-6 py-3 rounded-xl font-body font-semibold text-sm hover:bg-navy/90 transition-all duration-300 w-fit group"
+                  className="inline-flex items-center gap-2 bg-navy text-white px-5 md:px-6 py-2.5 md:py-3 rounded-xl font-body font-semibold text-sm hover:bg-navy/90 transition-all duration-300 w-fit group mt-auto md:mt-0 shrink-0"
                 >
                   {CATEGORY_SHOWCASE[activeCat].cta}
                   <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                 </Link>
               </div>
 
-              {/* Right — image */}
-              <div className="relative bg-cream/50 flex flex-col items-center justify-center p-8 md:p-12 min-h-[300px] md:min-h-[400px] overflow-hidden group/image">
-                <div className="relative w-full max-w-[280px] aspect-square flex items-center justify-center perspective-1000">
+              {/* Right — image (moves to top on mobile) */}
+              <div className="order-1 md:order-2 relative bg-cream/50 flex flex-col items-center justify-center p-5 sm:p-8 md:p-12 min-h-[180px] sm:min-h-[250px] md:min-h-[400px] overflow-hidden group/image shrink-0 border-b md:border-b-0 md:border-l border-border/50">
+                <div className="relative w-full max-w-[200px] md:max-w-[280px] aspect-square flex items-center justify-center perspective-1000">
                   {['stamp-pad', 'refill-ink', 'face-stamps'].includes(CATEGORY_SHOWCASE[activeCat].id) ? (
                     // Single static image for specific categories
                     <img
