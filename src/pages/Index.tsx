@@ -79,12 +79,6 @@ const CATEGORY_SHOWCASE = [
     description: "Self-inking stamps with your face, logo, or custom art. Thousands of crisp impressions with no separate ink pad needed.",
     cta: "Shop Face Stamps",
   },
-  {
-    id: "wooden-stamps",
-    name: "Wooden Stamps",
-    description: "Classic hardwood handle stamps for a traditional stamping experience. Beautiful craftsmanship meets precision engraving.",
-    cta: "Shop Wooden Stamps",
-  },
 ];
 
 export default function Index() {
@@ -267,11 +261,11 @@ export default function Index() {
               </div>
 
               {/* Right — image */}
-              <div className="relative bg-cream/50 flex items-center justify-center p-8 md:p-12 min-h-[280px]">
+              <div className="relative bg-cream/50 flex items-center justify-center p-8 md:p-12 min-h-[280px] overflow-hidden group/image">
                 <img
                   src={getCategoryImage(CATEGORY_SHOWCASE[activeCat].id)}
                   alt={CATEGORY_SHOWCASE[activeCat].name}
-                  className="max-w-full max-h-[320px] object-contain rounded-xl"
+                  className="max-w-full max-h-[320px] object-contain rounded-xl transition-all duration-700 ease-out group-hover/image:scale-110 group-hover/image:-translate-y-2 group-hover/image:drop-shadow-2xl"
                 />
               </div>
             </div>
