@@ -53,42 +53,36 @@ const CATEGORY_SHOWCASE = [
     id: "custom-stamps",
     name: "Big Custom Stamps",
     description: "Upload any logo, artwork, or design and get a precision-engraved custom stamp. Perfect for branding, packaging, and creative projects.",
-    image: "https://cdn.shopify.com/s/files/1/0676/7401/3807/files/Sleekstamp.gif?v=1772023606",
     cta: "Design Your Stamp",
   },
   {
     id: "bundle",
     name: "Complete Bundle Kits",
     description: "Everything you need in one package — custom stamp, ink pad, and refill ink. Save more and start stamping right away.",
-    image: "https://cdn.shopify.com/s/files/1/0676/7401/3807/files/Sleekstamp.gif?v=1772023606",
     cta: "View Bundles",
   },
   {
     id: "stamp-pad",
     name: "Stamp Pads",
     description: "Premium oversized ink pads designed for flawless, even impressions. Compatible with all SleekStamp custom stamps.",
-    image: "https://cdn.shopify.com/s/files/1/0676/7401/3807/files/Sleekstamp.gif?v=1772023606",
     cta: "Shop Stamp Pads",
   },
   {
     id: "refill-ink",
     name: "Refill Ink",
     description: "Bold, vibrant refill inks to keep your stamps performing at their best. Available in multiple colors — each pack includes 3 bottles.",
-    image: "https://cdn.shopify.com/s/files/1/0676/7401/3807/files/Sleekstamp.gif?v=1772023606",
     cta: "Shop Refill Ink",
   },
   {
     id: "face-stamps",
     name: "Face & Logo Stamps",
     description: "Self-inking stamps with your face, logo, or custom art. Thousands of crisp impressions with no separate ink pad needed.",
-    image: "https://cdn.shopify.com/s/files/1/0676/7401/3807/files/Sleekstamp.gif?v=1772023606",
     cta: "Shop Face Stamps",
   },
   {
     id: "wooden-stamps",
     name: "Wooden Stamps",
     description: "Classic hardwood handle stamps for a traditional stamping experience. Beautiful craftsmanship meets precision engraving.",
-    image: "https://cdn.shopify.com/s/files/1/0676/7401/3807/files/Sleekstamp.gif?v=1772023606",
     cta: "Shop Wooden Stamps",
   },
 ];
@@ -101,6 +95,13 @@ export default function Index() {
     .filter(Boolean) as typeof products;
 
   const [activeCat, setActiveCat] = useState(0);
+
+  // Resolve category image from the first product in that category
+  const allProducts = data?.all ?? [];
+  const getCategoryImage = (catId: string) => {
+    const match = allProducts.find(p => p.category === catId);
+    return match?.image || '';
+  };
 
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true, align: "start", dragFree: true });
 
@@ -268,7 +269,7 @@ export default function Index() {
               {/* Right — image */}
               <div className="relative bg-cream/50 flex items-center justify-center p-8 md:p-12 min-h-[280px]">
                 <img
-                  src={CATEGORY_SHOWCASE[activeCat].image}
+                  src={getCategoryImage(CATEGORY_SHOWCASE[activeCat].id)}
                   alt={CATEGORY_SHOWCASE[activeCat].name}
                   className="max-w-full max-h-[320px] object-contain rounded-xl"
                 />
