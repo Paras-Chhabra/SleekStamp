@@ -105,10 +105,6 @@ function StepBundle({ variants, selected, onSelect }: { variants: Variant[]; sel
                 ${active ? "border-red-600 bg-gradient-to-r from-gold/5 to-gold/2 shadow-sm shadow-red-600/10" : "border-border bg-white hover:border-red-600/40"}
                 ${!v.available ? "opacity-40 cursor-not-allowed" : ""}`}
                         >
-                            <div className="w-10 h-10 rounded-xl bg-red-600/10 flex items-center justify-center shrink-0">
-                                <Package className={`w-5 h-5 ${active ? "text-red-600" : "text-gray-400"}`} />
-                            </div>
-
                             <div className="flex-1 min-w-0">
                                 <span className="font-display font-semibold text-base">{v.title}</span>
                             </div>

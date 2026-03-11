@@ -133,16 +133,20 @@ export default function ProductCard({ product }: ProductCardProps) {
 
         {/* Price */}
         <div className="flex items-center justify-between">
-          <div className="flex items-baseline gap-2">
-            <span className="font-body font-bold text-lg text-foreground">
-              ${product.price.toFixed(2)}
-            </span>
-            {product.originalPrice && (
-              <span className="text-sm text-muted-foreground line-through font-body">
-                ${product.originalPrice.toFixed(2)}
+          {product.slug !== "complete-bundle-kit" ? (
+            <div className="flex items-baseline gap-2">
+              <span className="font-body font-bold text-lg text-foreground">
+                ${product.price.toFixed(2)}
               </span>
-            )}
-          </div>
+              {product.originalPrice && (
+                <span className="text-sm text-muted-foreground line-through font-body">
+                  ${product.originalPrice.toFixed(2)}
+                </span>
+              )}
+            </div>
+          ) : (
+            <div className="flex items-baseline gap-2"></div>
+          )}
           <span className="text-xs text-muted-foreground font-body">
             {product.turnaround}
           </span>
