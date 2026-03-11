@@ -93,6 +93,23 @@ export default function Index() {
   // Resolve multiple category images from the products in that category
   const allProducts = data?.all ?? [];
   const getCategoryImages = (catId: string) => {
+    // Override for specific categories as requested
+    if (catId === 'face-stamps') {
+      // Use the Refill Ink image for Face & Logo Stamps
+      const inkProducts = allProducts.filter(p => p.category === 'refill-ink');
+      if (inkProducts.length > 0 && inkProducts[0].image) {
+        return [inkProducts[0].image];
+      }
+    }
+
+    if (catId === 'refill-ink') {
+      // Use the Face Stamp image for Refill Ink
+      const faceProducts = allProducts.filter(p => p.category === 'face-stamps');
+      if (faceProducts.length > 0 && faceProducts[0].image) {
+        return [faceProducts[0].image];
+      }
+    }
+
     const categoryProducts = allProducts.filter(p => p.category === catId);
     let images: string[] = [];
     categoryProducts.forEach(p => {
