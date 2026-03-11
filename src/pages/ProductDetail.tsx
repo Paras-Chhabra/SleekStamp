@@ -436,7 +436,7 @@ export default function ProductDetail() {
   }
 
   // ── Render StampBuilder immediately for custom stamp products ──
-  const isCustomStampSlug = slug?.includes("custom-stamp") || slug === "big-custom-stamps-by-sleekstamp";
+  const isCustomStampSlug = slug === "big-custom-stamps-by-sleekstamp";
   if (isCustomStampSlug || (product && product.category === "custom-stamps")) {
     return <StampBuilder />;
   }

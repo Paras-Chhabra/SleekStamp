@@ -85,6 +85,8 @@ function mapShopifyProduct(node: any): Product {
     category = 'face-stamps';
   } else if (lowTitle.includes('wood')) {
     category = 'wooden-stamps';
+  } else if (lowTitle.includes('bundle')) {
+    category = 'bundle';
   } else if (node.productType) {
     category = node.productType.toLowerCase().replace(/ /g, '-');
   }

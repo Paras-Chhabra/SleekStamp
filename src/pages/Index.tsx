@@ -1,11 +1,10 @@
 import { Link } from "react-router-dom"; // rebuild trigger
-import { useCallback } from "react";
+import { useState, useCallback } from "react";
 import useEmblaCarousel from "embla-carousel-react";
 import { Star, ArrowRight, Shield, Truck, Clock, Award, ChevronLeft, ChevronRight, Check } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import ProductCard from "@/components/ProductCard";
-import { categories } from "@/data/products";
 import { useShopifyProducts } from "@/hooks/useShopify";
 import heroBanner from "@/assets/hero-premium-stamps.png";
 
@@ -42,10 +41,66 @@ const worksOnImages = [
   "https://cdn.shopify.com/s/files/1/0676/7401/3807/files/ChatGPT_Image_Feb_26_2026_03_52_20_PM.webp?v=1772101944"
 ];
 
+const BEST_SELLER_SLUGS = [
+  "big-custom-stamps-by-sleekstamp",
+  "complete-bundle-kit",
+  "big-stamp-pad-ink-pad-l",
+  "stamp-pad-refill-ink-3-pcs",
+];
+
+const CATEGORY_SHOWCASE = [
+  {
+    id: "custom-stamps",
+    name: "Big Custom Stamps",
+    description: "Upload any logo, artwork, or design and get a precision-engraved custom stamp. Perfect for branding, packaging, and creative projects.",
+    image: "https://cdn.shopify.com/s/files/1/0676/7401/3807/files/Sleekstamp.gif?v=1772023606",
+    cta: "Design Your Stamp",
+  },
+  {
+    id: "bundle",
+    name: "Complete Bundle Kits",
+    description: "Everything you need in one package — custom stamp, ink pad, and refill ink. Save more and start stamping right away.",
+    image: "https://cdn.shopify.com/s/files/1/0676/7401/3807/files/Sleekstamp.gif?v=1772023606",
+    cta: "View Bundles",
+  },
+  {
+    id: "stamp-pad",
+    name: "Stamp Pads",
+    description: "Premium oversized ink pads designed for flawless, even impressions. Compatible with all SleekStamp custom stamps.",
+    image: "https://cdn.shopify.com/s/files/1/0676/7401/3807/files/Sleekstamp.gif?v=1772023606",
+    cta: "Shop Stamp Pads",
+  },
+  {
+    id: "refill-ink",
+    name: "Refill Ink",
+    description: "Bold, vibrant refill inks to keep your stamps performing at their best. Available in multiple colors — each pack includes 3 bottles.",
+    image: "https://cdn.shopify.com/s/files/1/0676/7401/3807/files/Sleekstamp.gif?v=1772023606",
+    cta: "Shop Refill Ink",
+  },
+  {
+    id: "face-stamps",
+    name: "Face & Logo Stamps",
+    description: "Self-inking stamps with your face, logo, or custom art. Thousands of crisp impressions with no separate ink pad needed.",
+    image: "https://cdn.shopify.com/s/files/1/0676/7401/3807/files/Sleekstamp.gif?v=1772023606",
+    cta: "Shop Face Stamps",
+  },
+  {
+    id: "wooden-stamps",
+    name: "Wooden Stamps",
+    description: "Classic hardwood handle stamps for a traditional stamping experience. Beautiful craftsmanship meets precision engraving.",
+    image: "https://cdn.shopify.com/s/files/1/0676/7401/3807/files/Sleekstamp.gif?v=1772023606",
+    cta: "Shop Wooden Stamps",
+  },
+];
+
 export default function Index() {
   const { data, isLoading } = useShopifyProducts();
   const products = data?.display ?? [];
-  const featuredProducts = products.slice(0, 4);
+  const featuredProducts = BEST_SELLER_SLUGS
+    .map(slug => products.find(p => p.slug === slug || p.name.toLowerCase().includes(slug.replace(/-/g, ' ').substring(0, 12))))
+    .filter(Boolean) as typeof products;
+
+  const [activeCat, setActiveCat] = useState(0);
 
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true, align: "start", dragFree: true });
 
@@ -144,32 +199,91 @@ export default function Index() {
       {/* Shop by Category */}
       <section className="py-16 bg-cream">
         <div className="container mx-auto px-4">
-          <div className="text-center mb-10">
-            <h2 className="font-display text-3xl font-bold text-navy mb-3">Shop by Category</h2>
-            <p className="text-muted-foreground font-body max-w-md mx-auto">
-              Shop precision-crafted stamps for business, personal, and creative needs
-            </p>
+          {/* Category header with navigation */}
+          <div className="flex items-center justify-between mb-8">
+            <div>
+              <h2 className="font-display text-3xl font-bold text-navy mb-1">Shop by Category</h2>
+              <p className="text-muted-foreground font-body text-sm">
+                Browse our collection of premium stamps and accessories
+              </p>
+            </div>
+            <div className="flex items-center gap-2">
+              <button
+                onClick={() => setActiveCat((prev) => (prev - 1 + CATEGORY_SHOWCASE.length) % CATEGORY_SHOWCASE.length)}
+                className="w-10 h-10 rounded-full border border-border bg-white flex items-center justify-center hover:bg-navy hover:text-white hover:border-navy transition-all duration-300 shadow-sm"
+              >
+                <ChevronLeft className="w-5 h-5" />
+              </button>
+              <button
+                onClick={() => setActiveCat((prev) => (prev + 1) % CATEGORY_SHOWCASE.length)}
+                className="w-10 h-10 rounded-full border border-border bg-white flex items-center justify-center hover:bg-navy hover:text-white hover:border-navy transition-all duration-300 shadow-sm"
+              >
+                <ChevronRight className="w-5 h-5" />
+              </button>
+            </div>
           </div>
 
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
-            {categories.map((cat) => (
-              <Link
+          {/* Category pills */}
+          <div className="flex gap-2 mb-8 overflow-x-auto pb-2 scrollbar-hide">
+            {CATEGORY_SHOWCASE.map((cat, i) => (
+              <button
                 key={cat.id}
-                to={`/products?category=${cat.id}`}
-                className="group bg-card rounded-xl p-5 border border-border hover:border-gold/50 hover:shadow-hover transition-smooth text-center"
+                onClick={() => setActiveCat(i)}
+                className={`whitespace-nowrap px-4 py-2 rounded-full text-sm font-body font-medium transition-all duration-300 shrink-0
+                  ${activeCat === i
+                    ? 'bg-navy text-white shadow-md'
+                    : 'bg-white text-foreground border border-border hover:border-navy/30'}`}
               >
-                <div className="w-10 h-10 bg-navy rounded-lg mx-auto mb-3 flex items-center justify-center group-hover:bg-[#Cca35a] transition-smooth">
-                  <span className="text-white font-display font-bold text-sm transition-smooth">
-                    {cat.name.charAt(0)}
-                  </span>
-                </div>
-                <h3 className="font-display font-semibold text-sm text-foreground mb-1 group-hover:text-navy transition-smooth">
-                  {cat.name}
+                {cat.name}
+              </button>
+            ))}
+          </div>
+
+          {/* Category showcase card */}
+          <div
+            key={CATEGORY_SHOWCASE[activeCat].id}
+            className="bg-white rounded-2xl border border-border shadow-card overflow-hidden animate-fade-in"
+          >
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-0">
+              {/* Left — description */}
+              <div className="p-8 md:p-12 flex flex-col justify-center">
+                <span className="inline-block px-3 py-1 rounded-full bg-navy/10 text-navy text-xs font-body font-bold uppercase tracking-wider mb-4 w-fit">
+                  {CATEGORY_SHOWCASE[activeCat].name}
+                </span>
+                <h3 className="font-display text-2xl md:text-3xl font-bold text-navy mb-4 leading-tight">
+                  {CATEGORY_SHOWCASE[activeCat].name}
                 </h3>
-                <p className="text-xs text-muted-foreground font-body leading-snug">
-                  {cat.description}
+                <p className="text-muted-foreground font-body text-base leading-relaxed mb-6">
+                  {CATEGORY_SHOWCASE[activeCat].description}
                 </p>
-              </Link>
+                <Link
+                  to={`/products?category=${CATEGORY_SHOWCASE[activeCat].id}`}
+                  className="inline-flex items-center gap-2 bg-navy text-white px-6 py-3 rounded-xl font-body font-semibold text-sm hover:bg-navy/90 transition-all duration-300 w-fit group"
+                >
+                  {CATEGORY_SHOWCASE[activeCat].cta}
+                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                </Link>
+              </div>
+
+              {/* Right — image */}
+              <div className="relative bg-cream/50 flex items-center justify-center p-8 md:p-12 min-h-[280px]">
+                <img
+                  src={CATEGORY_SHOWCASE[activeCat].image}
+                  alt={CATEGORY_SHOWCASE[activeCat].name}
+                  className="max-w-full max-h-[320px] object-contain rounded-xl"
+                />
+              </div>
+            </div>
+          </div>
+
+          {/* Dots indicator */}
+          <div className="flex items-center justify-center gap-2 mt-6">
+            {CATEGORY_SHOWCASE.map((_, i) => (
+              <button
+                key={i}
+                onClick={() => setActiveCat(i)}
+                className={`rounded-full transition-all duration-300 ${activeCat === i ? 'w-8 h-2.5 bg-navy' : 'w-2.5 h-2.5 bg-gray-300 hover:bg-gray-400'}`}
+              />
             ))}
           </div>
         </div>
