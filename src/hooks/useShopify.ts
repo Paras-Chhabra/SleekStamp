@@ -77,10 +77,11 @@ function mapShopifyProduct(node: any): Product {
 
   let category = 'custom-stamps';
   const lowTitle = node.title.toLowerCase();
-  if (lowTitle.includes('refill ink') || lowTitle.includes('textile ink')) {
-    category = 'refill-ink';
-  } else if (lowTitle.includes('stamp pad') || lowTitle.includes('ink pad')) {
+
+  if (lowTitle.includes('stamp pad') || lowTitle.includes('ink pad')) {
     category = 'stamp-pad';
+  } else if (lowTitle.includes('ink')) {
+    category = 'refill-ink';
   } else if (lowTitle.includes('face')) {
     category = 'face-stamps';
   } else if (lowTitle.includes('wood')) {

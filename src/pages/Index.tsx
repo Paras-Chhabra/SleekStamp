@@ -90,11 +90,20 @@ export default function Index() {
 
   const [activeCat, setActiveCat] = useState(0);
 
-  // Resolve category image from the first product in that category
+  // Resolve multiple category images from the products in that category
   const allProducts = data?.all ?? [];
-  const getCategoryImage = (catId: string) => {
-    const match = allProducts.find(p => p.category === catId);
-    return match?.image || '';
+  const getCategoryImages = (catId: string) => {
+    const categoryProducts = allProducts.filter(p => p.category === catId);
+    let images: string[] = [];
+    categoryProducts.forEach(p => {
+      if (p.images && p.images.length > 0) {
+        images.push(...p.images);
+      } else if (p.image) {
+        images.push(p.image);
+      }
+    });
+    // Return up to 3 unique images
+    return Array.from(new Set(images)).slice(0, 3);
   };
 
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true, align: "start", dragFree: true });
@@ -192,12 +201,14 @@ export default function Index() {
       </section>
 
       {/* Shop by Category */}
-      <section className="py-16 bg-cream">
-        <div className="container mx-auto px-4">
+      <section className="py-12 md:py-16 bg-cream min-h-[100svh] flex flex-col justify-center">
+        <div className="container mx-auto px-4 flex flex-col h-full max-w-6xl">
           {/* Category header with navigation */}
-          <div className="flex items-center justify-between mb-8">
+          <div className="flex items-center justify-between mb-6 md:mb-8">
             <div>
-              <h2 className="font-display text-3xl font-bold text-navy mb-1">Shop by Category</h2>
+              <h2 className="font-display text-2xl md:text-3xl font-bold text-navy mb-1 flex items-center gap-2">
+                Shop by Category
+              </h2>
               <p className="text-muted-foreground font-body text-sm">
                 Browse our collection of premium stamps and accessories
               </p>
@@ -261,12 +272,21 @@ export default function Index() {
               </div>
 
               {/* Right — image */}
-              <div className="relative bg-cream/50 flex items-center justify-center p-8 md:p-12 min-h-[280px] overflow-hidden group/image">
-                <img
-                  src={getCategoryImage(CATEGORY_SHOWCASE[activeCat].id)}
-                  alt={CATEGORY_SHOWCASE[activeCat].name}
-                  className="max-w-full max-h-[320px] object-contain rounded-xl transition-all duration-700 ease-out group-hover/image:scale-110 group-hover/image:-translate-y-2 group-hover/image:drop-shadow-2xl"
-                />
+              <div className="relative bg-cream/50 flex flex-col items-center justify-center p-8 md:p-12 min-h-[300px] md:min-h-[400px] overflow-hidden group/image">
+                <div className="relative w-full max-w-[280px] aspect-square flex items-center justify-center perspective-1000">
+                  {getCategoryImages(CATEGORY_SHOWCASE[activeCat].id).map((img, idx) => (
+                    <img
+                      key={img + idx}
+                      src={img}
+                      alt={`${CATEGORY_SHOWCASE[activeCat].name} preview ${idx + 1}`}
+                      className={`absolute w-[75%] md:w-[85%] aspect-square object-contain rounded-xl shadow-lg transition-all duration-700 ease-out origin-bottom bg-white p-2
+                        ${idx === 0 ? 'z-30 transform group-hover/image:scale-110 group-hover/image:-translate-y-4 shadow-xl' : ''}
+                        ${idx === 1 ? 'z-20 transform -rotate-6 -translate-x-6 md:-translate-x-8 translate-y-3 md:translate-y-4 group-hover/image:-rotate-12 group-hover/image:-translate-x-12 md:group-hover/image:-translate-x-16 group-hover/image:translate-y-0 group-hover/image:scale-105 opacity-90' : ''}
+                        ${idx === 2 ? 'z-10 transform rotate-6 translate-x-6 md:translate-x-8 translate-y-3 md:translate-y-4 group-hover/image:rotate-12 group-hover/image:translate-x-12 md:group-hover/image:translate-x-16 group-hover/image:translate-y-0 group-hover/image:scale-105 opacity-80' : ''}
+                      `}
+                    />
+                  ))}
+                </div>
               </div>
             </div>
           </div>
