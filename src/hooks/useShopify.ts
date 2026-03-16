@@ -88,6 +88,8 @@ function mapShopifyProduct(node: any): Product {
     category = 'wooden-stamps';
   } else if (lowTitle.includes('bundle')) {
     category = 'bundle';
+  } else if (lowTitle.includes('sticker')) {
+    category = 'stickers';
   } else if (node.productType) {
     category = node.productType.toLowerCase().replace(/ /g, '-');
   }
