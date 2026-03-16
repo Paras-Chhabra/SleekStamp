@@ -47,7 +47,7 @@ interface BuilderSelections {
    CONSTANTS
    ═══════════════════════════════════════════════════════════════════════ */
 
-const STEP_LABELS = ["Size", "Logo", "Pad", "Ink", "Speed", "Tip", "Review"];
+const STEP_LABELS = ["Size", "Logo", "Pad", "Ink", "Speed", "Review"];
 
 const INK_COLORS: { name: string; hex: string }[] = [
     { name: "Black", hex: "#1a1a1a" },
@@ -57,7 +57,7 @@ const INK_COLORS: { name: string; hex: string }[] = [
     { name: "Purple", hex: "#7c3aed" },
 ];
 
-const STEP_TITLES = ["Select Size", "Your Logo", "Stamp Pad", "Ink Color", "Processing", "Add a Tip", "Review"];
+const STEP_TITLES = ["Select Size", "Your Logo", "Stamp Pad", "Ink Color", "Processing", "Review"];
 
 function ProgressBar({ step, onStepClick }: { step: number; onStepClick: (s: number) => void }) {
     return (
@@ -741,7 +741,6 @@ function StepReview({
         { label: "Stamp Pad", value: selections.stampPad ? selections.stampPad.name : "None", price: selections.stampPad?.price ?? 0, step: 2 },
         { label: "Refill Ink", value: selections.inkVariant?.title ?? "None", price: selections.inkVariant?.price ?? 0, step: 3 },
         { label: "Processing", value: selections.priorityProcessing ? "Priority (24h)" : "Standard (1–3 days)", price: selections.priorityProcessing ? selections.priorityPrice : 0, step: 4 },
-        { label: "Tip", value: selections.tipAmount > 0 ? `$${selections.tipAmount.toFixed(2)}` : "None", price: selections.tipAmount, step: 5 },
     ];
 
     return (
@@ -843,9 +842,9 @@ export default function Customize() {
         logoPreview: null,
         logoUrl: null,
         logoUploading: false,
-        stampPad: null,
+        stampPad: stampPadOptions.find(opt => opt.name.includes("L")) ?? stampPadOptions[0] ?? null,
         inkVariant: null,
-        priorityProcessing: false,
+        priorityProcessing: true,
         priorityVariantId: priorityProduct?.defaultVariantId ?? null,
         priorityPrice,
         designFee: 0,
@@ -1089,13 +1088,6 @@ export default function Customize() {
                             />
                         )}
                         {step === 5 && (
-                            <StepTip
-                                totalPrice={totalPrice - selections.tipAmount}
-                                tipAmount={selections.tipAmount}
-                                onTipChange={(amount) => setSelections((s) => ({ ...s, tipAmount: amount }))}
-                            />
-                        )}
-                        {step === 6 && (
                             <StepReview
                                 selections={selections}
                                 totalPrice={totalPrice}
@@ -1119,10 +1111,10 @@ export default function Customize() {
                             Back
                         </button>
                     )}
-                    {step < 6 ? (
+                    {step < 5 ? (
                         <button
                             onClick={() => {
-                                setStep((s) => Math.min(6, s + 1));
+                                setStep((s) => Math.min(5, s + 1));
                                 window.scrollTo({ top: 0, behavior: "smooth" });
                             }}
                             disabled={!canContinue()}
