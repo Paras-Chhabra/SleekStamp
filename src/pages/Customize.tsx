@@ -830,6 +830,7 @@ export default function Customize() {
     }));
 
     const stampPadOptions: StampPadOption[] = stampPadProducts
+        .filter((p) => p.name.toLowerCase().includes("stamp pad") && !p.name.toLowerCase().includes("refill ink"))
         .sort((a, b) => a.price - b.price)
         .map((p) => ({ name: p.name, price: p.price, variantId: p.defaultVariantId ?? "" }));
 

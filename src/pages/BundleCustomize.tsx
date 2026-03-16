@@ -39,8 +39,8 @@ interface BundleSelections {
    CONSTANTS
    ═══════════════════════════════════════════════════════════════════════ */
 
-const STEP_LABELS = ["Bundle", "Logo", "Ink", "Speed", "Tip", "Review"];
-const STEP_TITLES = ["Choose Bundle", "Your Logo", "Ink Color", "Processing", "Add a Tip", "Review"];
+const STEP_LABELS = ["Bundle", "Logo", "Ink", "Speed", "Review"];
+const STEP_TITLES = ["Choose Bundle", "Your Logo", "Ink Color", "Processing", "Review"];
 
 const INK_COLORS: { name: string; hex: string }[] = [
     { name: "Black", hex: "#1a1a1a" },
@@ -515,7 +515,6 @@ function StepReview({
         { label: "Your Design", value: selections.designFee > 0 ? "We design for you" : (selections.logoFile?.name ?? "No file uploaded"), price: selections.designFee, step: 1 },
         { label: "Ink Color", value: selections.inkColor, price: 0, step: 2 },
         { label: "Processing", value: selections.priorityProcessing ? "Priority (24h)" : "Standard (1–3 days)", price: selections.priorityProcessing ? selections.priorityPrice : 0, step: 3 },
-        { label: "Tip", value: selections.tipAmount > 0 ? `$${selections.tipAmount.toFixed(2)}` : "None", price: selections.tipAmount, step: 4 },
     ];
 
     return (
@@ -612,7 +611,7 @@ export default function BundleCustomize() {
         logoUrl: null,
         logoUploading: false,
         inkColor: "Black",
-        priorityProcessing: false,
+        priorityProcessing: true,
         priorityVariantId: priorityProduct?.defaultVariantId ?? null,
         priorityPrice,
         designFee: 0,
@@ -819,13 +818,6 @@ export default function BundleCustomize() {
                             />
                         )}
                         {step === 4 && (
-                            <StepTip
-                                totalPrice={totalPrice - selections.tipAmount}
-                                tipAmount={selections.tipAmount}
-                                onTipChange={(amount) => setSelections((s) => ({ ...s, tipAmount: amount }))}
-                            />
-                        )}
-                        {step === 5 && (
                             <StepReview
                                 selections={selections}
                                 totalPrice={totalPrice}
@@ -839,7 +831,7 @@ export default function BundleCustomize() {
             </section>
 
             {/* Fixed bottom bar — hidden on review step which has its own checkout */}
-            {step < 5 && (
+            {step < 4 && (
                 <div className="fixed bottom-0 left-0 right-0 z-30 bg-white border-t border-border px-3 py-2.5 shadow-[0_-8px_16px_rgba(0,0,0,0.06)]">
                     <div className="max-w-xl mx-auto flex items-center gap-2">
                         {step > 0 && (
@@ -852,7 +844,7 @@ export default function BundleCustomize() {
                         )}
                         <button
                             onClick={() => {
-                                setStep((s) => Math.min(5, s + 1));
+                                setStep((s) => Math.min(4, s + 1));
                                 window.scrollTo({ top: 0, behavior: "smooth" });
                             }}
                             disabled={!canContinue()}
